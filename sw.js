@@ -1,10 +1,10 @@
 // Bitume 1c1 — service worker : lance le jeu hors ligne (sauf le mode en ligne).
 // Change VERSION à chaque nouvelle mise à jour du jeu pour forcer le rafraîchissement.
-const VERSION = 'bitume-v2';
+const VERSION = 'bitume-v31';
 const CORE = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
 const CDN = [
   'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js',
-  'https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js',
+  'https://cdn.jsdelivr.net/npm/mqtt@5.10.1/dist/mqtt.min.js',
 ];
 
 self.addEventListener('install', (e) => {
