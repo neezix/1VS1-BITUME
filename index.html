@@ -480,6 +480,20 @@ body{background:var(--night);color:var(--chalk);font-family:var(--body);font-siz
 .txt{font-size:18px;letter-spacing:.06em;width:100%;box-sizing:border-box}
 .join input:focus-visible,.txt:focus-visible{outline:3px solid var(--rival);outline-offset:2px}
 .code{margin:0;font-family:var(--display);font-size:44px;letter-spacing:.2em;color:var(--rival);text-align:center}
+.fete .frow{display:grid;grid-template-columns:1fr 1fr;gap:8px}.fete .frow button:only-child,.fete .frow button:first-child:nth-last-child(2)[hidden]+button{grid-column:1/-1}
+.fete .label{margin:2px 0 -4px}
+.flist{display:flex;flex-direction:column;gap:6px}
+.fp{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:10px;background:#1a1529;border-left:5px solid var(--pc)}
+.fp b{font-family:var(--display);font-size:16px;color:var(--chalk);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.fp em{font-style:normal;font-size:11px;font-weight:800;color:#140f1f;background:#ffd166;border-radius:6px;padding:2px 6px}
+.fp .fi{font-size:18px}.fp button{border:0;border-radius:8px;padding:6px 10px;font-weight:800;cursor:pointer;background:#2b2440;color:var(--chalk)}.fp .ft{background:var(--sodium);color:#140f1f}.fp .ft.b{background:var(--rival)}.fp .fx{background:transparent;color:#ff8a80;font-size:16px}
+.seg.fgames{grid-template-columns:repeat(3,1fr)}#menu .seg.fgames button{font-size:13px}
+.fmods{display:flex;flex-wrap:wrap;gap:6px}.fmods button{border:1px solid rgba(239,231,214,.2);border-radius:999px;padding:8px 12px;background:#1a1529;color:var(--muted);font-weight:800;cursor:pointer;font-size:14px}.fmods button[aria-pressed=true]{background:#ffd166;color:#140f1f;border-color:#ffd166}
+.partyov{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:14;width:min(92vw,520px);max-height:84vh;overflow:auto;padding:18px 20px;border-radius:18px;background:rgba(14,11,26,.9);border:2px solid #ffd166;box-shadow:0 20px 60px rgba(0,0,0,.6);text-align:center;color:var(--chalk);animation:ovIn .35s ease-out;pointer-events:none}
+.partyov h2{margin:0 0 4px;font-family:var(--display);font-size:clamp(22px,5vw,34px);color:#ffd166;line-height:1.1}.partyov p{margin:0 0 10px;color:#e6dcc8;font-weight:700}
+.partyov ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;text-align:left}.partyov li{display:flex;justify-content:space-between;gap:10px;padding:8px 12px;border-radius:10px;background:#1a1529;border-left:5px solid var(--pc)}
+.partyov li b{font-family:var(--display)}.partyov li span{font-weight:800;color:#ffd166}.partyov small{display:block;margin-top:10px;color:var(--muted)}
+@keyframes ovIn{from{opacity:0;transform:translate(-50%,-44%) scale(.94)}to{opacity:1;transform:translate(-50%,-50%)}}
+.partybar{position:fixed;left:50%;transform:translateX(-50%);top:calc(env(safe-area-inset-top,0px) + 54px);z-index:6;max-width:92vw;padding:5px 12px;border-radius:999px;background:rgba(14,11,26,.72);color:#efe7d6;font-weight:800;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;pointer-events:none}
 button:focus-visible{outline:3px solid var(--rival);outline-offset:3px}
 .ctrls{display:grid;gap:8px}
 .ctabs{display:flex;gap:4px;flex-wrap:wrap}
@@ -683,6 +697,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
         <button id="m-trois" role="radio" data-v="trois" aria-checked="false">Concours 3 pts</button>
         <button id="m-dunkc" role="radio" data-v="dunkc" aria-checked="false">Concours dunks</button>
         <button id="m-libre" role="radio" data-v="libre" aria-checked="false">Terrain libre</button>
+        <button id="m-fete" role="radio" data-v="fete" aria-checked="false">★ Fête</button>
         <button id="m-histoire" role="radio" data-v="histoire" aria-checked="false">★ Histoire</button>
       </div>
     </div>
@@ -769,6 +784,21 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
       </div>
       <button class="play alt" id="inviteBtn" hidden>Copier le lien d'invitation</button>
       <p class="note" id="netStatus">Crée une partie et donne le code à ton ami, ou entre le sien. Ton ami ouvre ce même lien sur son téléphone ou son ordi, choisit En ligne et tape le code.</p>
+    </div>
+    <div class="online fete" id="fetePanel" hidden>
+      <p class="note" id="fStatus">De 2 à 8 joueurs : sur cet écran (clavier, manettes), avec des bots, ou en ligne, chacun sur son téléphone.</p>
+      <div class="frow"><button class="play alt" id="fHost">📱 Inviter des amis en ligne</button><button class="play alt" id="fInvite" hidden>Copier le lien</button></div>
+      <p class="code" id="fCode" hidden></p>
+      <div class="join" id="fJoinRow"><input id="fCodeIn" maxlength="4" placeholder="CODE" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="Code de la salle"><button class="play alt" id="fJoin">Rejoindre</button></div>
+      <span class="label">Joueurs</span>
+      <div class="flist" id="fList"></div>
+      <div class="frow"><button class="play alt" id="fBot">🤖 + Bot</button><button class="play alt" id="fJ2">🎮 + J2 sur cet écran</button></div>
+      <span class="label">Jeu</span>
+      <div class="seg fgames" id="fGameSeg" role="radiogroup" aria-label="Jeu de la fête"><button role="radio" data-v="gagnant">👑 Le gagnant reste</button><button role="radio" data-v="patate">💣 Patate chaude</button><button role="radio" data-v="roi">🦍 Le roi géant</button><button role="radio" data-v="tournoi">🏆 Tournoi éclair</button><button role="radio" data-v="equipes">🤝 Équipes</button><button role="radio" data-v="tirs">🎯 Concours 3 pts</button></div>
+      <p class="note" id="fGameD"></p>
+      <span class="label">Délires (à cumuler)</span>
+      <div class="fmods" id="fMods"><button data-v="tete" aria-pressed="false">🎈 Grosses têtes</button><button data-v="mini" aria-pressed="false">🐜 Mini</button><button data-v="geant" aria-pressed="false">🗿 Géants</button><button data-v="lune" aria-pressed="false">🌙 Lune</button><button data-v="turbo" aria-pressed="false">⚡ Turbo</button></div>
+      <button class="play alt" id="fLeave" hidden>Quitter la salle</button>
     </div>
     <button class="play" id="play">Jouer</button>
     <div class="row2">
@@ -888,6 +918,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
   <div class="schoice" id="stChoice" hidden><p id="stQ"></p><div id="stOpts"></div></div>
   <button class="sskip" id="stSkip">Passer la scène ⏭</button>
 </div>
+<div class="partyov" id="partyOv" hidden></div><div class="partybar" id="partyBar" hidden></div>
 <div class="stphoto" id="stPhoto" hidden><div class="fr"></div><p><b>LA GÉNÉRATION MIRACLE</b><span id="stPhotoN"></span></p></div>
 <div class="stcard" id="stCard" hidden><b id="stCardT"></b><span id="stCardS"></span></div>
 <div class="credits" id="credits" hidden><div class="croll" id="crollIn"></div></div>
@@ -970,7 +1001,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
 
   // ---------- constants ----------
   const RIM = new V3(0, 3.05, 1.575), RIM_R = .225, BOARD_Z = 1.2, BALL_R = .12;
-  const ARC_R = 6.75, DUNK_R = 2.7, G = 14, BG = 12;
+  const ARC_R = 6.75, DUNK_R = 2.7; let G = 14, BG = 12; // let: the party's "Lune" changes gravity
   const MINX = -7.2, MAXX = 7.2, MINZ = .35, MAXZ = 13.6;
   const KEY_HX = 2.45, KEY_Z = 5.8;            // the paint ("raquette")
   const NOGO_HX = 1.1, NOGO_Z = 1.95;          // nobody stands under/behind the backboard
@@ -2321,8 +2352,10 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
   // mode: solo | local | host | guest
   const S = { mode: 'solo', phase: 'menu', score: { p: 0, ai: 0 }, att: p1, clock: SHOT, phaseT: 0, next: null, diff: DIFFS.normal, time: 0, netT: 0, evs: [], evId: 0,
     map: 'bitume', paused: false, slowT: 0, shakeT: 0, rimShake: 0, celeb: null, clearMsgT: 0 };
-  const me = () => S.mode === 'guest' ? p2 : S.mode === 'local' ? null : p1;
+  const me = () => S.mode === 'guest' ? (S.gParty ? S.myP : p2) : S.party ? partyMe() : S.mode === 'local' ? null : p1;
+  const gme = () => (S.gParty && S.myP) || p2; // the body this guest controls
   function setNames() {
+    if (S.party || S.gParty) { if (S.party) partyNames(); return; }
     const def = LOOK_P1.name, n1 = p1.look.name, n2 = p2.look.name;
     let n;
     if (S.mode === 'solo' && S.story) n = [n1, p2.look.name];
@@ -2596,6 +2629,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
     const G = GM(), a = S.score.p, b = S.score.ai;
     if (S.sub === 'libre' || S.sub === 'trois' || S.sub === 'dunkc' || S.sub === 'horse') return false;
     if (S.sub === 'roi') return Math.max(a, b) >= 5;
+    if (S.party && S.party.target) return Math.max(a, b) >= S.party.target;
     if (G.time) return S.gclock <= 0 && a !== b;
     const hi = Math.max(a, b), lo = Math.min(a, b);
     return hi >= G.win && (!G.by2 || hi - lo >= 2);
@@ -3201,14 +3235,14 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
   // ---------- input ----------
   const mkIn = () => ({ u: 0, d: 0, l: 0, r: 0, jx: 0, jz: 0, A: false, pressed: false, released: false, np: 0, nr: 0, rg: null, B: false, pressed2: false, nb: 0, nd: 0, dbl: false, lastDown: -1e9 });
   const inA = mkIn(), inB = mkIn(), inR = mkIn();
-  function actDown(i) { if (!i.A) { i.A = true; i.pressed = true; i.np++; i.tDown = performance.now(); if (S.mode === 'guest') i.rd = p2.dunking && !p2.dunkDone ? Math.round(p2.dkT * 1000) / 1000 : null;
+  function actDown(i) { if (!i.A) { i.A = true; i.pressed = true; i.np++; i.tDown = performance.now(); if (S.mode === 'guest') { const q = gme(); i.rd = q.dunking && !q.dunkDone ? Math.round(q.dkT * 1000) / 1000 : null; }
     // online guest: spot the double tap here, so two taps squeezed into one network packet still count
     const now = performance.now(); if (now - i.lastDown < 340) i.nd++; i.lastDown = now; } }
   function actUp(i) { if (i.A) { i.A = false; i.released = true; i.nr++; i.tUp = performance.now();
     // how long the button was really held, to the millisecond (frames are 17 ms apart: too coarse for a deep-shot green)
     i.held = i.tDown && S.slowT <= 0 ? Math.round(i.tUp - i.tDown) / 1000 : null;
     // online guest: time against the meter he actually sees (the host's state), so the network delay doesn't count
-    if (S.mode === 'guest') { i.rg = Math.round(p2.gt * 1000) / 1000; i.rd = p2.dunking && !p2.dunkDone ? Math.round(p2.dkT * 1000) / 1000 : null;
+    if (S.mode === 'guest') { const q = gme(); i.rg = Math.round(q.gt * 1000) / 1000; i.rd = q.dunking && !q.dunkDone ? Math.round(q.dkT * 1000) / 1000 : null;
       i.sg = p2.shooting && p2.shownW > 0 && p2.shownG != null && Math.abs(p2.shownG - METER_TARGET) <= p2.shownW + (p2.shownTol || .02) ? 1 : 0; } } }
   function secDown(i) { if (!i.B) { i.B = true; i.pressed2 = true; i.nb++; } }
   function secUp(i) { i.B = false; }
@@ -3315,7 +3349,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
   function applyKey(i, a, down, e) {
     const dirs = { up: 'u', down: 'd', left: 'l', right: 'r' };
     if (a === 'pass') { if (down && !(e && e.repeat)) { i.passReq = true; i.npass = (i.npass || 0) + 1; } return; }
-    if (a === 'oop') { if (down && !(e && e.repeat)) { const p = S.mode === 'guest' ? p2 : i === inA ? p1 : p2; if (p.oopT > 0 || (p.dunking && p.oop && !p.dunkDone)) { i.oopTime = true; i.not = (i.not || 0) + 1; } else { i.oopReq = true; i.noq = (i.noq || 0) + 1; } } return; }
+    if (a === 'oop') { if (down && !(e && e.repeat)) { const p = S.mode === 'guest' ? gme() : i === inA ? p1 : p2; if (p.oopT > 0 || (p.dunking && p.oop && !p.dunkDone)) { i.oopTime = true; i.not = (i.not || 0) + 1; } else { i.oopReq = true; i.noq = (i.noq || 0) + 1; } } return; }
     if (dirs[a]) { i[dirs[a]] = down ? 1 : 0; return; }
     if (a === 'act') { if (!down) actUp(i); else if (!e.repeat) actDown(i); return; }
     if (a === 'sec') { if (!down) secUp(i); else if (!e.repeat) secDown(i); return; }
@@ -3373,7 +3407,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
         if (edge(0) === 1) navOk(); if (edge(1) === 1) navBack(); if (st.l1E === 1) navTab(-1); if (edge(5) === 1) navTab(1);
         [2, 3].forEach(edge); i.hands = false; continue;
       }
-      const p = S.mode === 'guest' ? p2 : i === inA ? p1 : p2;
+      const p = S.mode === 'guest' ? gme() : i === inA ? p1 : p2;
       const has = ball.state === 'held' && ball.holder === p, def = ball.state === 'held' && ball.holder === other(p);
       const down = w => w === 'A' ? actDown(i) : w === 'B' ? secDown(i) : 0, up = w => w === 'A' ? actUp(i) : w === 'B' ? secUp(i) : 0;
       // face buttons: what they do depends on offense / defense, and the release goes to whatever the press started
@@ -3443,7 +3477,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
   // 4th button: LOB (alley-oop, then LOB again at the right time to finish) · on defense: MAINS (hands up while held)
   const oopPress = (inp, p) => { if (p && (p.oopT > 0 || (p.dunking && p.oop && !p.dunkDone))) { inp.oopTime = true; inp.not = (inp.not || 0) + 1; } else { inp.oopReq = true; inp.noq = (inp.noq || 0) + 1; } };
   for (const [id, inp] of [['bAL', inA], ['bBL', inB]]) { const b = $(id);
-    b.addEventListener('pointerdown', e => { e.preventDefault(); b.classList.add('on'); const p = S.mode === 'guest' ? p2 : inp === inA ? p1 : p2; if (b.textContent === 'MAINS') inp.handsK = true; else oopPress(inp, p); });
+    b.addEventListener('pointerdown', e => { e.preventDefault(); b.classList.add('on'); const p = S.mode === 'guest' ? gme() : inp === inA ? p1 : p2; if (b.textContent === 'MAINS') inp.handsK = true; else oopPress(inp, p); });
     for (const ev of ['pointerup', 'pointercancel', 'pointerleave']) b.addEventListener(ev, () => { b.classList.remove('on'); inp.handsK = false; }); }
   for (const [id, inp] of [['bAP', inA], ['bBP', inB]]) { const b = $(id); b.addEventListener('pointerdown', e => { e.preventDefault(); b.classList.add('on'); inp.passReq = true; inp.npass = (inp.npass || 0) + 1; }); for (const ev of ['pointerup', 'pointercancel', 'pointerleave']) b.addEventListener(ev, () => b.classList.remove('on')); }
   bindJoy($('jzA'), $('joyA'), inA); bindJoy($('jzB'), $('joyB'), inB);
@@ -3927,21 +3961,23 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
   }
 
   // ---------- update ----------
-  function inputFor(p) { return p.tin && S.team3 ? p.tin : p.ctrl === 'remote' ? inR : p === p1 ? inA : inB; }
+  function inputFor(p) { return p.tin && (S.team3 || S.party) ? p.tin : p.ctrl === 'remote' ? inR : p === p1 ? inA : inB; }
   function update(dt) {
     if (S.mode === 'pad') { padSend(); return; }
     if (S.paused) return;
+    if (S.party && S.party.mods.turbo) dt *= 1.3;
     if (S.phase === 'replay') { S.time += dt; if (S.mode === 'guest') { const h = peerWith('host'); if (h && h.presence.s && h.presence.s.ph !== 'over') { endReplay(); return; } } replayUpdate(dt); return; }
     S.time += dt; S.netT = Math.max(0, S.netT - dt); S.rimShake = Math.max(0, S.rimShake - dt); S.clearMsgT = Math.max(0, S.clearMsgT - dt);
     if (S.mode === 'guest') return guestUpdate(dt);
     if (S.mode === 'host') readGuest();
+    if (S.party && partyTick(dt)) return;
     if (S.phase === 'select') { selectUpdate(dt); return; }
     if (S.phase === 'intro') { introUpdate(dt); teamIntroPose(); return; }
     if (S.phase === 'story') { storyUpdate(dt); return; }
     if (S.phase === 'menu' || S.phase === 'over') { if (ball.state === 'held') updateBall(dt); return; }
     for (const q of P) { staminaTick(q, dt); fxTick(q); }
     if (S.phase === 'play' || S.phase === 'scored') recTick(dt);
-    if (S.phase !== 'play') for (const i of [inA, inB, inR]) i.pressed = i.released = i.pressed2 = false;
+    if (S.phase !== 'play') for (const i of ALLIN()) i.pressed = i.released = i.pressed2 = false;
     if (S.phase === 'check') { S.phaseT -= dt; updateBall(dt); if (S.phaseT <= 0) { S.phase = 'play'; showMsg(''); } return; }
     if (S.phase === 'kill') { killUpdate(dt); return; }
     if (S.phase === 'scored' && S.kcPending > 0) { S.kcPending -= dt; if (S.kcPending <= 0) { startKill(); if (S.phase === 'kill') return; } }
@@ -3965,7 +4001,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
     }
     if (S.qte) { qteTick(dt); return; } // the dunk contest combo freezes the action
     if (S.lockT > 0) { S.lockT -= dt / (S.slowT > 0 ? .3 : 1); // the takeover show: game time, so it can't freeze anything for good
- for (const p of P) { p.vx = p.vz = 0; } for (const i of [inA, inB, inR]) i.pressed = i.released = i.pressed2 = false; return; } // takeover show: everybody freezes
+ for (const p of P) { p.vx = p.vz = 0; } for (const i of ALLIN()) i.pressed = i.released = i.pressed2 = false; return; } // takeover show: everybody freezes
     for (const p of P) { if (p.ctrl === 'none') continue; if (p.ctrl === 'ai' && S.passCall && ball.holder === p && !p.shooting && !p.dunking) { p.vx *= .8; p.vz *= .8; continue; } if (p.ctrl === 'ai') controlAI(p, dt); else controlPlayer(p, inputFor(p), dt); }
     subTick(dt); teamInputs(); team3Tick(dt);
     physics(p1, dt); physics(p2, dt); separate();
@@ -4091,6 +4127,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
     }
   }
   function readGuest() {
+    if (NET.party) { partyReadGuests(); return; }
     const g = peerWith('guest'); if (!g) return;
     const i = g.presence.in; if (!i) return;
     inR.jx = clamp(+i.x || 0, -1, 1); inR.jz = clamp(+i.z || 0, -1, 1);
@@ -4143,7 +4180,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
     S.balanced = buildKey === 'equilibre'; applyBalance(); refreshGoal(); startTeams(); setTouch();
     if (window.__noIntro) newGame(); else startIntro(null, true);
   }
-  function hostSend() { if (S.mode === 'host' && NET.R) NET.R.presence({ role: 'host', s: pack(), look: looks.p1 }).catch(() => {}); }
+  function hostSend() { if (NET.party) return; if (S.mode === 'host' && NET.R) NET.R.presence({ role: 'host', s: pack(), look: looks.p1 }).catch(() => {}); }
   async function joinGame() {
     const code = $('codeIn').value.trim().toLowerCase();
     if (!/^[a-z0-9]{4}$/.test(code)) { netStatus.textContent = 'Le code fait 4 caractères.'; return; }
@@ -4175,12 +4212,13 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
   let guestSkips = 0;
   // the guest's own shot meter: counted here from his own button press, smooth, the same clock as what he sees
   function ownGt(p, hostGt, dt) {
-    if (!(S.mode === 'guest' && p === p2 && S.phase === 'play' && p.shooting)) { p.gtL = null; return hostGt; }
+    if (!(S.mode === 'guest' && p === gme() && S.phase === 'play' && p.shooting)) { p.gtL = null; return hostGt; }
     if (p.gtL == null) p.gtL = inA.tDown ? Math.max(hostGt, Math.min(1.3, (performance.now() - inA.tDown) / 1000)) : hostGt; else p.gtL += dt;
     if (Math.abs(p.gtL - hostGt) > .3) p.gtL = hostGt;
     return p.gtL;
   }
   function guestUpdate(dt) {
+    if (S.gParty) partyGuest(dt);
     const h = peerWith('host');
     const s = h && h.presence.s;
     if (s !== NET.lastS) { NET.lastS = s; NET.sAge = 0; } else NET.sAge = (NET.sAge || 0) + dt;
@@ -4782,7 +4820,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
       if (liveSh && !liveDunk) { sh.shownG = g; sh.shownW = w; sh.shownTol = 3 / (H - 4); } // what the player sees (marker included) is what counts
       gm.style.top = (tpx(g) - 2) + 'px';
     } else gEl.hidden = true;
-    const ctrlP = S.mode === 'guest' ? p2 : p1;
+    const ctrlP = S.mode === 'guest' ? gme() : p1;
     const la = btnLabel(ctrlP); if (bA.textContent !== la) bA.textContent = la;
     const la2 = btn2Label(ctrlP); if (bA2.textContent !== la2) bA2.textContent = la2;
     if (S.mode === 'local') {
@@ -4881,10 +4919,12 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
   const pickMode = bindSeg('modeSeg', v => {
     modeKey = v;
     $('storyPanel').hidden = v !== 'histoire'; if (v === 'histoire') setTimeout(renderStoryPanel, 0); setTimeout(() => typeof fmtVis === 'function' && fmtVis(), 0);
-    $('diffField').hidden = !(v === 'solo' || v === 'horse'); $('localNote').hidden = v !== 'local'; $('onlinePanel').hidden = v !== 'online'; $('tourPanel').hidden = v !== 'tournoi'; renderSub(v);
+    $('diffField').hidden = !(v === 'solo' || v === 'horse' || v === 'fete'); $('localNote').hidden = v !== 'local'; $('onlinePanel').hidden = v !== 'online'; $('fetePanel').hidden = v !== 'fete'; if (v === 'fete') setTimeout(renderFete, 0); $('tourPanel').hidden = v !== 'tournoi'; renderSub(v);
     if (v === 'tournoi') renderTour(); else if (playBtn.textContent.startsWith('Affronter') || playBtn.textContent.startsWith('Rejouer contre')) playBtn.textContent = 'Jouer';
     playBtn.hidden = v === 'online';
-    if (v !== 'online' && NET.R) { leaveRoom(); codeOut.hidden = true; }
+    if (NET.R && NET.party && v !== 'fete') feteLeave();
+    else if (v !== 'online' && v !== 'fete' && NET.R && !NET.party) { leaveRoom(); codeOut.hidden = true; }
+    if (v !== 'fete' && playBtn.textContent.startsWith('★ Lancer')) playBtn.textContent = 'Jouer';
   });
   let buildKey = store.get('builds', 'legendes');
   const pickBuild = bindSeg('buildSeg', v => { buildKey = v; store.set('builds', v); if (S.mode !== 'guest') { S.balanced = v === 'equilibre'; applyBalance(); } });
@@ -4903,7 +4943,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
   $('onBuildBtn').addEventListener('click', () => { if (S.mode === 'solo') openSelect(true); else if ((S.mode === 'host' || S.mode === 'guest') && (S.phase === 'over' || S.phase === 'menu')) openSelectLive(); });
   function refreshOnBuild() { $('onBuildN').textContent = (PROFILES[looks.p1.arch] || PROFILES.perso).n; }
   refreshOnBuild();
-  function setTouch() { $('touch').classList.toggle('duo', S.mode === 'local'); $('touch').classList.toggle('team', !!S.team3); }
+  function setTouch() { $('touch').classList.toggle('duo', S.mode === 'local' || !!(S.party && S.party.duo)); $('touch').classList.toggle('team', !!S.team3); }
   function startGame() {
     if (modeKey === 'online') return;
     if (modeKey === 'tournoi' && !window.__noIntro) { S.sub = null; S.tour = null; storyStart(tourScene(tourIdx(), null)); return; }
@@ -4945,7 +4985,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
     $('replayBtn').hidden = !S.hls.length;
     menu.hidden = false;
   }
-  function endGame() { if (S.story) { storyMatchEnd(); return; } if (S.tour != null && S.mode === 'solo' && !window.__noIntro) { tourEnd(); return; } S.phase = 'over'; showMsg(''); showEnd(); recordHist(); roiEnd(); matchRewards(); if (S.hls && S.hls.length) setTimeout(() => { if (S.phase === 'over' && !menu.hidden) startReplay(); }, 1400); }
+  function endGame() { if (S.party && partyEndGame()) return; if (S.story) { storyMatchEnd(); return; } if (S.tour != null && S.mode === 'solo' && !window.__noIntro) { tourEnd(); return; } S.phase = 'over'; showMsg(''); showEnd(); recordHist(); roiEnd(); matchRewards(); if (S.hls && S.hls.length) setTimeout(() => { if (S.phase === 'over' && !menu.hidden) startReplay(); }, 1400); }
 
   // ---------- pause menu (☰ / Échap) ----------
   const pauseEl = $('pause');
@@ -4962,6 +5002,8 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
   function closePause() { pauseEl.hidden = true; S.paused = false; releaseAll(); try { document.activeElement && document.activeElement.blur(); } catch (_) {} }
   async function quitToMenu() {
     pauseEl.hidden = true; S.paused = false; releaseAll();
+    if (S.party) { partyStop(); return; }
+    if (S.gParty) { await feteLeave('Tu as quitté la salle.'); openMenu(''); pickMode('fete'); return; }
     const online = S.mode === 'host' || S.mode === 'guest';
     S.mode = 'solo'; S.phase = 'menu'; showMsg('');
     if (S.storySaved && S.story) { S.gm = S.storySaved.gm; S.lv = S.storySaved.lv; }
@@ -5280,6 +5322,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
   $('customClose').addEventListener('click', closeCustom);
 
   playBtn.addEventListener('click', () => {
+    if (modeKey === 'fete') { if (!(NET.party && NET.role === 'guest')) partyStart(); return; }
     if (modeKey === 'histoire' && (S.mode === 'solo' || S.mode === 'local')) { storyContinue(); return; }
     if (S.mode === 'host' && S.phase === 'over') { if (peerWith('guest')) { menu.hidden = true; result.hidden = true; hostStart(); } else openMenu("Ton ami n'est plus là."); return; }
     if (S.mode === 'host' || S.mode === 'guest') return;
@@ -5486,7 +5529,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
       for (const k of 'UDLR') { if (st[k] && !Q.pad[k]) qteKey(k); Q.pad[k] = st[k]; } break; }
     if (!Q.res) { Q.t -= dt; if (Q.t <= 0) { Q.t = 0; qteEnd(false); } $('qBar').style.transform = 'scaleX(' + Math.max(0, Q.t / Q.T).toFixed(3) + ')'; }
     else { Q.hold -= dt; if (Q.hold <= 0) { S.qte = null; $('qte').hidden = true; } }
-    for (const i of [inA, inB, inR]) i.pressed = i.released = i.pressed2 = false;
+    for (const i of ALLIN()) i.pressed = i.released = i.pressed2 = false;
   }
   addEventListener('keydown', e => {
     if (!S.qte || S.qte.res) return;
@@ -5548,6 +5591,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
     return false;
   }
   function subEnd(lost) {
+    if (S.party) { partySubEnd(); return; }
     const v = S.sub; let text = '', sc = 0;
     if (v === 'trois') { sc = S.c3.score; const best = Math.max(store.get('best3', 0), sc); store.set('best3', best); text = 'Concours à 3 pts : ' + sc + ' pts' + (sc >= best ? ' · NOUVEAU RECORD !' : ' · record ' + best); incStat('threeScore', sc, true); }
     if (v === 'dunkc') { sc = S.dk.total; const best = Math.max(store.get('bestDunk', 0), sc); store.set('bestDunk', best); text = 'Concours de dunks : ' + sc + ' / 200' + (sc >= best ? ' · NOUVEAU RECORD !' : ' · record ' + best); incStat('dunkScore', sc, true); }
@@ -5700,7 +5744,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
     const bodies = teamBodies();
     for (const h of T.H) { if (!bodies.some(b => b.look === h.look)) h.look = mainOf(h.side).look; } // no automatic switch: you keep your player
     for (const b of bodies) b.human = T.H.find(q => q.look === b.look) || null;
-    for (const m of [p1, p2]) { const h = m.human; if (h) { m.ctrl = h.inp === inR ? 'remote' : 'local'; m.tin = h.inp; } else { m.ctrl = 'ai'; m.tin = null; m.ai = m.ai || {}; } }
+    for (const m of [p1, p2]) { const h = m.human; if (h) { m.ctrl = h.inp === inR || PIN.includes(h.inp) ? 'remote' : 'local'; m.tin = h.inp; } else { m.ctrl = 'ai'; m.tin = null; m.ai = m.ai || {}; } }
   }
   // the buttons of every human: L1 / C = pass (offense) or switch player (defense)
   function teamInputs() {
@@ -6913,7 +6957,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
     if (St.cho) { St.cho.t += dt; const C = CHO[St.cho.name]; if (C && C.tick) C.tick(St.cho, dt); if (St.cho.ended && !St.cho.keep) St.cho.force = false; }
     confettiTick(dt); spotsTick(dt); boltsTick(dt);
     if (!storyPad() && (inA.pressed || inB.pressed) && $('stChoice').hidden) storyTap();
-    for (const i of [inA, inB, inR]) i.pressed = i.released = i.pressed2 = false;
+    for (const i of ALLIN()) i.pressed = i.released = i.pressed2 = false;
     // camera: close-up on the speaker, otherwise a slow wide shot
     const portrait = camera.aspect < 1, R = portrait ? 1.5 : 1;
     if (St.cam && SA[St.cam] && St.cam !== 'wide') {
@@ -7131,7 +7175,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
     S.phase = 'intro'; S.introSkip = false; introUI.hidden = !!withVs; stage.classList.add('intro-on'); showMsg(''); S.cine = null;
     $('introSlam').hidden = true; $('introGo').hidden = true; menu.hidden = true; result.hidden = true;
     if (remote) { $('introK').textContent = $('introT').textContent = $('introS').textContent = ''; return; }
-    for (const i of [inA, inB, inR]) i.pressed = i.released = i.pressed2 = false;
+    for (const i of ALLIN()) i.pressed = i.released = i.pressed2 = false;
     for (const q of P) Object.assign(q, { x: 0, z: 8, y: 0, vx: 0, vz: 0, vy: 0, shooting: false, dunking: false, dunkDone: false, hangT: 0, pend: null, fallT: 0, stun: 0, sad: false, mv: 0, mvT: 0, showCeleb: null, handsUp: false, intense: false, reachT: 0, robT: 0, fakeT: 0, ftT: 0, fadeT: 0, landLag: 0, hand: 1 });
     Object.assign(ball, { state: 'held', holder: p1, fl: null, lockT: 0, clr: true, trailT: 0 });
     $('introK').textContent = $('introT').textContent = $('introS').textContent = '';
@@ -7206,7 +7250,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
     I.t += dt;
     // a tap skips one step: countdown -> matchup -> cinematic -> match
     const anyPress = !I.remote && (inA.pressed || inB.pressed || inR.pressed);
-    if (!I.remote) for (const i of [inA, inB, inR]) i.pressed = i.released = i.pressed2 = false;
+    if (!I.remote) for (const i of ALLIN()) i.pressed = i.released = i.pressed2 = false;
     if (!I.remote && (S.introSkip || anyPress)) {
       S.introSkip = false;
       const now = performance.now(); if (now - (I.skipAt || 0) > 300) { I.skipAt = now;
@@ -7414,6 +7458,420 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
   $('codeIn').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); joinGame(); } });
 
 
+
+  // ======================================================================================
+  //  MODE FÊTE: 2 to 8 players — same screen (keyboard, controllers), bots, or online each on his phone.
+  //  Duel games run on the 1 vs 1 engine (p1 / p2 change owner between duels); team games on the team engine.
+  // ======================================================================================
+  const FGAMES = {
+    gagnant: { n: 'Le gagnant reste', ico: '👑', d: 'Chacun pour soi. Duels en 3 points : le gagnant reste sur le terrain, le perdant retourne dans la file. Premier à 3 couronnes.', duel: true, target: 3 },
+    patate: { n: 'Patate chaude', ico: '💣', d: 'Le ballon est une bombe ! Marque pour la refiler à l\'autre. Si elle explose dans tes mains, tu es éliminé. Dernier debout gagne.', duel: true, target: 99 },
+    roi: { n: 'Le roi géant', ico: '🦍', d: 'Chacun pour soi. Le roi grandit et devient plus fort à chaque victoire. Qui fera tomber le géant ? Premier à 4 victoires.', duel: true, target: 3 },
+    tournoi: { n: 'Tournoi éclair', ico: '🏆', d: 'Tableau à élimination directe, duels en 3 points. Un seul champion.', duel: true, target: 3 },
+    equipes: { n: 'Équipes', ico: '🤝', d: 'Deux équipes, du 2c2 au 4c4 (touche une ligne pour changer d\'équipe). Les places vides sont prises par des bots. Premier à 7.', team: true },
+    tirs: { n: 'Concours 3 pts', ico: '🎯', d: 'Chacun son tour : 60 secondes pour marquer un max de 3 pts. Meilleur score gagne.', turn: 'trois' }
+  };
+  const FMODS = { tete: '🎈 Grosses têtes', mini: '🐜 Mini', geant: '🗿 Géants', lune: '🌙 Lune', turbo: '⚡ Turbo' };
+  const PIN = [];                                    // inputs of the online players (one per guest)
+  function ALLIN() { return [inA, inB, inR, ...PIN]; }
+  function partyMe() { const P2 = S.party; if (!P2 || P2.duo) return null; if (S.team3 && S.team3.H) { const h = S.team3.H.find(q => q.pid === 'h'); return h ? teamBodies().find(b => b.look === h.look) || null : null; } return [p1, p2].find(b => b.pid === 'h') || null; }
+  const PT = Object.assign({ pl: [], game: 'gagnant', mods: {}, st: 'lobby', v: 1, nb: 0, sendT: 0, lkT: 0 }, (() => { const f = store.get('fete', null) || {}; return { game: FGAMES[f.game] ? f.game : 'gagnant', mods: f.mods || {} }; })());
+  const ptSave = () => store.set('fete', { game: PT.game, mods: PT.mods });
+  const FCOL = ['#ff9a2e', '#4cc9b8', '#facc15', '#c084fc', '#ef4444', '#3b82f6', '#22c55e', '#f472b6'];
+  const kindIco = { me: '🖥️', j2: '🎮', guest: '📱', bot: '🤖' };
+  function ptMe() { let me = PT.pl.find(p => p.id === 'h'); if (!me) { me = { id: 'h', kind: 'me' }; PT.pl.unshift(me); } me.look = looks.p1; return me; }
+  function pname(pl) {
+    const n = pl.look && pl.look.name;
+    if (n && n !== LOOK_P1.name && n !== LOOK_P2.name && n !== 'MOI') return n.toUpperCase().slice(0, 12);
+    if (pl.kind === 'me') return NET.party && NET.role === 'host' ? 'HÔTE' : 'J1';
+    if (pl.kind === 'j2') return 'J2';
+    if (pl.kind === 'bot') return pl.look.name || 'BOT';
+    return 'AMI ' + (PT.pl.filter(q => q.kind === 'guest').indexOf(pl) + 1);
+  }
+  const pcol = pl => FCOL[Math.max(0, PT.pl.indexOf(pl)) % FCOL.length];
+  const plById = id => PT.pl.find(p => p.id === id);
+  const inpOf = pl => pl.kind === 'me' ? inA : pl.kind === 'j2' ? inB : pl.kind === 'guest' ? pl.inp : null;
+  function addBot() { if (PT.pl.length >= 8) return; const l = roiOpponent(); PT.pl.push({ id: 'b' + (++PT.nb), kind: 'bot', look: l }); PT.v++; renderFete(); }
+  function toggleJ2() { const j = PT.pl.find(p => p.kind === 'j2'); if (j) PT.pl.splice(PT.pl.indexOf(j), 1); else if (PT.pl.length < 8) PT.pl.splice(1, 0, { id: 'j2', kind: 'j2', look: looks.p2 }); PT.v++; renderFete(); }
+
+  // ---- the lobby (menu panel) ----
+  function renderFete() {
+    if (!$('fetePanel')) return;
+    const guest = NET.party && NET.role === 'guest';
+    if (!guest) ptMe();
+    const g = FGAMES[PT.game] || FGAMES.gagnant, team = !!g.team, list = guest ? (PT.gl || []) : PT.pl.map(p => ({ id: p.id, n: pname(p), k: p.kind, t: p.team || '' }));
+    if (team && !guest) { let a = 0, b = 0; for (const p of PT.pl) { if (p.team !== 'A' && p.team !== 'B') p.team = a <= b ? 'A' : 'B'; if (p.team === 'A') a++; else b++; } }
+    $('fList').innerHTML = list.map((p, i) => `<div class="fp" style="--pc:${FCOL[i % FCOL.length]}"><span class="fi">${kindIco[p.k] || '📱'}</span><b>${p.n}</b>${p.id === PT.myId ? '<em>toi</em>' : ''}`
+      + (team ? `<button class="ft${p.t === 'B' ? ' b' : ''}" data-id="${p.id}"${guest ? ' disabled' : ''}>Équipe ${p.t || 'A'}</button>` : '')
+      + (!guest && p.k !== 'me' ? `<button class="fx" data-id="${p.id}" aria-label="Retirer">✕</button>` : '') + '</div>').join('')
+      + (list.length < 2 ? '<p class="note">Ajoute des joueurs : bots, J2 sur cet écran, ou invite tes amis en ligne.</p>' : '');
+    document.querySelectorAll('#fGameSeg button').forEach(b => b.setAttribute('aria-checked', String(b.dataset.v === PT.game)));
+    document.querySelectorAll('#fMods button').forEach(b => b.setAttribute('aria-pressed', String(!!PT.mods[b.dataset.v])));
+    $('fGameD').textContent = g.ico + ' ' + g.d;
+    for (const id of ['fBot', 'fJ2', 'fHost']) $(id).hidden = guest;
+    $('fJ2').textContent = PT.pl.some(p => p.kind === 'j2') ? '− J2 sur cet écran' : '+ J2 sur cet écran';
+    document.querySelectorAll('#fGameSeg button, #fMods button').forEach(b => { b.disabled = guest; });
+    $('fJoinRow').hidden = NET.party; $('fLeave').hidden = !NET.party; $('fCode').hidden = !(NET.party && NET.role === 'host'); $('fInvite').hidden = !(NET.party && NET.role === 'host' && canInvite());
+    if (NET.party && NET.role === 'host') $('fCode').textContent = (NET.code || '').toUpperCase();
+    if (modeKey === 'fete') { playBtn.hidden = guest; playBtn.textContent = '★ Lancer la fête (' + list.length + ' joueurs)'; }
+    if (guest) $('fStatus').textContent = PT.gst === 'play' ? 'La partie est en cours…' : '✅ Connecté. Attends que l\'hôte lance la fête !';
+  }
+  $('fList').addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b || (NET.party && NET.role === 'guest')) return;
+    const pl = plById(b.dataset.id); if (!pl) return;
+    if (b.classList.contains('fx')) { if (pl.kind === 'guest') pl.kicked = true; PT.pl.splice(PT.pl.indexOf(pl), 1); }
+    if (b.classList.contains('ft')) pl.team = pl.team === 'B' ? 'A' : 'B';
+    SFX.click && SFX.click(); PT.v++; renderFete();
+  });
+  $('fBot').addEventListener('click', () => { SFX.click && SFX.click(); addBot(); });
+  $('fJ2').addEventListener('click', () => { SFX.click && SFX.click(); toggleJ2(); });
+  document.querySelectorAll('#fGameSeg button').forEach(b => b.addEventListener('click', () => { if (NET.party && NET.role === 'guest') return; SFX.click && SFX.click(); PT.game = b.dataset.v; ptSave(); PT.v++; renderFete(); }));
+  document.querySelectorAll('#fMods button').forEach(b => b.addEventListener('click', () => { if (NET.party && NET.role === 'guest') return; SFX.click && SFX.click(); const k = b.dataset.v; PT.mods[k] = !PT.mods[k]; if (k === 'mini' && PT.mods.mini) PT.mods.geant = false; if (k === 'geant' && PT.mods.geant) PT.mods.mini = false; ptSave(); PT.v++; renderFete(); }));
+
+  // ---- online: the room of the party ----
+  async function feteHost() {
+    if (NET.party && NET.role === 'host') return;
+    await leaveRoom(); const room = await roomReady;
+    if (!room) { $('fStatus').textContent = 'Le jeu en ligne ne marche pas ici (pas d\'internet ?). Vous pouvez jouer sur cet écran avec des manettes et des bots.'; return; }
+    const code = genCode(); $('fStatus').textContent = 'Création de la salle…';
+    try { NET.R = await room.join('b1c1fete-' + code, { host: true }); } catch (_) { $('fStatus').textContent = 'Impossible de créer la salle. Réessaie.'; return; }
+    NET.role = 'host'; NET.code = code; NET.party = true; ptMe();
+    NET.unsub = NET.R.onPeers(fetePeers, () => {});
+    $('fStatus').textContent = 'Donne ce code à tes amis (ou envoie le lien). Ils tapent le code dans Fête → Rejoindre.';
+    PT.v++; renderFete(); feteNet(true);
+  }
+  function fetePeers() {
+    if (!NET.R || NET.role !== 'host') return;
+    const peers = NET.R.peers().filter(q => !q.isMe && !q.sameTab && q.presence && q.presence.role === 'guest');
+    for (const q of peers) {
+      let pl = plById(q.peer);
+      if (!pl && !PT.pl.some(p => p.kicked && p.id === q.peer) && PT.pl.length < 8) {
+        const inp = mkIn(); PIN.push(inp); pl = { id: q.peer, kind: 'guest', inp, L: {}, look: cleanLook(q.presence.look, LOOK_P2), crowns: 0, wins: 0, streak: 0, score: null, alive: true, team: '' }; PT.pl.push(pl); PT.v++;
+        popup(pname(pl) + ' REJOINT LA FÊTE', 0, 3, 8, '#ffd166', 20, 'info');
+        if (S.party) { const P2 = S.party; if (P2.game === 'gagnant' || P2.game === 'roi') P2.queue.push(pl); else if (P2.game === 'patate') pl.alive = false; else if (P2.g.turn) P2.order.push(pl); }
+      }
+      else if (pl && q.presence.look) { const l = cleanLook(q.presence.look, LOOK_P2); if (JSON.stringify(l) !== JSON.stringify(pl.look)) { pl.look = l; PT.v++; } }
+    }
+    for (const pl of PT.pl.slice()) if (pl.kind === 'guest' && !peers.some(q => q.peer === pl.id)) { // gone
+      PT.pl.splice(PT.pl.indexOf(pl), 1); PT.v++;
+      if (S.party) partyGone(pl);
+    }
+    if (modeKey === 'fete' && !menu.hidden) renderFete();
+  }
+  // what the guests receive: the players, the game, the overlay, who is on the court
+  function partyInfo() {
+    const P2 = S.party, o = { v: PT.v, st: P2 ? 'play' : 'lobby', g: PT.game, m: PT.mods, pl: PT.pl.map(p => [p.id, pname(p), p.kind, p.team || ''])};
+    if (P2) {
+      o.bp = [p1.pid || '', p2.pid || '']; o.goal = P2.goal || ''; o.nm = [p1.name, p2.name]; o.ov = S.phase === 'party' ? P2.ov : 0; o.bar = P2.bar || ''; o.sc = [r2(p1.sc || 1), r2(p2.sc || 1)];
+      if (P2.bomb) o.bomb = r2(P2.bomb.t / P2.bomb.max);
+      if (S.team3 && S.team3.H) o.hid = S.team3.H.map(h => h.pid);
+      if (S.time - PT.lkT > 1) { PT.lkT = S.time; o.lk = [p1.look, p2.look]; }
+    }
+    return o;
+  }
+  function feteNet(force) {
+    if (!NET.party || NET.role !== 'host' || !NET.R) return;
+    PT.sendT -= 1 / 60; if (!force && !S.party && PT.sendT > 0) return; PT.sendT = .25;
+    NET.R.presence(Object.assign({ role: 'host', look: looks.p1, party: partyInfo() }, S.party ? { s: pack() } : { s: null })).catch(() => {});
+  }
+  // the buttons of every online player, each into his own input
+  function partyReadGuests() {
+    if (!NET.party || !NET.R) return;
+    const peers = NET.R.peers(), live = S.phase === 'play';
+    for (const pl of PT.pl) {
+      if (pl.kind !== 'guest') continue;
+      const g = peers.find(q => q.peer === pl.id), i = g && g.presence && g.presence.in, R = pl.inp, L = pl.L;
+      if (!i) { R.jx = R.jz = 0; R.A = R.B = false; continue; }
+      if (!L.init) { pl.L = { init: 1, ap: i.ap || 0, ar: i.ar || 0, bp: i.bp || 0, dd: i.dd || 0, oq: i.oq || 0, ot: i.ot || 0, ps: i.ps || 0, sk: i.sk || 0 }; continue; }
+      R.jx = clamp(+i.x || 0, -1, 1); R.jz = clamp(+i.z || 0, -1, 1);
+      if ((i.ap || 0) > L.ap && live) R.pressed = true;
+      if ((i.ar || 0) > L.ar && live) { R.released = true; R.rg = typeof i.rg === 'number' ? i.rg : null; R.sg = i.sg ? 1 : 0; }
+      if ((i.bp || 0) > L.bp && live) { R.pressed2 = true; if (i.mo) { R.mvOn = true; R.mvX = +i.mo[0] || 0; R.mvZ = +i.mo[1] || 0; } }
+      if ((i.ap || 0) > L.ap || (i.ar || 0) > L.ar) R.rd = typeof i.rd === 'number' ? i.rd : null;
+      R.B = !!i.bh; R.A = !!i.a; R.hands = !!i.hu; R.sprint = !!i.spr; R.intense = !!i.it;
+      R.aimOn = !!i.am; if (i.am) { R.aimX = +i.am[0] || 0; R.aimZ = +i.am[1] || 0; }
+      if ((i.dd || 0) > L.dd && live) R.dbl = true;
+      if ((i.oq || 0) > L.oq && live) R.oopReq = true;
+      if ((i.ot || 0) > L.ot && live) R.oopTime = true;
+      if ((i.ps || 0) > L.ps && live) R.passReq = true;
+      if ((i.sk || 0) > L.sk && S.phase === 'party' && S.party) S.party.it = Math.min(S.party.it, .4); // a guest skips the scoreboard too
+      pl.L = { init: 1, ap: i.ap || 0, ar: i.ar || 0, bp: i.bp || 0, dd: i.dd || 0, oq: i.oq || 0, ot: i.ot || 0, ps: i.ps || 0, sk: i.sk || 0 };
+    }
+  }
+  // ---- joining a party (guest side) ----
+  async function feteJoin(code) {
+    code = (code || '').trim().toLowerCase();
+    if (!/^[a-z0-9]{4}$/.test(code)) { $('fStatus').textContent = 'Le code fait 4 caractères.'; return; }
+    await leaveRoom(); const room = await roomReady;
+    if (!room) { $('fStatus').textContent = 'Le jeu en ligne ne marche pas ici (pas d\'internet ?).'; return; }
+    $('fStatus').textContent = 'Connexion à la salle…';
+    try { NET.R = await room.join('b1c1fete-' + code, { host: false }); } catch (_) { $('fStatus').textContent = 'Impossible de rejoindre. Réessaie.'; return; }
+    NET.role = 'guest'; NET.code = code; NET.party = true; NET.synced = false; NET.seen = 1e9; NET.lastPh = null; S.myP = null; PT.gst = null; PT.gl = []; PT.hostSeen = performance.now();
+    NET.R.presence({ role: 'guest', look: looks.p1, in: {} }).catch(() => {});
+    const meP = NET.R.peers().find(q => q.isMe); PT.myId = meP ? meP.peer : null;
+    NET.unsub = NET.R.onPeers(() => { const m2 = NET.R && NET.R.peers().find(q => q.isMe); if (m2) PT.myId = m2.peer; }, () => {});
+    S.mode = 'guest'; S.gParty = true; renderFete();
+    clearTimeout(NET.timer); NET.timer = setTimeout(() => { if (NET.party && NET.role === 'guest' && !peerWith('host')) { $('fStatus').textContent = 'Aucune salle trouvée avec ce code. Vérifie-le.'; feteLeave(); } }, 9000);
+  }
+  async function feteLeave(msg) {
+    const wasGuest = NET.role === 'guest';
+    if (S.party) partyStop(true);
+    await leaveRoom(); NET.party = false; S.myP = null; S.gParty = false; PT.myId = null; PT.gl = []; PT.gst = null;
+    for (const pl of PT.pl.slice()) if (pl.kind === 'guest') PT.pl.splice(PT.pl.indexOf(pl), 1);
+    PIN.length = 0;
+    if (wasGuest) { S.mode = 'solo'; S.phase = 'menu'; partyVisual(null); teamOff(); $('partyOv').hidden = true; $('partyBar').hidden = true; menu.hidden = false; }
+    if (msg) $('fStatus').textContent = msg;
+    renderFete();
+  }
+  $('fHost').addEventListener('click', feteHost);
+  $('fJoin').addEventListener('click', () => feteJoin($('fCodeIn').value));
+  $('fCodeIn').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); feteJoin($('fCodeIn').value); } });
+  $('fLeave').addEventListener('click', () => feteLeave('Tu as quitté la salle.'));
+  $('fInvite').addEventListener('click', async () => {
+    const url = location.origin + location.pathname + '?fete=' + (NET.code || '').toUpperCase();
+    try { if (navigator.share && touchDevice) await navigator.share({ title: 'Bitume · Fête', text: 'Viens jouer à Bitume avec nous !', url }); else { await navigator.clipboard.writeText(url); $('fStatus').textContent = 'Lien copié : envoie-le à tes amis.'; } } catch (_) { $('fStatus').textContent = url; }
+  });
+
+  // ---- the fun modifiers ----
+  function partyVisual(m, king) {
+    const bodies = [p1, p2, ...EX];
+    for (const b of bodies) {
+      const kingK = king && b === king.body ? king.k : 1;
+      const base = S.balanced ? 1 : (b.st || PROFILES.perso).h / 1.98, sc = base * (m ? (m.mini ? .72 : m.geant ? 1.3 : 1) * kingK : 1);
+      if (S.phase !== 'story') b.sc = sc;
+      const hs = m && m.tete ? 1.85 : 1; if (b.m && b.m.head && b.m.head.scale.x !== hs) b.m.head.scale.setScalar(hs);
+    }
+  }
+  function partyPhysics(on) { G = on && PT.mods.lune ? 14 * .42 : 14; BG = on && PT.mods.lune ? 12 * .45 : 12; }
+
+  // ---- the party itself (host / offline) ----
+  function partyStart() {
+    ptMe(); const g = FGAMES[PT.game], list = PT.pl.slice();
+    if (list.length < 2) { $('fStatus').textContent = 'Il faut au moins 2 joueurs : ajoute un bot, J2 ou des amis.'; return; }
+    if (g.turn && !list.some(p => p.kind !== 'bot')) return;
+    S.sub = null; S.tour = null; S.story = null; S.st = null; teamOff(); hideEx(); storyFxClear();
+    for (const p of list) Object.assign(p, { crowns: 0, wins: 0, alive: true, score: null, streak: 0 });
+    S.party = { game: PT.game, g, mods: Object.assign({}, PT.mods), it: 0, ov: null, bar: '', duel: null, queue: [], order: [], ti: 0 };
+    S.mode = NET.party && NET.role === 'host' ? 'host' : 'solo'; S.evs = S.evs || []; S.diff = DIFFS[diffKey] || DIFFS.normal; S.gm = 'eclair'; S.lv = 'pro';
+    menu.hidden = true; result.hidden = true; $('selectScr').hidden = true; partyPhysics(true);
+    if (g.duel) {
+      const sh = list.slice().sort(() => rnd() - .5);
+      if (PT.game === 'tournoi') { S.party.round = sh; S.party.next = []; S.party.rn = 1; tourneyNext(); }
+      else { S.party.queue = sh; S.party.duel = [S.party.queue.shift(), S.party.queue.shift()]; if (PT.game === 'patate') S.party.king = null; partyDuel(); }
+    } else if (g.team) partyTeams();
+    else { S.party.order = list.filter(p => p.kind !== 'bot'); S.party.ti = 0; partyTurn(); }
+    PT.v++; feteNet(true);
+  }
+  function setBody(b, pl) {
+    const L = Object.assign({}, pl.look, { name: pname(pl) });
+    if (PT.game === 'roi' && S.party.king === pl && (pl.streak || 0) >= 2) L.aura = '#ffd166';
+    setLook(b, L); b.pid = pl.id; b.name = pname(pl);
+    b.ctrl = pl.kind === 'bot' ? 'ai' : pl.kind === 'guest' ? 'remote' : 'local'; b.tin = inpOf(pl); b.ai = {};
+  }
+  function partyNames() { $('tP').textContent = p1.name; $('tA').textContent = p2.name; $('tagP').textContent = p1.name; $('tagA').textContent = p2.name; }
+  function partyDuel() {
+    const P2 = S.party, [a, b] = P2.duel;
+    setBody(p1, a); setBody(p2, b); parkP2(false); p1.m.g.visible = p2.m.g.visible = true;
+    P2.duo = a.kind !== 'bot' && b.kind !== 'bot' && a.kind !== 'guest' && b.kind !== 'guest';
+    P2.target = P2.g.target; S.sub = null; setTouch(); partyNames(); P2.goal = PT.game === 'patate' ? '💣 GARE À LA BOMBE' : 'PREMIER À ' + P2.target; goalEl.textContent = P2.goal;
+    if (PT.game === 'patate') { const mx = 9 + rnd() * 7; P2.bomb = { t: mx, max: mx, beep: 0 }; }
+    else P2.bomb = null;
+    newGame(); S.phase = 'check'; S.phaseT = 1.6;
+    showMsg(pname(a) + '  VS  ' + pname(b), '#ffd166', true);
+    popup((PT.game === 'patate' ? '💣 ' : PT.game === 'roi' && P2.king ? '🦍 ' : '⚔️ ') + pname(a) + ' VS ' + pname(b), 0, 3.4, 7, '#ffd166', 30, 'huge', 'vs');
+    partyBar();
+  }
+  function partyBar() {
+    const P2 = S.party; if (!P2) return;
+    const g = P2.game, live = PT.pl.filter(p => p.alive !== false);
+    if (g === 'gagnant') P2.bar = '👑 ' + PT.pl.slice().sort((x, y) => y.crowns - x.crowns).map(p => pname(p) + ' ' + p.crowns).join(' · ') + '  (3 pour gagner)';
+    else if (g === 'roi') P2.bar = '🦍 ' + PT.pl.slice().sort((x, y) => y.wins - x.wins).map(p => pname(p) + ' ' + p.wins).join(' · ') + '  (4 pour gagner)';
+    else if (g === 'patate') P2.bar = '💣 En vie : ' + live.map(pname).join(' · ');
+    else if (g === 'tournoi') P2.bar = '🏆 Tour ' + P2.rn + ' · encore en course : ' + (P2.round.concat(P2.next, P2.duel || [])).filter((p, i, a2) => a2.indexOf(p) === i).map(pname).join(' · ');
+    else if (g === 'equipes') P2.bar = '🤝 ' + S.score.p + ' – ' + S.score.ai + '  ·  premier à 7';
+    if (P2.queue && P2.queue.length && P2.g.duel && g !== 'tournoi') P2.bar += '   ⏳ ' + P2.queue.map(pname).join(', ');
+  }
+  // the end of a duel / team game / turn
+  function partyEndGame() {
+    const P2 = S.party; if (!P2) return false;
+    if (P2.g.team) { const wA = S.score.p > S.score.ai; partyOver(null, wA ? 'L\'ÉQUIPE ' + p1.name + ' GAGNE !' : 'L\'ÉQUIPE ' + p2.name + ' GAGNE !', (wA ? 'A' : 'B')); return true; }
+    const w = S.score.p > S.score.ai ? p1 : p2, wp = plById(w.pid), lp = plById(other(w).pid);
+    duelResult(wp, lp, false);
+    return true;
+  }
+  function duelResult(wp, lp, boom) {
+    const P2 = S.party, g = P2.game; if (!wp || !lp) { partyNextOrOver(); return; }
+    let title = '', sub = '';
+    if (g === 'gagnant') { wp.crowns++; title = '👑 ' + pname(wp) + ' RESTE SUR LE TERRAIN'; if (wp.crowns >= 3) return partyOver(wp);
+      P2.queue.push(lp); P2.duel = [wp, P2.queue.shift()]; }
+    else if (g === 'roi') { wp.wins++; wp.streak = P2.king === wp ? (wp.streak || 0) + 1 : 1; if (P2.king && P2.king !== wp) { title = '💥 ' + pname(wp) + ' FAIT TOMBER LE ROI !'; P2.king.streak = 0; } else title = '🦍 ' + pname(wp) + ' GRANDIT ENCORE…'; P2.king = wp;
+      if (wp.wins >= 4) return partyOver(wp); P2.queue.push(lp); P2.duel = [wp, P2.queue.shift()]; }
+    else if (g === 'patate') { lp.alive = false; title = '💥 ' + pname(lp) + ' A EXPLOSÉ !'; const alive = PT.pl.filter(p => p.alive !== false);
+      if (alive.length <= 1) return partyOver(wp); P2.queue = P2.queue.filter(p => p.alive !== false); if (!P2.queue.length) return partyOver(wp); P2.duel = [wp, P2.queue.shift()]; }
+    else if (g === 'tournoi') { P2.next.push(wp); title = '🏆 ' + pname(wp) + ' PASSE AU TOUR SUIVANT'; if (!tourneyPrep()) return partyOver(wp); }
+    sub = 'Prochain duel : ' + pname(P2.duel[0]) + ' contre ' + pname(P2.duel[1]);
+    partyInterlude(title, sub, 4.2, () => partyDuel());
+  }
+  function tourneyPrep() { // returns false when the champion is known
+    const P2 = S.party;
+    if (P2.round.length < 2) { const bye = P2.round.shift(); if (bye) P2.next.push(bye); if (P2.next.length <= 1) return false; P2.round = P2.next.sort(() => rnd() - .5); P2.next = []; P2.rn++; }
+    if (P2.round.length < 2) return tourneyPrep();
+    P2.duel = [P2.round.shift(), P2.round.shift()]; return true;
+  }
+  function tourneyNext() { if (!tourneyPrep()) return partyOver(S.party.next[0]); partyDuel(); }
+  function partyRows() {
+    const P2 = S.party, g = P2.game;
+    const val = p => g === 'gagnant' ? ('👑'.repeat(p.crowns) || '—') : g === 'roi' ? p.wins + ' victoire' + (p.wins > 1 ? 's' : '') + (P2.king === p ? ' · ROI' : '') : g === 'patate' ? (p.alive === false ? '💀 éliminé' : '❤️ en vie') : g === 'tirs' ? (p.score == null ? '…' : p.score + ' pts') : g === 'tournoi' ? ((P2.round.concat(P2.next, P2.duel || [])).includes(p) ? 'en course' : 'éliminé') : '';
+    const key = p => g === 'gagnant' ? p.crowns : g === 'roi' ? p.wins : g === 'patate' ? (p.alive === false ? 0 : 1) : g === 'tirs' ? (p.score || 0) : 0;
+    return PT.pl.slice().sort((x, y) => key(y) - key(x)).map(p => [pname(p), val(p), pcol(p)]);
+  }
+  function partyInterlude(title, sub, t, then) {
+    const P2 = S.party; partyBar();
+    P2.ov = { t: title, s: sub, r: partyRows() }; P2.it = t; P2.then = then; S.phase = 'party'; renderPartyOv(P2.ov); showMsg('');
+    SFX.cheer && SFX.cheer();
+  }
+  function partyOver(wp, title, side) {
+    const P2 = S.party; partyBar();
+    P2.ov = { t: title || ('🏆 ' + pname(wp) + ' GAGNE LA FÊTE !'), s: 'Retour au salon dans quelques secondes…', r: partyRows(), fin: wp ? wp.id : side || '' };
+    P2.it = 7; P2.then = () => partyStop(); S.phase = 'party'; renderPartyOv(P2.ov); showMsg('');
+    storyConfetti(); SFX.roar && SFX.roar(); flash();
+    const meWon = wp ? wp.id === 'h' || (wp.kind === 'j2') : PT.pl.some(p => p.id === 'h' && p.team === side);
+    awardXP(meWon ? 140 : 60); incStat && meWon && incStat('wins');
+  }
+  function partyNextOrOver() {
+    const P2 = S.party, alive = PT.pl.filter(p => p.alive !== false);
+    if (P2.g.duel) { P2.queue = P2.queue.filter(p => PT.pl.includes(p) && p.alive !== false); P2.duel = (P2.duel || []).filter(p => PT.pl.includes(p) && p.alive !== false);
+      while (P2.duel.length < 2 && P2.queue.length) P2.duel.push(P2.queue.shift());
+      if (P2.game === 'tournoi') { P2.round = P2.round.filter(p => PT.pl.includes(p)); P2.next = P2.next.filter(p => PT.pl.includes(p)); if (P2.duel.length < 2) { P2.round = P2.duel.concat(P2.round); if (!tourneyPrep()) return partyOver(P2.next[0] || P2.round[0]); } }
+      if (P2.duel.length < 2) return partyOver(P2.duel[0] || alive[0]);
+      partyInterlude('UN JOUEUR EST PARTI', 'Prochain duel : ' + pname(P2.duel[0]) + ' contre ' + pname(P2.duel[1]), 3, () => partyDuel());
+    } else partyStop();
+  }
+  function partyGone(pl) { // an online player left in the middle of the party
+    const P2 = S.party; if (!P2) return;
+    if (P2.g.duel && P2.duel && P2.duel.includes(pl) && S.phase !== 'party') { const o = P2.duel.find(p => p !== pl); P2.duel = [o]; if (P2.game === 'tournoi') P2.next.push(o); partyNextOrOver(); }
+    else if (P2.g.team && S.team3) { S.team3.H = S.team3.H.filter(h => h.pid !== pl.id); teamCtl(); }
+    else if (P2.g.turn) { P2.order = P2.order.filter(p => p !== pl); }
+  }
+  // ---- teams ----
+  function partyTeams() {
+    const P2 = S.party, A = PT.pl.filter(p => p.team !== 'B'), B = PT.pl.filter(p => p.team === 'B');
+    const n = clamp(Math.max(A.length, B.length, 2), 2, 4), lk = p => Object.assign({}, p.look, { name: pname(p) });
+    const LA = A.map(lk), LB = B.map(lk); while (LA.length < n) LA.push(roiOpponent()); while (LB.length < n) LB.push(roiOpponent());
+    const H = []; for (const p of A) if (p.kind !== 'bot') H.push({ inp: inpOf(p), side: 'A', pid: p.id }); for (const p of B) if (p.kind !== 'bot') H.push({ inp: inpOf(p), side: 'B', pid: p.id });
+    team3Setup(LA, LB, H.length ? H : [{ inp: inA, side: 'A', pid: 'none' }]);
+    if (!H.length) S.team3.H = [];
+    const bodiesOf = sd => [mainOf(sd), ...teamEx(sd)];
+    for (const sd of ['A', 'B']) { const hs = S.team3.H.filter(h => h.side === sd), bs = bodiesOf(sd), roster = sd === 'A' ? A : B; hs.forEach(h => { const k = roster.findIndex(p => p.id === h.pid); const b = bs[k] || bs[0]; h.look = b.look; }); }
+    p1.pid = A[0] ? A[0].id : ''; p2.pid = B[0] ? B[0].id : ''; p1.name = 'A'; p2.name = 'B';
+    P2.target = 7; P2.duo = false; P2.goal = 'PREMIER À 7'; goalEl.textContent = P2.goal; teamCtl(); setTouch(); newGame(); S.phase = 'check'; S.phaseT = 1.6;
+    p1.name = pname(A[0] || { look: LA[0], kind: 'bot' }); p2.name = pname(B[0] || { look: LB[0], kind: 'bot' }); partyNames();
+    showMsg('ÉQUIPE ' + p1.name + '  VS  ÉQUIPE ' + p2.name, '#ffd166', true); partyBar();
+  }
+  // ---- one after the other (contests) ----
+  function partyTurn() {
+    const P2 = S.party, pl = P2.order[P2.ti]; if (!pl) return partyStop();
+    hideEx(); setBody(p1, pl); P2.duo = false; S.sub = P2.g.turn; P2.goal = 'AU TOUR DE ' + pname(pl); goalEl.textContent = P2.goal; P2.target = 0; p2.pid = ''; p2.name = '—'; partyNames(); setTouch();
+    newGame();
+    popup('AU TOUR DE ' + pname(pl), 0, 3.4, 8, pcol(pl), 30, 'huge', 'vs'); partyBar();
+  }
+  function partySubEnd() {
+    const P2 = S.party, pl = P2.order[P2.ti], sc = S.sub === 'trois' && S.c3 ? S.c3.score : S.dk ? S.dk.total : 0;
+    if (pl) pl.score = sc; $('subHud').hidden = true; S.sub = null; P2.ti++;
+    if (P2.ti >= P2.order.length) { const best = P2.order.slice().sort((x, y) => (y.score || 0) - (x.score || 0))[0]; partyOver(best, '🎯 ' + pname(best) + ' GAGNE AVEC ' + (best.score || 0) + ' PTS !'); return; }
+    const nx = P2.order[P2.ti]; partyInterlude('🎯 ' + pname(pl) + ' : ' + sc + ' PTS', 'Au tour de ' + pname(nx) + ' !', 3.6, () => partyTurn());
+  }
+  // ---- per frame (host) ----
+  function partyTick(dt) {
+    const P2 = S.party; if (!P2) return false;
+    const king = P2.game === 'roi' && P2.king && (P2.king.streak || 0) > 0 ? { body: [p1, p2].find(b => b.pid === P2.king.id), k: 1 + Math.min(4, P2.king.streak) * .14 } : null;
+    partyVisual(P2.mods, king);
+    if (S.phase === 'party') {
+      P2.it -= dt; renderPartyOv(P2.ov);
+      if (inA.pressed || inB.pressed) P2.it = Math.min(P2.it, .3);
+      for (const i of ALLIN()) i.pressed = i.released = i.pressed2 = false;
+      if (P2.it <= 0) { $('partyOv').hidden = true; const f = P2.then; P2.then = null; if (f) f(); }
+      return true;
+    }
+    if (P2.g.turn && S.sub === 'trois' && S.c3) P2.bar = '🎯 ' + p1.name + ' · ' + S.c3.score + ' pts · ' + Math.ceil(Math.max(0, S.c3.t)) + ' s';
+    else if (P2.game === 'equipes' || !P2.g.turn) partyBar();
+    renderPartyBar(P2.bar);
+    // the bomb
+    const B = P2.bomb;
+    if (B && (S.phase === 'play' || S.phase === 'check')) {
+      if (S.phase === 'play') B.t -= dt;
+      B.beep -= dt; const u = clamp(B.t / B.max, 0, 1);
+      if (B.beep <= 0) { B.beep = .12 + u * .9; SFX.click && SFX.click(); }
+      if (B.t <= 0) { partyBoom(); return true; }
+    }
+    return false;
+  }
+  function bombLook(frac) {
+    const m = ballMesh.material;
+    if (frac == null || frac < 0) { if (m.emissive && m.emissiveIntensity) { m.emissive.set('#000000'); m.emissiveIntensity = 0; } return; }
+    const u = 1 - clamp(frac, 0, 1), blink = Math.sin(S.time * (6 + u * 30)) > 0;
+    m.emissive.set('#ff2a10'); m.emissiveIntensity = (.3 + u * 2.6) * (blink ? 1 : .35);
+    if (rnd() < .25 + u * .5) sparks(ball.x, ball.y + .12, ball.z, '#ffb347');
+  }
+  function partyBoom() {
+    const P2 = S.party, vb = ball.holder || ball.lastTouch || S.att || p1, vic = vb === p2 ? p2 : p1, win = other(vic);
+    P2.bomb = null; bombLook(null);
+    flash(); S.shakeT = 1.1; S.slowT = .8; ringFlash(ball.x, Math.max(.5, ball.y), ball.z, '#ff4d1f'); for (let k = 0; k < 4; k++) sparks(ball.x, ball.y + .3, ball.z, k % 2 ? '#ff4d1f' : '#ffd166');
+    popup('💥 BOOM !', vic.x, 3.2, vic.z, '#ff4d1f', 46, 'huge', 'poster');
+    vic.fallKind = 'poster'; vic.fallVar = Math.floor(rnd() * 5); vic.fallT = POSTER_T; vic.stun = POSTER_T; vic.fallSide = rnd() < .5 ? 1 : -1;
+    Object.assign(ball, { state: 'loose', holder: null, vx: (rnd() - .5) * 6, vy: 6, vz: (rnd() - .5) * 6, lockT: 2 });
+    S.phase = 'party'; P2.ov = null; P2.it = 2; P2.then = () => duelResult(plById(win.pid), plById(vic.pid), true);
+  }
+  function partyStop(silent) {
+    const P2 = S.party; S.party = null; partyPhysics(false); partyVisual(null); bombLook(null);
+    for (const b of [p1, p2]) { b.tin = null; b.pid = ''; } applyBalance();
+    teamOff(); hideEx(); storyFxClear(); S.sub = null; parkP2(false); $('partyOv').hidden = true; $('partyBar').hidden = true; $('subHud').hidden = true;
+    S.mode = 'solo'; S.phase = 'menu'; showMsg(''); setLook(p1, looks.p1); setLook(p2, looks.p2); p1.ctrl = 'local'; p2.ctrl = 'ai'; refreshGoal();
+    PT.v++; feteNet(true);
+    if (!silent) { openMenu(''); pickMode('fete'); renderFete(); }
+  }
+  // the scoreboard between two games
+  function renderPartyOv(ov) {
+    const el = $('partyOv'); if (!ov) { el.hidden = true; return; }
+    if (el.dataset.k !== JSON.stringify(ov)) { el.dataset.k = JSON.stringify(ov);
+      el.innerHTML = `<h2>${ov.t}</h2><p>${ov.s || ''}</p><ol>${(ov.r || []).map(r => `<li style="--pc:${r[2]}"><b>${r[0]}</b><span>${r[1]}</span></li>`).join('')}</ol><small>✕ / ESPACE pour passer</small>`; }
+    el.hidden = false;
+  }
+  function renderPartyBar(t) { const el = $('partyBar'); el.hidden = !t; if (t && el.textContent !== t) el.textContent = t; }
+
+  // ---- guest side: follow the party ----
+  function partyGuest(dt) {
+    const h = peerWith('host');
+    if (!h) { if (performance.now() - (PT.hostSeen || 0) > 6000 && NET.party) { feteLeave('L\'hôte a quitté la salle.'); openMenu('L\'hôte a quitté la salle.'); pickMode('fete'); } return; }
+    PT.hostSeen = performance.now(); clearTimeout(NET.timer);
+    const pi = h.presence.party; if (!pi) return;
+    if (pi.v !== PT.gv) { PT.gv = pi.v; PT.gl = (pi.pl || []).map(a => ({ id: a[0], n: a[1], k: a[2], t: a[3] })); PT.game = FGAMES[pi.g] ? pi.g : PT.game; PT.mods = pi.m || {}; if (modeKey === 'fete' && !menu.hidden) renderFete(); }
+    if (pi.st !== PT.gst) {
+      PT.gst = pi.st;
+      if (pi.st === 'play') { menu.hidden = true; result.hidden = true; $('selectScr').hidden = true; }
+      else { S.phase = 'menu'; teamOff(); partyVisual(null); bombLook(null); $('partyOv').hidden = true; $('partyBar').hidden = true; menu.hidden = false; pickMode('fete'); setLook(p1, looks.p1); setLook(p2, looks.p2); renderFete();
+        if (PT.lastFin && !PT.awarded) { PT.awarded = true; awardXP(PT.lastFin === PT.myId || PT.gl.some(p => p.id === PT.myId && p.t === PT.lastFin) ? 140 : 60); } }
+      renderFete();
+    }
+    if (pi.st !== 'play') return;
+    if (pi.lk) pi.lk.forEach((l, k) => { const b = P[k], key = JSON.stringify(l); if (b.lkKey !== key) { b.lkKey = key; setLook(b, cleanLook(l, LOOK_AI)); } });
+    if (pi.nm) { p1.name = pi.nm[0]; p2.name = pi.nm[1]; partyNames(); }
+    if (pi.goal && goalEl.textContent !== pi.goal) goalEl.textContent = pi.goal;
+    if (pi.bp) { p1.pid = pi.bp[0]; p2.pid = pi.bp[1]; }
+    let myB = pi.bp ? (pi.bp[0] === PT.myId ? p1 : pi.bp[1] === PT.myId ? p2 : null) : null;
+    if (S.team3 && pi.hid && S.hcIdx) { const j = pi.hid.indexOf(PT.myId), bi = j >= 0 ? S.hcIdx[j] : -1, bodies = teamBodies(); myB = bi >= 0 ? bodies[bi] : null; }
+    S.myP = myB;
+    if (pi.sc) pi.sc.forEach((v, k) => { P[k].kingSc = v; });
+    const m = pi.m || {}; for (const b of [p1, p2, ...EX]) { b.sc = P.includes(b) && b.kingSc ? b.kingSc : (S.balanced ? 1 : (b.st || PROFILES.perso).h / 1.98) * (m.mini ? .72 : m.geant ? 1.3 : 1); const hs = m.tete ? 1.85 : 1; if (b.m && b.m.head && b.m.head.scale.x !== hs) b.m.head.scale.setScalar(hs); }
+    bombLook(typeof pi.bomb === 'number' ? pi.bomb : null);
+    if (typeof pi.bomb === 'number') { PT.beep = (PT.beep || 0) - dt; if (PT.beep <= 0) { PT.beep = .12 + pi.bomb * .9; SFX.click && SFX.click(); } }
+    if (pi.ov && pi.ov.fin) PT.lastFin = pi.ov.fin; else if (!pi.ov) PT.awarded = PT.awarded && !!PT.lastFin;
+    if (S.phase === 'party' && pi.ov) renderPartyOv(pi.ov); else $('partyOv').hidden = true;
+    renderPartyBar(pi.bar);
+  }
+  { const q = new URLSearchParams(location.search), f = q.get('fete');
+    if (f && /^[a-z0-9]{4}$/i.test(f)) setTimeout(() => { pickMode('fete'); $('fCodeIn').value = f.toUpperCase(); feteJoin(f); }, 500); }
+
   // ======================================================================================
   //  PHONE ↔ PC: the phone as a controller (rooms 'b1c1pad-'), progress transfer (rooms 'b1c1sav-'), play anywhere
   // ======================================================================================
@@ -7562,7 +8020,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
     const dt = S.freezeT > 0 ? 0 : S.slowT > 0 ? real * .3 : real; // freeze frame, then slow motion
     S.slowT = Math.max(0, S.slowT - real); S.shakeT = ATH.calm ? 0 : Math.max(0, S.shakeT - real);
     pollPads(real); padLinkTick(); lvTick(); cineTick(real); dynRes(real);
-    update(dt); render(dt); hostSend();
+    update(dt); render(dt); hostSend(); feteNet();
     requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);
