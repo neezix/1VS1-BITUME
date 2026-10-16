@@ -36,25 +36,8 @@
 body{margin:0}
 :root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);box-sizing:border-box;height:100%}
 .stage.uiopen .menubtn,.stage.uiopen .goal,.stage.uiopen .keys,.stage.uiopen .tag,.stage.uiopen .stam{visibility:hidden}
-/* phones, portrait: the menu sits on a solid panel; the 3D court stays visible above */
-@media (orientation:portrait) and (max-width:600px){
-  #menu{padding-top:30vh}
-  #menu .card{background:linear-gradient(180deg,rgba(14,11,26,.72),rgba(14,11,26,.96) 90px);border-radius:22px 22px 0 0;padding:16px 14px 0;gap:14px;box-shadow:0 -10px 30px rgba(0,0,0,.35)}
-  #menu .logo{font-size:44px}
-  #menu .lede{font-size:15px;line-height:1.35}
-  #menu .seg button{font-size:14px;padding:10px 4px;min-height:44px}
-  #menu .eyebrow{font-size:11px}
-}
 /* phones, landscape (short screens): smaller titles, compact rows, the notch side kept clear */
 @media (max-height:520px) and (orientation:landscape){
-  #menu{padding-top:10px;padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
-  #menu .card{max-width:min(470px,52vw);gap:9px;background:rgba(14,11,26,.88);border-radius:18px;padding:12px 14px 0;margin-block:0}
-  #menu .logo{font-size:32px}
-  #menu .lede,#menu .eyebrow{display:none}
-  #menu .seg{padding:4px;gap:4px}#menu .seg button{font-size:13px;padding:7px 4px;min-height:36px}
-  #menu .label{font-size:11px}
-  #menu #play{font-size:20px;padding:12px}
-  #menu .row2 .play{font-size:14px;padding:10px}
   .overlay .card{gap:10px}
   /* character select */
   .seltop{grid-auto-flow:column;align-items:center;justify-content:center;gap:14px;top:calc(6px + env(safe-area-inset-top,0px))}
@@ -442,18 +425,6 @@ body{background:var(--night);color:var(--chalk);font-family:var(--body);font-siz
 
 .overlay{position:fixed;inset:0;z-index:10;display:grid;place-items:center;overflow:auto;padding:24px 16px;background:rgba(10,8,20,.80);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
 .overlay.top{z-index:20;background:rgba(10,8,20,.92)}
-/* main menu as a showcase: the court stays visible and changes live with the map picker */
-#menu{background:linear-gradient(90deg,rgba(10,8,20,.94) 0,rgba(10,8,20,.88) 500px,rgba(10,8,20,.25) 760px,rgba(10,8,20,0) 100%);backdrop-filter:none;-webkit-backdrop-filter:none;place-items:start;justify-items:start;padding-inline:clamp(16px,4vw,56px)}
-#menu .card{margin-block:auto}
-#menu #play{position:sticky;bottom:12px;z-index:4;font-size:26px;padding:18px;box-shadow:0 6px 0 #a35310,0 12px 34px rgba(0,0,0,.65)}
-#menu #play:focus-visible{outline:3px solid #fff;outline-offset:3px}
-@media (max-width:820px){
-  #menu{justify-items:center;padding-top:34vh;background:linear-gradient(180deg,rgba(10,8,20,0) 0,rgba(10,8,20,.15) 22vh,rgba(10,8,20,.9) 36vh,rgba(10,8,20,.96) 100%)}
-  #menu .card{margin-block:0}
-}
-@media (max-width:820px) and (orientation:landscape){ #menu{padding-top:16px;justify-items:start;background:linear-gradient(90deg,rgba(10,8,20,.95) 0,rgba(10,8,20,.9) 58%,rgba(10,8,20,.2) 80%,rgba(10,8,20,0) 100%)} #menu .card{max-width:56vw} }
-.maptag{position:fixed;right:20px;bottom:18px;z-index:11;font-family:var(--display);font-size:clamp(22px,4vw,40px);color:var(--chalk);text-shadow:3px 3px 0 #3d2a5c;pointer-events:none;opacity:.9}
-@media (max-width:820px) and (orientation:portrait){ .maptag{top:calc(30vh - 28px);bottom:auto;right:16px} }
 .card{width:100%;max-width:460px;display:flex;flex-direction:column;gap:16px}
 .card.wide{max-width:560px}
 .eyebrow{margin:0;font-weight:700;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
@@ -571,7 +542,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
 .studio .pvname span{display:block;margin-top:4px;font-weight:700;color:var(--sodium);letter-spacing:.06em}
 .studio .side{display:flex;flex-direction:column;gap:12px;min-height:0;overflow:auto;padding:18px 18px 0;background:rgba(14,11,26,.94);border-left:1px solid rgba(239,231,214,.08)}
 .studio .side .h2{margin:0}
-@media (max-width:760px),(orientation:portrait){
+@media (orientation:portrait){
   #customPanel.studio{grid-template-columns:1fr;grid-template-rows:44vh minmax(0,1fr)}
   .studio .side{border-left:0;border-top:1px solid rgba(239,231,214,.08);padding:12px 14px 0}
   .studio .pvname{left:14px;bottom:10px}
@@ -618,6 +589,220 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
 }
 .editbar{position:sticky;bottom:0;z-index:3;padding-block:10px;background:linear-gradient(180deg,rgba(10,8,20,0),rgba(10,8,20,.96) 40%)}
 @media (prefers-reduced-motion:reduce){.pop,.msg.big{animation-duration:.01s}.play:active,.act.on{transform:none}}
+/* ===================== v35 · interface ===================== */
+:root{--glass:linear-gradient(180deg,rgba(27,21,48,.96),rgba(12,9,24,.98));--line:rgba(239,231,214,.09);--line2:rgba(239,231,214,.16);--ease:cubic-bezier(.2,.9,.3,1);--gold:#ffd166;--cp:20px}
+.overlay{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(7,5,14,.76);animation:ovFade .2s ease-out}
+.overlay.top{background:rgba(7,5,14,.86)}
+@keyframes ovFade{from{opacity:0}}
+@keyframes sheetUp{from{transform:translateY(22px) scale(.985);opacity:0}}
+/* every panel = one clean glass card that never gets taller than the screen */
+.overlay:not(#menu):not(#selectScr):not(#vsScr):not(.studio)>.card{background:var(--glass);border:1px solid var(--line2);border-radius:22px;padding:var(--cp);box-sizing:border-box;max-height:calc(100dvh - 32px);overflow:auto;overscroll-behavior:contain;gap:12px;box-shadow:0 26px 70px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.06);animation:sheetUp .3s var(--ease);scrollbar-width:thin;scrollbar-color:#3a3152 transparent}
+.overlay .card>.h2,.overlay .card>.logo{line-height:1}
+.h2{font-size:28px;text-shadow:3px 3px 0 #2c1f45}
+.eyebrow{font-size:11px;letter-spacing:.18em;color:#a79cc2}
+.label{font-size:11px;letter-spacing:.16em;color:#a79cc2}
+.note{font-size:14px;color:#a79cc2}
+/* buttons */
+.play{font-size:20px;padding:14px 16px;border-radius:14px;background:linear-gradient(180deg,#ffb455,#ff8a1f);box-shadow:0 5px 0 #a35310,0 10px 26px rgba(255,138,31,.22);transition:transform .12s var(--ease),box-shadow .12s,filter .15s;touch-action:manipulation}
+.play:hover{filter:brightness(1.06)}
+.play:active{transform:translateY(3px) scale(.985);box-shadow:0 2px 0 #a35310}
+.play.alt{font-family:var(--body);font-weight:700;font-size:16px;padding:11px 14px;background:#251e3a;color:var(--chalk);border:1px solid var(--line2);box-shadow:0 4px 0 #110d1d}
+.play.alt:hover{background:#2e2547}
+.play.alt:active{box-shadow:0 1px 0 #110d1d}
+.seg{background:rgba(255,255,255,.04);border:1px solid var(--line);padding:4px;gap:4px;border-radius:12px}
+.seg button{font-size:15px;padding:9px 6px;border-radius:9px;color:#b4a9cc;transition:background .15s,color .15s,transform .1s;touch-action:manipulation}
+.seg button[aria-checked="true"],.seg button[aria-selected="true"]{background:var(--chalk);color:var(--night);box-shadow:0 2px 10px rgba(0,0,0,.35)}
+.seg button:active,.ctabs button:active,.mini button:active,.fmods button:active{transform:scale(.95)}
+.ctabs button{transition:background .15s,color .15s}
+.join input,.txt{border-radius:12px;border:1px solid var(--line2);background:#16112a;font-size:20px;padding:10px 12px}
+.subp{border-radius:14px;background:rgba(255,255,255,.04);border:1px solid var(--line)}
+.tour .trow{background:rgba(255,255,255,.04);border-color:var(--line)}
+.fp{background:rgba(255,255,255,.05)}
+.fmods button{background:rgba(255,255,255,.05);border-color:var(--line2);font-size:13px;padding:7px 11px;transition:background .15s,color .15s,transform .1s}
+.athtabs{top:calc(-1 * var(--cp));background:#1a1430;margin-inline:calc(-1 * var(--cp));padding-inline:var(--cp)}
+
+/* ---------- main menu: game hub ---------- */
+#menu{display:block;padding:0;overflow:hidden;background:linear-gradient(90deg,rgba(7,5,14,.5),rgba(7,5,14,0) 62%)}
+#menu .hub{position:absolute;left:0;top:0;bottom:0;width:clamp(360px,36vw,480px);max-width:none;margin:0;display:flex;flex-direction:column;gap:0;background:var(--glass);border-right:1px solid var(--line2);box-shadow:24px 0 70px rgba(0,0,0,.5);animation:hubIn .4s var(--ease)}
+@keyframes hubIn{from{transform:translateX(-28px);opacity:0}}
+@keyframes hubUp{from{transform:translateY(40px);opacity:0}}
+.hubtop{display:grid;grid-template-columns:1fr auto;align-items:center;gap:10px 12px;padding:calc(16px + env(safe-area-inset-top,0px)) 18px 12px max(18px,env(safe-area-inset-left))}
+#menu .logo{font-size:36px;line-height:.9;text-shadow:3px 3px 0 #3d2a5c;white-space:nowrap}
+#menu .lvl{margin:0;gap:6px;white-space:nowrap;justify-self:end;padding:5px 6px 5px 10px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid var(--line)}
+#menu .lvl i{width:52px;flex:0 0 52px}
+#menu .lvl span{font-size:11px;white-space:nowrap}
+#menu .lvl .linkbtn{white-space:nowrap;text-decoration:none;font-weight:800;font-size:11px;color:#140f1f;background:var(--gold);border-radius:999px;padding:3px 8px}
+.hubnav{grid-column:1/-1;display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));gap:6px}
+.hb{display:grid;justify-items:center;align-content:center;gap:3px;min-height:52px;padding:6px 2px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:#ded6ea;font:700 11px/1.1 var(--body);cursor:pointer;transition:background .15s,transform .1s,border-color .15s;touch-action:manipulation}
+.hb i{font-style:normal;font-size:19px;line-height:1}
+.hb:hover{background:rgba(255,255,255,.09);border-color:var(--line2)}
+.hb:active{transform:scale(.93)}
+.hubscroll{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;display:flex;flex-direction:column;gap:14px;padding:6px 18px 18px max(18px,env(safe-area-inset-left));scrollbar-width:thin;scrollbar-color:#3a3152 transparent;-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 8px,#000 calc(100% - 16px),transparent);mask-image:linear-gradient(180deg,transparent 0,#000 8px,#000 calc(100% - 16px),transparent)}
+.hubscroll>*{flex:0 0 auto}
+.hubfoot{padding:10px 18px calc(12px + env(safe-area-inset-bottom,0px)) max(18px,env(safe-area-inset-left));border-top:1px solid var(--line);background:rgba(8,6,16,.55)}
+.hubfoot:has(#play[hidden]){display:none}
+#menu .hubfoot #play{position:static;width:100%;font-size:24px;padding:15px;box-shadow:0 5px 0 #a35310,0 12px 30px rgba(255,138,31,.3)}
+#menu .result{font-size:22px;padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.05);border:1px solid var(--line)}
+#menu .lede{font-size:14px;line-height:1.35;color:#c4bad6;margin-top:-4px}
+/* mode tiles */
+#modeSeg.modes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;background:none;border:0;padding:0}
+#modeSeg button{display:grid;align-content:center;justify-items:start;gap:2px;text-align:left;min-height:72px;padding:10px;border-radius:14px;background:linear-gradient(160deg,rgba(255,255,255,.08),rgba(255,255,255,.025));border:1px solid var(--line);color:var(--chalk);box-shadow:none;overflow:hidden}
+#modeSeg button i{font-style:normal;font-size:21px;line-height:1;margin-bottom:3px}
+#modeSeg button b{font:400 13px/1.05 var(--display);letter-spacing:.01em}
+#modeSeg button small{font-size:11px;font-weight:600;line-height:1.15;color:#9e93b8}
+#modeSeg button:hover{border-color:var(--line2);background:linear-gradient(160deg,rgba(255,255,255,.12),rgba(255,255,255,.04))}
+#modeSeg button[aria-checked="true"]{background:linear-gradient(155deg,#ffb455,#f0701c);border-color:#ffd09a;color:#1d1205;box-shadow:0 8px 22px rgba(255,138,31,.32)}
+#modeSeg button[aria-checked="true"] small{color:rgba(29,18,5,.72)}
+#m-histoire:not([aria-checked="true"]){border-color:rgba(255,209,102,.35)}
+#m-fete:not([aria-checked="true"]){border-color:rgba(192,132,252,.38)}
+/* match settings: compact pill rows */
+.msets{display:flex;flex-direction:column;gap:12px;padding:12px;border-radius:16px;background:rgba(255,255,255,.03);border:1px solid var(--line)}
+.msets .field{gap:6px}
+.msets .seg{display:flex;flex-wrap:wrap;gap:6px;background:none;border:0;padding:0;border-radius:0}
+.msets .seg button{flex:0 0 auto;font-size:14px;padding:7px 12px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid var(--line);color:#c9bfdb;box-shadow:none}
+.msets .seg button[aria-checked="true"]{background:var(--chalk);border-color:var(--chalk);color:var(--night)}
+.msets .seg.maps button::before{content:'';display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--mc,#888);margin-right:6px;vertical-align:1px;box-shadow:0 0 6px var(--mc,#888)}
+.msets .note{font-size:12px}
+@media (pointer:coarse){
+  .msets .seg{flex-wrap:nowrap;overflow-x:auto;scroll-padding-inline:12px;scrollbar-width:none;scroll-snap-type:x proximity;margin-inline:-12px;padding-inline:12px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 12px,#000 calc(100% - 22px),transparent);mask-image:linear-gradient(90deg,transparent,#000 12px,#000 calc(100% - 22px),transparent)}
+  .msets .seg::-webkit-scrollbar{display:none}
+  .msets .seg button{scroll-snap-align:start;min-height:36px}
+}
+.fold{border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.03)}
+.fold>summary{list-style:none;cursor:pointer;padding:11px 14px;font-weight:700;color:#cfc6dc;display:flex;justify-content:space-between;align-items:center}
+.fold>summary::-webkit-details-marker{display:none}
+.fold>summary::after{content:'▾';transition:transform .2s}
+.fold[open]>summary::after{transform:rotate(180deg)}
+.fold>.ctrls{padding:0 14px 14px}
+#menu .online,#menu .tour,#menu .subp{animation:sheetUp .25s var(--ease)}
+#menu .seg.fgames{background:none;border:0;padding:0;grid-template-columns:repeat(2,1fr)}
+#menu .seg.fgames button{font-size:13px;background:rgba(255,255,255,.05);border:1px solid var(--line);padding:9px 6px}
+#menu .seg.fgames button[aria-checked="true"]{background:var(--chalk)}
+#menu .code{font-size:38px}
+#storyBookSeg{grid-template-columns:1fr 1fr}#storyBookSeg button{font-size:13px}
+.subp.story .sdiff button{transition:background .15s,color .15s}
+.maptag{right:22px;bottom:20px;font-size:clamp(20px,3.4vw,36px);text-shadow:3px 3px 0 #3d2a5c,0 0 24px rgba(0,0,0,.5);animation:ovFade .3s}
+
+/* ---------- in-game HUD polish ---------- */
+.board{background:linear-gradient(180deg,rgba(27,21,48,.9),rgba(12,9,24,.86));border-color:var(--line2);border-radius:14px;box-shadow:0 8px 24px rgba(0,0,0,.35)}
+.clock,.gclock,.subhud{background:rgba(12,9,24,.82);border:1px solid var(--line)}
+.menubtn{border-radius:14px;background:rgba(12,9,24,.78);transition:transform .1s}
+.menubtn:active{transform:scale(.92)}
+.act{background:radial-gradient(circle at 50% 30%,#ffbb66,#ff8a1f 70%);transition:transform .06s,box-shadow .06s,filter .1s}
+.act.b{background:radial-gradient(circle at 50% 30%,#7fe3d6,#36b3a2 70%)}
+.act2{transition:transform .06s,box-shadow .06s}
+/* ---------- pause ---------- */
+#pause .card{max-width:400px}
+#pause .logo{font-size:44px!important}
+
+/* ---------- character select ---------- */
+.sel-h{font-size:clamp(20px,4.4vw,46px)}
+.selbottom{background:linear-gradient(180deg,rgba(7,5,14,0),rgba(7,5,14,.86) 30%)}
+.selcards .pcard{transition:transform .15s var(--ease),border-color .15s,background .15s}
+.selcards .pcard:active{transform:scale(.97)}
+.selcards .pcard[aria-checked="true"]{transform:translateY(-3px);box-shadow:0 8px 22px rgba(255,138,31,.25)}
+
+/* ---------- character studio ---------- */
+.studio .side{background:var(--glass);padding:18px 18px 0}
+#customPanel.studio{animation:ovFade .25s}
+
+/* ================= phones & tablets, portrait ================= */
+@media (orientation:portrait){
+  #menu{background:linear-gradient(180deg,rgba(7,5,14,0) 0,rgba(7,5,14,.25) 22vh)}
+  #menu .hub{top:24vh;top:24dvh;right:0;width:auto;border-right:0;border-top:1px solid var(--line2);border-radius:24px 24px 0 0;box-shadow:0 -18px 50px rgba(0,0,0,.5);animation-name:hubUp}
+  #menu .hub::before{content:'';position:absolute;left:50%;top:7px;width:38px;height:4px;margin-left:-19px;border-radius:2px;background:rgba(239,231,214,.22)}
+  .hubtop{padding:16px 14px 10px}
+  #menu .logo{font-size:28px}
+  .hubscroll{padding:4px 14px 16px;gap:12px}
+  .hubfoot{padding:8px 14px calc(10px + env(safe-area-inset-bottom,0px))}
+  #menu .hubfoot #play{font-size:21px;padding:13px}
+  .maptag{top:calc(24dvh - 44px);bottom:auto;right:16px}
+  .overlay:not(#menu):not(#selectScr):not(#vsScr):not(.studio){place-items:end center;padding:6dvh 0 0}
+  .overlay:not(#menu):not(#selectScr):not(#vsScr):not(.studio)>.card{max-width:640px;border-radius:24px 24px 0 0;border-bottom:0;max-height:94dvh;padding-bottom:calc(var(--cp) + env(safe-area-inset-bottom,0px));animation-name:hubUp}
+  #customPanel.studio{grid-template-columns:1fr;grid-template-rows:36dvh minmax(0,1fr)}
+  .studio .side{border-left:0;border-top:1px solid var(--line2);border-radius:20px 20px 0 0;margin-top:-16px;position:relative;padding:14px 14px 0}
+  .studio .pvname{left:14px;bottom:24px}
+}
+@media (orientation:portrait) and (min-width:700px){
+  #menu .hub{top:34dvh;left:50%;right:auto;width:min(720px,94vw);translate:-50% 0;border:1px solid var(--line2);border-bottom:0}
+  #modeSeg.modes{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .maptag{top:calc(34dvh - 50px)}
+}
+@media (orientation:portrait) and (max-width:699px){
+  :root{--cp:16px}
+  /* modes become a swipeable row of cards */
+  #modeSeg.modes{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:104px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin-inline:-14px;padding:2px 14px 4px;scroll-padding-inline:14px}
+  #modeSeg.modes::-webkit-scrollbar{display:none}
+  #modeSeg button{scroll-snap-align:start;min-height:84px}
+  .hb span{font-size:10px}
+  .hb{min-height:48px}
+  #menu .lvl span{display:none}
+  .h2{font-size:24px}
+  .play{font-size:18px;padding:12px 14px}
+  .play.alt{font-size:15px;padding:10px 12px}
+  .opt{grid-template-columns:minmax(0,1fr) auto;gap:10px}
+  .opt.full{grid-template-columns:minmax(0,1fr)}
+  .opt .t{font-size:15px}.opt .d{font-size:12px}
+  .opt input[type=range]{width:110px}
+  .sel-h{font-size:clamp(18px,6vw,26px)}
+  .selside{top:15%}.selside b{font-size:19px}
+  .selbottom{gap:8px}
+  .selbottom .row2 .play{font-size:17px;padding:11px}
+}
+
+/* ================= phones, landscape ================= */
+@media (max-height:520px) and (orientation:landscape){
+  :root{--cp:14px}
+  #menu{padding:0}
+  #menu .hub{width:min(430px,54vw);border-radius:0}
+  .hubtop{grid-template-columns:auto 1fr auto;padding:8px 12px 6px max(12px,env(safe-area-inset-left));gap:8px}
+  #menu .logo{font-size:22px;text-shadow:2px 2px 0 #3d2a5c}
+  #menu .lvl{order:3}
+  #menu .lvl i,#menu .lvl span{display:none}
+  .hubnav{grid-column:auto;order:2;display:flex;justify-content:flex-end;gap:4px}
+  .hb{min-height:0;width:36px;height:34px;padding:0;border-radius:10px}
+  .hb span{display:none}
+  .hb i{font-size:16px}
+  .hubscroll{padding:2px 12px 12px max(12px,env(safe-area-inset-left));gap:10px}
+  #modeSeg.modes{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:96px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin-inline:-12px;padding:2px 12px 2px;scroll-padding-inline:12px}
+  #modeSeg.modes::-webkit-scrollbar{display:none}
+  #modeSeg button{scroll-snap-align:start;min-height:66px;padding:8px}
+  #modeSeg button i{font-size:17px}
+  #modeSeg button b{font-size:12px}
+  #modeSeg button small{display:none}
+  #menu .lede{display:none}
+  #menu .label{font-size:10px}
+  .msets{padding:10px;gap:9px}
+  .msets .seg button{font-size:13px;padding:6px 10px;min-height:32px}
+  .hubfoot{padding:6px 12px calc(6px + env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left))}
+  #menu .hubfoot #play{font-size:18px;padding:10px}
+  #menu .result{font-size:16px;padding:8px 10px}
+  .overlay:not(#menu):not(#selectScr):not(#vsScr):not(.studio){padding:8px max(12px,env(safe-area-inset-right)) 8px max(12px,env(safe-area-inset-left))}
+  .overlay:not(#menu):not(#selectScr):not(#vsScr):not(.studio)>.card{max-height:calc(100dvh - 16px);max-width:min(640px,94vw);gap:8px;border-radius:18px}
+  .h2{font-size:21px}
+  .eyebrow{font-size:10px}
+  .play{font-size:17px;padding:10px 12px}
+  .play.alt{font-size:14px;padding:8px 10px}
+  .opt{padding:5px 0}.opt .t{font-size:14px}.opt .d{font-size:11.5px}
+  #pause .card{display:grid;grid-template-columns:1fr 1fr;max-width:520px;gap:8px}
+  #pause .card>:not(.play.alt){grid-column:1/-1}
+  #pause .logo{font-size:30px!important}
+  #customPanel.studio{grid-template-columns:minmax(0,1fr) minmax(300px,1.25fr)}
+  .studio .side{padding:10px 12px 0;gap:8px;border-left:1px solid var(--line2)}
+  .studio .side .eyebrow{display:none}
+  .studio .side .h2{font-size:20px}
+  .studio .pvname{left:12px;bottom:10px}.studio .pvname b{font-size:24px}
+  .studio .seg button{font-size:13px;padding:6px}
+  .studio .ctabs button{padding:5px 10px;font-size:12px}
+  .studio .editbar{padding-block:6px}
+  .studio #customClose{font-size:16px;padding:9px}
+  .sel-h{font-size:20px}
+}
+@media (max-height:380px) and (orientation:landscape){
+  #menu .hub{width:min(400px,52vw)}
+  #modeSeg button{min-height:56px}
+}
+@media (prefers-reduced-motion:reduce){.overlay,.overlay>.card,#menu .hub,#menu .online,#menu .tour,#menu .subp{animation:none!important}}
 </style>
 </head>
 <body>
@@ -679,144 +864,151 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
 </div>
 
 <div class="overlay" id="menu">
-  <div class="card">
-    <p class="eyebrow">Streetball 3D · 1 contre 1</p>
-    <div class="lvl" id="lvlBox"><b id="lvlN">NIV 1</b><i><s id="lvlBar"></s></i><span id="lvlXp"></span><button class="linkbtn" id="dailyBtn">Défis du jour</button></div>
-    <h1 class="logo">Bitume<span>1c1</span></h1>
-    <p class="result" id="result" hidden></p>
-    <p class="lede" id="lede">Premier à 11. Derrière la ligne : 2 pts, dedans : 1 pt. Après un raté, un contre ou un vol : ressors derrière la ligne.</p>
-    <div class="field">
-      <span class="label" id="modeLbl">Mode</span>
-      <div class="seg four" role="radiogroup" aria-labelledby="modeLbl" id="modeSeg">
-        <button id="m-solo" role="radio" data-v="solo" aria-checked="true">Solo</button>
-        <button id="m-local" role="radio" data-v="local" aria-checked="false">À deux</button>
-        <button id="m-online" role="radio" data-v="online" aria-checked="false">En ligne</button>
-        <button id="m-tournoi" role="radio" data-v="tournoi" aria-checked="false">Tournoi</button>
-        <button id="m-roi" role="radio" data-v="roi" aria-checked="false">Roi du terrain</button>
-        <button id="m-horse" role="radio" data-v="horse" aria-checked="false">H-O-R-S-E</button>
-        <button id="m-trois" role="radio" data-v="trois" aria-checked="false">Concours 3 pts</button>
-        <button id="m-dunkc" role="radio" data-v="dunkc" aria-checked="false">Concours dunks</button>
-        <button id="m-libre" role="radio" data-v="libre" aria-checked="false">Terrain libre</button>
-        <button id="m-fete" role="radio" data-v="fete" aria-checked="false">★ Fête</button>
-        <button id="m-histoire" role="radio" data-v="histoire" aria-checked="false">★ Histoire</button>
+  <div class="card hub">
+    <header class="hubtop">
+      <h1 class="logo">Bitume<span>1c1</span></h1>
+      <div class="lvl" id="lvlBox"><b id="lvlN">NIV 1</b><i><s id="lvlBar"></s></i><span id="lvlXp"></span><button class="linkbtn" id="dailyBtn">🎯 Défis</button></div>
+      <nav class="hubnav" aria-label="Menu">
+        <button class="hb" id="customBtn"><i>👤</i><span>Mon joueur</span></button>
+        <button class="hb" id="histBtn"><i>📜</i><span>Historique</span></button>
+        <button class="hb" id="athBtn"><i>⚙️</i><span>Réglages</span></button>
+        <button class="hb" id="phoneBtn"><i>📱</i><span>Appareils</span></button>
+        <button class="hb" id="fsBtn"><i>⛶</i><span>Plein écran</span></button>
+      </nav>
+    </header>
+    <div class="hubscroll" id="hubScroll">
+      <p class="result" id="result" hidden></p>
+      <button class="play alt" id="replayBtn" hidden>▶ Revoir les temps forts</button>
+      <div class="field">
+        <span class="label" id="modeLbl">Mode de jeu</span>
+        <div class="seg modes" role="radiogroup" aria-labelledby="modeLbl" id="modeSeg">
+          <button id="m-solo" role="radio" data-v="solo" aria-checked="true"><i>🏀</i><b>Solo</b><small>Contre l'IA</small></button>
+          <button id="m-histoire" role="radio" data-v="histoire" aria-checked="false"><i>📖</i><b>Histoire</b><small>La Légende</small></button>
+          <button id="m-fete" role="radio" data-v="fete" aria-checked="false"><i>🎉</i><b>Fête</b><small>2 à 8 joueurs</small></button>
+          <button id="m-online" role="radio" data-v="online" aria-checked="false"><i>🌐</i><b>En ligne</b><small>Avec un ami</small></button>
+          <button id="m-local" role="radio" data-v="local" aria-checked="false"><i>👥</i><b>À deux</b><small>Même écran</small></button>
+          <button id="m-tournoi" role="radio" data-v="tournoi" aria-checked="false"><i>🏆</i><b>Tournoi</b><small>8 rivaux</small></button>
+          <button id="m-roi" role="radio" data-v="roi" aria-checked="false"><i>👑</i><b>Roi du terrain</b><small>Série de victoires</small></button>
+          <button id="m-horse" role="radio" data-v="horse" aria-checked="false"><i>🐴</i><b>H-O-R-S-E</b><small>Copie les tirs</small></button>
+          <button id="m-trois" role="radio" data-v="trois" aria-checked="false"><i>🎯</i><b>Concours 3 pts</b><small>Chrono</small></button>
+          <button id="m-dunkc" role="radio" data-v="dunkc" aria-checked="false"><i>💥</i><b>Concours dunks</b><small>Les juges notent</small></button>
+          <button id="m-libre" role="radio" data-v="libre" aria-checked="false"><i>🧘</i><b>Terrain libre</b><small>Entraînement</small></button>
+        </div>
       </div>
-    </div>
-    <div class="field" id="fmtField">
-      <span class="label" id="fmtLbl">Format</span>
-      <div class="seg" role="radiogroup" aria-labelledby="fmtLbl" id="fmtSeg"><button role="radio" data-v="1" aria-checked="true">1 contre 1</button><button role="radio" data-v="2" aria-checked="false">2 contre 2</button><button role="radio" data-v="3" aria-checked="false">3 contre 3</button></div>
-      <div class="seg two" role="radiogroup" aria-label="Le joueur 2 est" id="coopSeg" hidden><button role="radio" data-v="vs" aria-checked="true">J2 adversaire</button><button role="radio" data-v="coop" aria-checked="false">J2 coéquipier</button></div>
-      <p class="note" id="fmtNote" hidden>En équipe : <b>L1</b> / <b>C</b> / bouton PASSE = passe (stick = vers qui) · en défense = changer de joueur · □+△ = alley-oop pour un coéquipier.</p>
-    </div>
-    <div class="field">
-      <span class="label" id="mapLbl">Terrain</span>
-      <div class="seg four" role="radiogroup" aria-labelledby="mapLbl" id="mapSeg">
-        <button id="map-bitume" role="radio" data-v="bitume" aria-checked="true">Bitume</button>
-        <button id="map-plage" role="radio" data-v="plage" aria-checked="false">Plage</button>
-        <button id="map-toit" role="radio" data-v="toit" aria-checked="false">Toit</button>
-        <button id="map-gymnase" role="radio" data-v="gymnase" aria-checked="false">Gymnase</button>
-        <button id="map-cage" role="radio" data-v="cage" aria-checked="false">La Cage</button>
-        <button id="map-paris" role="radio" data-v="paris" aria-checked="false">Paris</button>
-        <button id="map-lycee" role="radio" data-v="lycee" aria-checked="false">Lycée Sakura</button>
-        <button id="map-neon" role="radio" data-v="neon" aria-checked="false">Néon</button>
-        <button id="map-orbite" role="radio" data-v="orbite" aria-checked="false">Orbite</button>
-        <button id="map-arene" role="radio" data-v="arene" aria-checked="false">L'Arène</button>
-        <button id="map-port" role="radio" data-v="port" aria-checked="false">Le Port</button>
-        <button id="map-neige" role="radio" data-v="neige" aria-checked="false">Sommet</button>
-        <button id="map-desert" role="radio" data-v="desert" aria-checked="false">Canyon</button>
-        <button id="map-jungle" role="radio" data-v="jungle" aria-checked="false">Temple</button>
-        <button id="map-metro" role="radio" data-v="metro" aria-checked="false">Métro</button>
-        <button id="map-favela" role="radio" data-v="favela" aria-checked="false">La Colline</button>
-        <button id="map-ouest" role="radio" data-v="ouest" aria-checked="false">Côte Ouest</button>
-        <button id="map-volcan" role="radio" data-v="volcan" aria-checked="false">Volcan</button>
-        <button id="map-ferme" role="radio" data-v="ferme" aria-checked="false">La Ferme</button>
-        <button id="map-sanctuaire" role="radio" data-v="sanctuaire" aria-checked="false">Sanctuaire ✦</button>
+      <p class="lede" id="lede">Premier à 11. Derrière la ligne : 2 pts, dedans : 1 pt. Après un raté, un contre ou un vol : ressors derrière la ligne.</p>
+      <p class="note" id="localNote" hidden>Sur le même écran (ou une manette chacun). Sur téléphone, chacun prend un côté.</p>
+      <div class="subp story" id="storyPanel" hidden><b>BITUME · LA LÉGENDE</b><p>Le mode histoire. Des choix qui changent tout, des rivaux, une promesse brisée… et un dernier match que tu n'oublieras pas.</p>
+        <div class="seg sdiff" id="storyDiffSeg" role="radiogroup" aria-label="Difficulté de l'histoire"><button role="radio" data-v="facile">Facile</button><button role="radio" data-v="normal">Normal</button><button role="radio" data-v="difficile">Difficile</button><button role="radio" data-v="legende">Légende</button></div>
+        <div class="seg sdiff" id="storyBookSeg" role="radiogroup" aria-label="Livre"><button role="radio" data-v="1">Livre 1 · La Légende</button><button role="radio" data-v="2">Livre 2 · L'Éclipse ✦</button></div>
+        <p class="best" id="storyProg"></p><button class="linkbtn" id="storyReset">Recommencer l'histoire depuis le début</button></div>
+      <div class="subp" id="subPanel" hidden><b id="subT"></b><p id="subD"></p><p class="best" id="subBest"></p>
+        <label class="chk" id="libreDefRow" hidden><input type="checkbox" id="libreDef"> Avec un défenseur (IA)</label></div>
+      <div class="tour" id="tourPanel" hidden><p class="label">Tournoi du Bitume · 8 adversaires, de plus en plus forts</p><div id="tourList"></div>
+        <p class="champ" id="tourChamp" hidden>🏆 CHAMPION DU BITUME ! Tu as battu les 8.</p><button class="linkbtn" id="tourReset">Recommencer le tournoi</button></div>
+      <div class="online" id="onlinePanel" hidden>
+        <button class="play alt" id="onBuildBtn">Mon build : <b id="onBuildN">PERSO</b></button>
+        <button class="play" id="createBtn">Créer une partie</button>
+        <p class="code" id="codeOut" hidden></p>
+        <div class="join">
+          <input id="codeIn" maxlength="4" placeholder="CODE" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="Code de la partie">
+          <button class="play alt" id="joinBtn">Rejoindre</button>
+        </div>
+        <button class="play alt" id="inviteBtn" hidden>Copier le lien d'invitation</button>
+        <p class="note" id="netStatus">Crée une partie et donne le code à ton ami, ou entre le sien. Ton ami ouvre ce même lien sur son téléphone ou son ordi, choisit En ligne et tape le code.</p>
       </div>
-    </div>
-    <div class="field">
-      <span class="label" id="gmLbl">Type de match</span>
-      <div class="seg four" role="radiogroup" aria-labelledby="gmLbl" id="gmSeg">
-        <button id="gm-classique" role="radio" data-v="classique" aria-checked="true">Classique</button>
-        <button id="gm-eclair" role="radio" data-v="eclair" aria-checked="false">Éclair</button>
-        <button id="gm-chrono" role="radio" data-v="chrono" aria-checked="false">Chrono</button>
-        <button id="gm-garde" role="radio" data-v="garde" aria-checked="false">Qui marque garde</button>
+      <div class="online fete" id="fetePanel" hidden>
+        <p class="note" id="fStatus">De 2 à 8 joueurs : sur cet écran (clavier, manettes), avec des bots, ou en ligne, chacun sur son téléphone.</p>
+        <div class="frow"><button class="play alt" id="fHost">📱 Inviter des amis en ligne</button><button class="play alt" id="fInvite" hidden>Copier le lien</button></div>
+        <p class="code" id="fCode" hidden></p>
+        <div class="join" id="fJoinRow"><input id="fCodeIn" maxlength="4" placeholder="CODE" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="Code de la salle"><button class="play alt" id="fJoin">Rejoindre</button></div>
+        <span class="label">Joueurs</span>
+        <div class="flist" id="fList"></div>
+        <div class="frow"><button class="play alt" id="fBot">🤖 + Bot</button><button class="play alt" id="fJ2">🎮 + J2 ici</button></div>
+        <span class="label">Jeu</span>
+        <div class="seg fgames" id="fGameSeg" role="radiogroup" aria-label="Jeu de la fête"><button role="radio" data-v="gagnant">👑 Le gagnant reste</button><button role="radio" data-v="patate">💣 Patate chaude</button><button role="radio" data-v="roi">🦍 Le roi géant</button><button role="radio" data-v="tournoi">🏆 Tournoi éclair</button><button role="radio" data-v="equipes">🤝 Équipes</button><button role="radio" data-v="tirs">🎯 Concours 3 pts</button></div>
+        <p class="note" id="fGameD"></p>
+        <span class="label">Délires (à cumuler)</span>
+        <div class="fmods" id="fMods"><button data-v="tete" aria-pressed="false">🎈 Grosses têtes</button><button data-v="mini" aria-pressed="false">🐜 Mini</button><button data-v="geant" aria-pressed="false">🗿 Géants</button><button data-v="lune" aria-pressed="false">🌙 Lune</button><button data-v="turbo" aria-pressed="false">⚡ Turbo</button></div>
+        <button class="play alt" id="fLeave" hidden>Quitter la salle</button>
       </div>
+      <section class="msets" aria-label="Réglages du match">
+        <div class="field" id="fmtField">
+          <span class="label" id="fmtLbl">Format</span>
+          <div class="seg" role="radiogroup" aria-labelledby="fmtLbl" id="fmtSeg"><button role="radio" data-v="1" aria-checked="true">1 contre 1</button><button role="radio" data-v="2" aria-checked="false">2 contre 2</button><button role="radio" data-v="3" aria-checked="false">3 contre 3</button></div>
+          <div class="seg two" role="radiogroup" aria-label="Le joueur 2 est" id="coopSeg" hidden><button role="radio" data-v="vs" aria-checked="true">J2 adversaire</button><button role="radio" data-v="coop" aria-checked="false">J2 coéquipier</button></div>
+          <p class="note" id="fmtNote" hidden>En équipe : <b>L1</b> / <b>C</b> / bouton PASSE = passe (stick = vers qui) · en défense = changer de joueur · □+△ = alley-oop pour un coéquipier.</p>
+        </div>
+        <div class="field">
+          <span class="label" id="mapLbl">Terrain</span>
+          <div class="seg maps" role="radiogroup" aria-labelledby="mapLbl" id="mapSeg">
+            <button id="map-bitume" role="radio" data-v="bitume" aria-checked="true" style="--mc:#e0503c">Bitume</button>
+            <button id="map-plage" role="radio" data-v="plage" aria-checked="false" style="--mc:#f2c56b">Plage</button>
+            <button id="map-toit" role="radio" data-v="toit" aria-checked="false" style="--mc:#7aa2ff">Toit</button>
+            <button id="map-gymnase" role="radio" data-v="gymnase" aria-checked="false" style="--mc:#d9a066">Gymnase</button>
+            <button id="map-cage" role="radio" data-v="cage" aria-checked="false" style="--mc:#9aa4b2">La Cage</button>
+            <button id="map-paris" role="radio" data-v="paris" aria-checked="false" style="--mc:#b9a7ff">Paris</button>
+            <button id="map-lycee" role="radio" data-v="lycee" aria-checked="false" style="--mc:#ff9ec7">Lycée Sakura</button>
+            <button id="map-neon" role="radio" data-v="neon" aria-checked="false" style="--mc:#ff3fd8">Néon</button>
+            <button id="map-orbite" role="radio" data-v="orbite" aria-checked="false" style="--mc:#6be4ff">Orbite</button>
+            <button id="map-arene" role="radio" data-v="arene" aria-checked="false" style="--mc:#ffd166">L'Arène</button>
+            <button id="map-port" role="radio" data-v="port" aria-checked="false" style="--mc:#3fa7d6">Le Port</button>
+            <button id="map-neige" role="radio" data-v="neige" aria-checked="false" style="--mc:#e8f4ff">Sommet</button>
+            <button id="map-desert" role="radio" data-v="desert" aria-checked="false" style="--mc:#e0874a">Canyon</button>
+            <button id="map-jungle" role="radio" data-v="jungle" aria-checked="false" style="--mc:#4fbf6a">Temple</button>
+            <button id="map-metro" role="radio" data-v="metro" aria-checked="false" style="--mc:#c8c8c8">Métro</button>
+            <button id="map-favela" role="radio" data-v="favela" aria-checked="false" style="--mc:#ffb347">La Colline</button>
+            <button id="map-ouest" role="radio" data-v="ouest" aria-checked="false" style="--mc:#ff7e5f">Côte Ouest</button>
+            <button id="map-volcan" role="radio" data-v="volcan" aria-checked="false" style="--mc:#ff4a1c">Volcan</button>
+            <button id="map-ferme" role="radio" data-v="ferme" aria-checked="false" style="--mc:#9bcf53">La Ferme</button>
+            <button id="map-sanctuaire" role="radio" data-v="sanctuaire" aria-checked="false" style="--mc:#c79bff">Sanctuaire ✦</button>
+          </div>
+        </div>
+        <div class="field">
+          <span class="label" id="gmLbl">Type de match</span>
+          <div class="seg" role="radiogroup" aria-labelledby="gmLbl" id="gmSeg">
+            <button id="gm-classique" role="radio" data-v="classique" aria-checked="true">Classique</button>
+            <button id="gm-eclair" role="radio" data-v="eclair" aria-checked="false">Éclair</button>
+            <button id="gm-chrono" role="radio" data-v="chrono" aria-checked="false">Chrono</button>
+            <button id="gm-garde" role="radio" data-v="garde" aria-checked="false">Qui marque garde</button>
+          </div>
+        </div>
+        <div class="field">
+          <span class="label" id="lvLbl">Difficulté (tir, endurance)</span>
+          <div class="seg" role="radiogroup" aria-labelledby="lvLbl" id="lvSeg">
+            <button id="lv-arcade" role="radio" data-v="arcade" aria-checked="false">Arcade</button>
+            <button id="lv-pro" role="radio" data-v="pro" aria-checked="true">Pro</button>
+            <button id="lv-hof" role="radio" data-v="hof" aria-checked="false">Hall of Fame</button>
+          </div>
+        </div>
+        <div class="field" id="diffField">
+          <span class="label" id="diffLbl">Niveau du Mur</span>
+          <div class="seg" role="radiogroup" aria-labelledby="diffLbl" id="diffSeg">
+            <button id="d-facile" role="radio" data-v="facile" aria-checked="false">Facile</button>
+            <button id="d-normal" role="radio" data-v="normal" aria-checked="true">Normal</button>
+            <button id="d-pro" role="radio" data-v="pro" aria-checked="false">Pro</button>
+          </div>
+        </div>
+        <div class="field">
+          <span class="label" id="buildLbl">Joueurs</span>
+          <div class="seg" role="radiogroup" aria-labelledby="buildLbl" id="buildSeg">
+            <button id="b-legendes" role="radio" data-v="legendes" aria-checked="true">Légendes · stats uniques</button>
+            <button id="b-equilibre" role="radio" data-v="equilibre" aria-checked="false">Équilibré · mêmes stats</button>
+          </div>
+        </div>
+      </section>
+      <details class="fold" id="ctrlFold"><summary tabindex="0">🎮 Commandes</summary>
+        <div class="ctrls">
+          <div class="ctabs" role="tablist" id="ctrlTabs">
+            <button role="tab" data-v="kb" aria-selected="true">Clavier</button>
+            <button role="tab" data-v="pad" aria-selected="false">Manette</button>
+            <button role="tab" data-v="touch" aria-selected="false">Tactile</button>
+          </div>
+          <div class="cgrid" id="ctrlGrid"></div>
+          <button class="link" id="keysBtn0">Changer les touches</button>
+        </div>
+      </details>
     </div>
-    <div class="field">
-      <span class="label" id="lvLbl">Difficulté du jeu (tir, endurance)</span>
-      <div class="seg" role="radiogroup" aria-labelledby="lvLbl" id="lvSeg">
-        <button id="lv-arcade" role="radio" data-v="arcade" aria-checked="false">Arcade</button>
-        <button id="lv-pro" role="radio" data-v="pro" aria-checked="true">Pro</button>
-        <button id="lv-hof" role="radio" data-v="hof" aria-checked="false">Hall of Fame</button>
-      </div>
-    </div>
-    <div class="field" id="diffField">
-      <span class="label" id="diffLbl">Niveau du Mur</span>
-      <div class="seg" role="radiogroup" aria-labelledby="diffLbl" id="diffSeg">
-        <button id="d-facile" role="radio" data-v="facile" aria-checked="false">Facile</button>
-        <button id="d-normal" role="radio" data-v="normal" aria-checked="true">Normal</button>
-        <button id="d-pro" role="radio" data-v="pro" aria-checked="false">Pro</button>
-      </div>
-    </div>
-    <div class="field">
-      <span class="label" id="buildLbl">Joueurs</span>
-      <div class="seg" role="radiogroup" aria-labelledby="buildLbl" id="buildSeg" style="grid-template-columns:repeat(2,1fr)">
-        <button id="b-legendes" role="radio" data-v="legendes" aria-checked="true">Légendes (stats différentes)</button>
-        <button id="b-equilibre" role="radio" data-v="equilibre" aria-checked="false">Équilibré (mêmes stats)</button>
-      </div>
-    </div>
-    <p class="note" id="localNote" hidden>Sur le même écran (ou une manette chacun). Sur téléphone, chacun prend un côté.</p>
-    <div class="subp story" id="storyPanel" hidden><b>BITUME · LA LÉGENDE</b><p>Le mode histoire. Des choix qui changent tout, des rivaux, une promesse brisée… et un dernier match que tu n'oublieras pas.</p>
-      <div class="seg sdiff" id="storyDiffSeg" role="radiogroup" aria-label="Difficulté de l'histoire"><button role="radio" data-v="facile">Facile</button><button role="radio" data-v="normal">Normal</button><button role="radio" data-v="difficile">Difficile</button><button role="radio" data-v="legende">Légende</button></div>
-      <div class="seg sdiff" id="storyBookSeg" role="radiogroup" aria-label="Livre"><button role="radio" data-v="1">Livre 1 · La Légende</button><button role="radio" data-v="2">Livre 2 · L'Éclipse ✦</button></div>
-      <p class="best" id="storyProg"></p><button class="linkbtn" id="storyReset">Recommencer l'histoire depuis le début</button></div>
-    <div class="subp" id="subPanel" hidden><b id="subT"></b><p id="subD"></p><p class="best" id="subBest"></p>
-      <label class="chk" id="libreDefRow" hidden><input type="checkbox" id="libreDef"> Avec un défenseur (IA)</label></div>
-    <div class="tour" id="tourPanel" hidden><p class="label">Tournoi du Bitume · 8 adversaires, de plus en plus forts</p><div id="tourList"></div>
-      <p class="champ" id="tourChamp" hidden>🏆 CHAMPION DU BITUME ! Tu as battu les 8.</p><button class="linkbtn" id="tourReset">Recommencer le tournoi</button></div>
-    <button class="play alt" id="replayBtn" hidden>Revoir les temps forts</button>
-    <div class="online" id="onlinePanel" hidden>
-      <button class="play alt" id="onBuildBtn">Mon build : <b id="onBuildN">PERSO</b></button>
-      <button class="play alt" id="createBtn">Créer une partie</button>
-      <p class="code" id="codeOut" hidden></p>
-      <div class="join">
-        <input id="codeIn" maxlength="4" placeholder="CODE" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="Code de la partie">
-        <button class="play alt" id="joinBtn">Rejoindre</button>
-      </div>
-      <button class="play alt" id="inviteBtn" hidden>Copier le lien d'invitation</button>
-      <p class="note" id="netStatus">Crée une partie et donne le code à ton ami, ou entre le sien. Ton ami ouvre ce même lien sur son téléphone ou son ordi, choisit En ligne et tape le code.</p>
-    </div>
-    <div class="online fete" id="fetePanel" hidden>
-      <p class="note" id="fStatus">De 2 à 8 joueurs : sur cet écran (clavier, manettes), avec des bots, ou en ligne, chacun sur son téléphone.</p>
-      <div class="frow"><button class="play alt" id="fHost">📱 Inviter des amis en ligne</button><button class="play alt" id="fInvite" hidden>Copier le lien</button></div>
-      <p class="code" id="fCode" hidden></p>
-      <div class="join" id="fJoinRow"><input id="fCodeIn" maxlength="4" placeholder="CODE" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="Code de la salle"><button class="play alt" id="fJoin">Rejoindre</button></div>
-      <span class="label">Joueurs</span>
-      <div class="flist" id="fList"></div>
-      <div class="frow"><button class="play alt" id="fBot">🤖 + Bot</button><button class="play alt" id="fJ2">🎮 + J2 sur cet écran</button></div>
-      <span class="label">Jeu</span>
-      <div class="seg fgames" id="fGameSeg" role="radiogroup" aria-label="Jeu de la fête"><button role="radio" data-v="gagnant">👑 Le gagnant reste</button><button role="radio" data-v="patate">💣 Patate chaude</button><button role="radio" data-v="roi">🦍 Le roi géant</button><button role="radio" data-v="tournoi">🏆 Tournoi éclair</button><button role="radio" data-v="equipes">🤝 Équipes</button><button role="radio" data-v="tirs">🎯 Concours 3 pts</button></div>
-      <p class="note" id="fGameD"></p>
-      <span class="label">Délires (à cumuler)</span>
-      <div class="fmods" id="fMods"><button data-v="tete" aria-pressed="false">🎈 Grosses têtes</button><button data-v="mini" aria-pressed="false">🐜 Mini</button><button data-v="geant" aria-pressed="false">🗿 Géants</button><button data-v="lune" aria-pressed="false">🌙 Lune</button><button data-v="turbo" aria-pressed="false">⚡ Turbo</button></div>
-      <button class="play alt" id="fLeave" hidden>Quitter la salle</button>
-    </div>
-    <button class="play" id="play">Jouer</button>
-    <div class="row2">
-      <button class="play alt" id="customBtn">Mon joueur</button>
-      <button class="play alt" id="histBtn">Historique</button>
-      <button class="play alt" id="athBtn">ATH &amp; réglages</button>
-      <button class="play alt" id="phoneBtn">📱 Téléphone ↔ PC</button>
-      <button class="play alt" id="fsBtn">⛶ Plein écran</button>
-    </div>
-    <div class="ctrls">
-      <div class="ctabs" role="tablist" id="ctrlTabs">
-        <button role="tab" data-v="kb" aria-selected="true">Clavier</button>
-        <button role="tab" data-v="pad" aria-selected="false">Manette</button>
-        <button role="tab" data-v="touch" aria-selected="false">Tactile</button>
-      </div>
-      <div class="cgrid" id="ctrlGrid"></div>
-      <button class="link" id="keysBtn0">Changer les touches</button>
-    </div>
+    <footer class="hubfoot"><button class="play" id="play">Jouer</button></footer>
   </div>
 </div>
 
@@ -5394,6 +5586,10 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
   const pickCoop = bindSeg('coopSeg', v => store.set('coop', v));
   function fmtVis() { const f = +store.get('fmt', 1), m = modeKey; $('fmtField').hidden = !(m === 'solo' || m === 'local' || m === 'online'); $('coopSeg').hidden = !(m === 'local' && f > 1); $('fmtNote').hidden = f < 2; }
   setTimeout(() => { pickFmt(String(store.get('fmt', 1))); pickCoop(store.get('coop', 'vs')); }, 0);
+  function segInView() { document.querySelectorAll('#menu .seg').forEach(g => { if (g.scrollWidth <= g.clientWidth + 2) return; const b = g.querySelector('[aria-checked="true"]'); if (!b) return; const x = b.offsetLeft - g.offsetLeft - (g.clientWidth - b.offsetWidth) / 2; g.scrollTo({ left: Math.max(0, x), behavior: 'smooth' }); }); }
+  document.querySelectorAll('#menu .seg').forEach(g => g.addEventListener('click', () => setTimeout(segInView, 30)));
+  new MutationObserver(() => { if (!$('menu').hidden) setTimeout(segInView, 60); }).observe($('menu'), { attributes: true, attributeFilter: ['hidden'] });
+  setTimeout(segInView, 400);
   const pickMap = bindSeg('mapSeg', v => { mapKey = v; store.set('map', v); if (S.mode !== 'guest') buildMap(v); });
   const goalEl = document.querySelector('.goal');
   function refreshGoal() { goalEl.textContent = GM().goal; $('lede').textContent = GM().lede + ' Derrière la ligne : 2 pts, dedans : 1 pt. Après un raté, un contre ou un vol : ressors derrière la ligne.'; }
@@ -8455,7 +8651,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
     try { await req.call(el, { navigationUI: 'hide' }); try { await screen.orientation.lock('landscape'); } catch (_) {} }
     catch (_) { if (!silent) fsHelp(); }
   }
-  function fsLabel() { const t = inFs() ? '⛶ Quitter le plein écran' : '⛶ Plein écran'; $('fsBtn').textContent = t; $('fsBtn2').textContent = t; $('fsBtn').hidden = $('fsBtn2').hidden = standalone(); }
+  function fsLabel() { const t = inFs() ? '⛶ Quitter le plein écran' : '⛶ Plein écran'; $('fsBtn').innerHTML = '<i>⛶</i><span>' + (inFs() ? 'Quitter' : 'Plein écran') + '</span>'; $('fsBtn2').textContent = t; $('fsBtn').hidden = $('fsBtn2').hidden = standalone(); }
   $('fsBtn').addEventListener('click', () => goFull(false)); $('fsBtn2').addEventListener('click', () => goFull(false));
   document.addEventListener('fullscreenchange', fsLabel); document.addEventListener('webkitfullscreenchange', fsLabel); fsLabel();
   // on a phone, the first "Play" goes full screen by itself (Android); the iPhone gets the home-screen tip once
