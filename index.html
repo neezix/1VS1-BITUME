@@ -2813,6 +2813,8 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
     map: 'bitume', paused: false, slowT: 0, shakeT: 0, rimShake: 0, celeb: null, clearMsgT: 0 };
   const me = () => S.mode === 'guest' ? (S.gParty ? S.myP : p2) : S.party ? partyMe() : S.mode === 'local' ? null : p1;
   const gme = () => (S.gParty && S.myP) || p2; // the body this guest controls
+  // the body an input drives (in the party, J1 can be on either side)
+  const inBody = i => (S.party && [p1, p2].find(b => b.tin === i)) || (i === inA ? p1 : p2);
   function setNames() {
     if (S.party || S.gParty) { if (S.party) partyNames(); return; }
     const def = LOOK_P1.name, n1 = p1.look.name, n2 = p2.look.name;
@@ -3808,7 +3810,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
   function applyKey(i, a, down, e) {
     const dirs = { up: 'u', down: 'd', left: 'l', right: 'r' };
     if (a === 'pass') { if (down && !(e && e.repeat)) { i.passReq = true; i.npass = (i.npass || 0) + 1; } return; }
-    if (a === 'oop') { if (down && !(e && e.repeat)) { const p = S.mode === 'guest' ? gme() : i === inA ? p1 : p2; if (p.oopT > 0 || (p.dunking && p.oop && !p.dunkDone)) { i.oopTime = true; i.not = (i.not || 0) + 1; } else { i.oopReq = true; i.noq = (i.noq || 0) + 1; } } return; }
+    if (a === 'oop') { if (down && !(e && e.repeat)) { const p = S.mode === 'guest' ? gme() : inBody(i); if (p.oopT > 0 || (p.dunking && p.oop && !p.dunkDone)) { i.oopTime = true; i.not = (i.not || 0) + 1; } else { i.oopReq = true; i.noq = (i.noq || 0) + 1; } } return; }
     if (dirs[a]) { i[dirs[a]] = down ? 1 : 0; return; }
     if (a === 'act') { if (!down) actUp(i); else if (!e.repeat) actDown(i); return; }
     if (a === 'sec') { if (!down) secUp(i); else if (!e.repeat) secDown(i); return; }
@@ -3866,7 +3868,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
         if (edge(0) === 1) navOk(); if (edge(1) === 1) navBack(); if (st.l1E === 1) navTab(-1); if (edge(5) === 1) navTab(1);
         [2, 3].forEach(edge); i.hands = false; continue;
       }
-      const p = S.mode === 'guest' ? gme() : i === inA ? p1 : p2;
+      const p = S.mode === 'guest' ? gme() : inBody(i);
       const has = ball.state === 'held' && ball.holder === p, def = ball.state === 'held' && ball.holder === other(p);
       const down = w => w === 'A' ? actDown(i) : w === 'B' ? secDown(i) : 0, up = w => w === 'A' ? actUp(i) : w === 'B' ? secUp(i) : 0;
       // face buttons: what they do depends on offense / defense, and the release goes to whatever the press started
@@ -3936,7 +3938,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
   // 4th button: LOB (alley-oop, then LOB again at the right time to finish) · on defense: MAINS (hands up while held)
   const oopPress = (inp, p) => { if (p && (p.oopT > 0 || (p.dunking && p.oop && !p.dunkDone))) { inp.oopTime = true; inp.not = (inp.not || 0) + 1; } else { inp.oopReq = true; inp.noq = (inp.noq || 0) + 1; } };
   for (const [id, inp] of [['bAL', inA], ['bBL', inB]]) { const b = $(id);
-    b.addEventListener('pointerdown', e => { e.preventDefault(); b.classList.add('on'); const p = S.mode === 'guest' ? gme() : inp === inA ? p1 : p2; if (b.textContent === 'MAINS') inp.handsK = true; else oopPress(inp, p); });
+    b.addEventListener('pointerdown', e => { e.preventDefault(); b.classList.add('on'); const p = S.mode === 'guest' ? gme() : inBody(inp); if (b.textContent === 'MAINS') inp.handsK = true; else oopPress(inp, p); });
     for (const ev of ['pointerup', 'pointercancel', 'pointerleave']) b.addEventListener(ev, () => { b.classList.remove('on'); inp.handsK = false; }); }
   for (const [id, inp] of [['bAP', inA], ['bBP', inB]]) { const b = $(id); b.addEventListener('pointerdown', e => { e.preventDefault(); b.classList.add('on'); inp.passReq = true; inp.npass = (inp.npass || 0) + 1; }); for (const ev of ['pointerup', 'pointercancel', 'pointerleave']) b.addEventListener(ev, () => b.classList.remove('on')); }
   bindJoy($('jzA'), $('joyA'), inA); bindJoy($('jzB'), $('joyB'), inB);
@@ -5279,14 +5281,14 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
       if (liveSh && !liveDunk) { sh.shownG = g; sh.shownW = w; sh.shownTol = 3 / (H - 4); } // what the player sees (marker included) is what counts
       gm.style.top = (tpx(g) - 2) + 'px';
     } else gEl.hidden = true;
-    const ctrlP = S.mode === 'guest' ? gme() : p1;
+    const ctrlP = S.mode === 'guest' ? gme() : inBody(inA), ctrlB = inBody(inB);
     const la = btnLabel(ctrlP); if (bA.textContent !== la) bA.textContent = la;
     const la2 = btn2Label(ctrlP); if (bA2.textContent !== la2) bA2.textContent = la2;
-    if (S.mode === 'local') {
-      const lb = btnLabel(p2); if (bB.textContent !== lb) bB.textContent = lb;
-      const lb2 = btn2Label(p2); if (bB2.textContent !== lb2) bB2.textContent = lb2;
+    if (S.mode === 'local' || (S.party && S.party.duo)) {
+      const lb = btnLabel(ctrlB); if (bB.textContent !== lb) bB.textContent = lb;
+      const lb2 = btn2Label(ctrlB); if (bB2.textContent !== lb2) bB2.textContent = lb2;
     }
-    for (const [btn, bp, pb, inp] of [[$('bAL'), ctrlP, $('bAP'), inA], [$('bBL'), p2, $('bBP'), inB]]) { // LOB / MAINS, PASSE / BALLE ! / CHANGER
+    for (const [btn, bp, pb, inp] of [[$('bAL'), ctrlP, $('bAP'), inA], [$('bBL'), ctrlB, $('bBP'), inB]]) { // LOB / MAINS, PASSE / BALLE ! / CHANGER
       const has = ball.state === 'held' && ball.holder === bp, att = S.att === bp || (S.team3 && sideOf(S.att) === sideOf(bp));
       const finish = bp.oopT > 0 || (bp.dunking && bp.oop && !bp.dunkDone);
       const t4 = finish ? 'FINIS !' : att || S.phase !== 'play' ? 'LOB' : 'MAINS'; if (btn.textContent !== t4) btn.textContent = t4;
