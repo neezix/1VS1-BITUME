@@ -803,12 +803,134 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
   #modeSeg button{min-height:56px}
 }
 @media (prefers-reduced-motion:reduce){.overlay,.overlay>.card,#menu .hub,#menu .online,#menu .tour,#menu .subp{animation:none!important}}
+
+/* ===================== v36 · MAXI ===================== */
+.hubtop{grid-template-columns:auto 1fr}
+.hubstat{display:flex;align-items:center;gap:6px;justify-self:end;min-width:0}
+.coinpill{display:flex;align-items:center;gap:5px;padding:5px 10px;border-radius:999px;border:1px solid rgba(255,209,102,.45);background:linear-gradient(180deg,rgba(255,209,102,.18),rgba(255,209,102,.06));color:#ffe6a6;font:800 13px var(--body);cursor:pointer;white-space:nowrap;transition:transform .1s}
+.coinpill b{font-family:var(--display);font-weight:400;font-size:13px;letter-spacing:.02em}
+.coinpill:active,.chestbtn:active{transform:scale(.93)}
+.chestbtn{position:relative;width:34px;height:30px;border-radius:999px;border:1px solid var(--line2);background:rgba(255,255,255,.05);font-size:16px;cursor:pointer;padding:0;transition:transform .1s}
+.chestbtn.ready{border-color:#ffd166;animation:chestPulse 1.6s ease-in-out infinite}
+@keyframes chestPulse{50%{box-shadow:0 0 0 4px rgba(255,209,102,.25)}}
+.chestbtn i{position:absolute;right:-2px;top:-2px;width:10px;height:10px;border-radius:50%;background:#ff4d4d;border:2px solid #1a1430}
+#modeSeg button.new::after{content:'NOUVEAU';position:absolute;right:6px;top:6px;font:800 8px/1 var(--body);letter-spacing:.08em;padding:3px 5px;border-radius:5px;background:#ff3b6b;color:#fff}
+#modeSeg button{position:relative}
+#m-boss:not([aria-checked="true"]){border-color:rgba(239,68,68,.45);background:linear-gradient(160deg,rgba(239,68,68,.16),rgba(255,255,255,.02))}
+#m-carriere:not([aria-checked="true"]){border-color:rgba(76,201,184,.45);background:linear-gradient(160deg,rgba(76,201,184,.14),rgba(255,255,255,.02))}
+/* career panel */
+.carp{display:flex;flex-direction:column;gap:10px;padding:12px;border-radius:16px;background:rgba(76,201,184,.06);border:1px solid rgba(76,201,184,.3);animation:sheetUp .25s var(--ease)}
+.carhead{display:flex;justify-content:space-between;align-items:baseline}.carhead b{font-family:var(--display);color:var(--rival);font-size:16px}.carhead span{font-size:12px;color:#a79cc2;font-weight:700}
+.carnext{display:grid;gap:2px;padding:10px 12px;border-radius:12px;background:linear-gradient(135deg,rgba(76,201,184,.22),rgba(255,255,255,.03));border:1px solid rgba(76,201,184,.35)}
+.carnext small{font-size:10px;font-weight:800;letter-spacing:.14em;color:#8ef0e0}.carnext b{font-family:var(--display);font-size:20px;color:#fff}.carnext span{font-size:12px;color:#c4bad6}
+.carnext.champ{background:linear-gradient(135deg,rgba(255,209,102,.3),rgba(255,255,255,.03));border-color:#ffd166}.carnext.champ small{color:#ffd166}
+.carnext.out{background:rgba(255,255,255,.04);border-color:var(--line2)}.carnext.out small{color:#ff8a80}
+.cartab{width:100%;border-collapse:collapse;font-size:13px}
+.cartab th{font-size:10px;letter-spacing:.12em;color:#a79cc2;text-align:left;padding:4px 6px;font-weight:800}
+.cartab td{padding:5px 6px;border-top:1px solid var(--line)}.cartab td:nth-child(n+3),.cartab th:nth-child(n+3){text-align:right;font-variant-numeric:tabular-nums}
+.cartab td:first-child{color:#a79cc2;font-weight:800;width:18px}.cartab tr.me td{color:#ffd9a8;font-weight:800;background:rgba(255,154,46,.1)}
+.cartab tr.cut td{border-bottom:2px dashed rgba(76,201,184,.45)}
+.carlog{display:flex;flex-direction:column;gap:2px;font-size:12px;color:#a79cc2}
+/* boss panel */
+.bossp{display:flex;flex-direction:column;gap:6px;padding:12px;border-radius:16px;background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.3);animation:sheetUp .25s var(--ease)}
+.bossp>.label{color:#ff9a9a}
+.bossrow{display:grid;grid-template-columns:34px 1fr auto;gap:10px;align-items:center;text-align:left;padding:8px 10px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--chalk);cursor:pointer;font-family:var(--body);transition:background .15s,transform .1s,border-color .15s}
+.bossrow i{font-style:normal;font-size:22px;text-align:center}.bossrow b{display:block;font-family:var(--display);font-weight:400;font-size:15px}
+.bossrow em{display:block;font-style:normal;font-size:11.5px;color:#a79cc2}.bossrow small{display:block;margin-top:3px;font-size:12px;color:#ffd166;font-weight:700}
+.bossrow u{text-decoration:none;font-size:12px;font-weight:800;color:#ffe6a6;white-space:nowrap}
+.bossrow.sel{border-color:#ef4444;background:linear-gradient(135deg,rgba(239,68,68,.25),rgba(255,255,255,.03))}
+.bossrow.done u{color:#5cc98a}.bossrow.lock{opacity:.45;cursor:default}.bossrow:not(.lock):active{transform:scale(.98)}
+/* boss HUD + power overlays */
+.bossbar{display:flex;align-items:center;gap:8px;padding:3px 10px;border-radius:999px;background:rgba(40,6,10,.85);border:1px solid rgba(239,68,68,.55);font:800 11px var(--body);letter-spacing:.06em;color:#ffd0d0;white-space:nowrap}
+.bossbar i{width:70px;height:6px;border-radius:3px;background:rgba(255,255,255,.12);overflow:hidden}.bossbar s{display:block;height:100%;width:0;background:linear-gradient(90deg,#f97316,#ef4444);text-decoration:none;transition:width .2s}
+.bossbar.on{border-color:#facc15;color:#fff;animation:bossOn .3s ease-in-out infinite alternate}.bossbar.on s{background:#facc15}
+@keyframes bossOn{to{box-shadow:0 0 16px rgba(250,204,21,.7)}}
+.bossfog{position:absolute;inset:0;z-index:0;pointer-events:none;opacity:0;transition:opacity .6s}
+.bossfog.on{opacity:1}
+.bossfog.brouillard{background:radial-gradient(ellipse at 50% 55%,rgba(60,80,40,.35) 0,rgba(30,40,20,.88) 38%,rgba(16,24,12,.97) 70%)}
+.bossfog.blizzard{background:radial-gradient(ellipse at center,rgba(220,240,255,.1) 30%,rgba(220,240,255,.55) 90%);backdrop-filter:saturate(.6)}
+.bossfog.fournaise{background:radial-gradient(ellipse at center,rgba(255,80,20,.06) 30%,rgba(255,60,10,.45) 95%);animation:heat .25s ease-in-out infinite alternate}
+@keyframes heat{to{opacity:.75}}
+.bossfog.gravite{background:radial-gradient(ellipse at center,transparent 40%,rgba(80,160,255,.3) 100%)}
+.bossfog.seisme{background:radial-gradient(ellipse at center,transparent 45%,rgba(120,80,40,.35) 100%)}
+.bossfog.eclair{background:radial-gradient(ellipse at center,transparent 50%,rgba(250,204,21,.22) 100%)}
+/* coin + achievement toasts */
+.ctoasts{position:fixed;left:50%;top:calc(12px + env(safe-area-inset-top,0px));transform:translateX(-50%);z-index:60;display:flex;flex-direction:column;align-items:center;gap:6px;pointer-events:none}
+.ctoast{display:flex;align-items:center;gap:10px;padding:8px 14px;border-radius:999px;background:linear-gradient(180deg,rgba(40,30,8,.95),rgba(20,14,4,.95));border:1px solid #ffd166;color:#fff;font-weight:700;font-size:13px;box-shadow:0 10px 30px rgba(0,0,0,.5);animation:toastIn .45s cubic-bezier(.2,1.5,.4,1)}
+.ctoast b{font-family:var(--display);font-weight:400;color:#ffd166;font-size:15px}
+.ctoast.ach{border-radius:16px;padding:10px 14px;background:linear-gradient(135deg,rgba(60,40,10,.97),rgba(20,14,30,.97))}
+.ctoast.ach i{font-style:normal;font-size:26px}.ctoast.ach small{display:block;font-size:9px;letter-spacing:.2em;color:#ffd166}.ctoast.ach b{display:block;font-size:16px;color:#fff}.ctoast.ach em{font-style:normal;font-weight:800;color:#ffd166}
+.ctoast.out{opacity:0;transform:translateY(-10px);transition:all .5s}
+@keyframes toastIn{from{transform:translateY(-20px) scale(.8);opacity:0}}
+/* shop */
+.shophead{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.shophead .coinpill{cursor:default}
+#shopTabs{grid-template-columns:repeat(3,1fr)}
+.shoplist{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:8px}
+.sitem{display:grid;justify-items:center;gap:6px;padding:12px 8px 10px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid var(--line);text-align:center;transition:border-color .15s,transform .15s}
+.sitem b{font-size:13px;font-weight:700;line-height:1.15;min-height:2.3em;display:grid;place-items:center}
+.sitem.on{border-color:#ffd166;background:linear-gradient(180deg,rgba(255,209,102,.14),rgba(255,255,255,.03))}
+.sitem canvas.sball{width:64px;height:64px;filter:drop-shadow(0 6px 8px rgba(0,0,0,.5))}
+.sitem .strail{display:block;width:84px;height:18px;margin:23px 0;border-radius:9px;box-shadow:0 0 14px rgba(255,255,255,.12)}
+.sitem .sfx{font-style:normal;font-size:40px;line-height:64px;height:64px}
+.sbtn{width:100%;padding:7px 4px;border-radius:10px;border:0;background:#2e2547;color:#fff;font:800 12px var(--body);cursor:pointer;transition:transform .1s,filter .15s}
+.sbtn.buy{background:linear-gradient(180deg,#ffd166,#f2a516);color:#2a1a00}.sbtn.buy.poor{background:#2e2547;color:#a79cc2}
+.sbtn.eq{display:block;background:rgba(92,201,138,.18);color:#5cc98a;cursor:default}
+.sbtn:active{transform:scale(.95)}
+.sbtn.shake{animation:shk .35s}
+@keyframes shk{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+/* trophies / profile */
+.trhead{display:flex;justify-content:space-between;align-items:center;gap:10px}.trhead small{font-weight:800;color:#ffd166;font-size:12px;white-space:nowrap}
+#trTabs{grid-template-columns:1fr 1fr}
+.phead b{display:block;font-family:var(--display);font-size:26px;color:var(--sodium);line-height:1}.phead span{font-size:13px;color:#a79cc2}
+.ptitles{display:flex;flex-wrap:wrap;gap:6px}.ptitles span{padding:5px 10px;border-radius:999px;background:rgba(255,209,102,.14);border:1px solid rgba(255,209,102,.4);font-size:12px;font-weight:800;color:#ffe6a6}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:6px}
+.pst{padding:9px 10px;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid var(--line)}.pst b{display:block;font-family:var(--display);font-weight:400;font-size:18px;color:#fff}.pst span{font-size:11px;color:#a79cc2;font-weight:600}
+.achrow{display:grid;grid-template-columns:36px 1fr auto;gap:10px;align-items:center;padding:8px 4px;border-bottom:1px solid var(--line)}
+.achrow i{font-style:normal;font-size:24px;text-align:center;filter:grayscale(1);opacity:.6}.achrow.ok i{filter:none;opacity:1}
+.achrow b{display:block;font-size:14px}.achrow em{display:block;font-style:normal;font-size:12px;color:#a79cc2}
+.achrow s{display:block;height:5px;margin-top:5px;border-radius:3px;background:rgba(255,255,255,.08);overflow:hidden}.achrow s u{display:block;height:100%;background:linear-gradient(90deg,#ff9a2e,#ffd166)}
+.achrow.ok s u{background:#5cc98a}
+.achrow small{font-size:11px;font-weight:800;color:#ffe6a6;text-align:right;line-height:1.5}.achrow.ok small{color:#5cc98a}
+/* daily chest */
+.chestwrap{display:grid;justify-items:center;gap:12px;text-align:center}
+.chestbox{position:relative;width:150px;height:120px;margin:18px 0 6px}
+.chestbox .cb{position:absolute;left:0;right:0;bottom:0;height:72px;border-radius:10px 10px 14px 14px;background:linear-gradient(180deg,#b06a2a,#7a3f12);border:4px solid #ffd166;box-shadow:inset 0 -10px 0 rgba(0,0,0,.2),0 14px 30px rgba(0,0,0,.5)}
+.chestbox .cl{position:absolute;left:-4px;right:-4px;bottom:66px;height:46px;border-radius:40px 40px 8px 8px;background:linear-gradient(180deg,#c87a34,#8a4a18);border:4px solid #ffd166;transform-origin:50% 100%;transition:transform .5s cubic-bezier(.2,1.6,.4,1)}
+.chestbox .ck{position:absolute;left:50%;bottom:52px;width:26px;height:30px;margin-left:-13px;border-radius:6px;background:#ffd166;box-shadow:0 0 0 3px #7a3f12 inset;z-index:2}
+.chestbox .cg{position:absolute;left:50%;bottom:60px;width:10px;height:10px;margin-left:-5px;border-radius:50%;background:#fff;opacity:0;box-shadow:0 0 60px 40px rgba(255,220,120,.9);transition:opacity .3s}
+.chestbox.shake{animation:cShake 1.4s ease-in-out infinite}
+.chestbox.opening{animation:cShake .12s linear infinite}
+.chestbox.open .cl{transform:rotate(-28deg) translate(-18px,-24px)}.chestbox.open .cg{opacity:1}
+.chestbox.done{filter:grayscale(.7);opacity:.7}
+@keyframes cShake{0%,60%,100%{transform:rotate(0)}70%{transform:rotate(-4deg)}80%{transform:rotate(4deg)}90%{transform:rotate(-2deg)}}
+.chestamt{font-family:var(--display);font-size:34px;color:#ffd166;min-height:40px;text-shadow:0 4px 0 #3d2a5c}
+.chestamt.show{animation:toastIn .5s cubic-bezier(.2,1.6,.4,1)}.chestamt.jack{color:#fff;text-shadow:0 0 24px #ffd166,0 4px 0 #3d2a5c}
+.cdays{display:flex;gap:4px;justify-content:center;margin-top:6px}.cdays i{font-style:normal;width:26px;height:26px;display:grid;place-items:center;border-radius:8px;background:rgba(255,255,255,.06);font-size:12px;font-weight:800;color:#a79cc2}.cdays i.on{background:#ffd166;color:#2a1a00}
+#chestStreak{font-size:13px;color:#c4bad6}
+.trfoot{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media (orientation:portrait) and (max-width:699px){
+  #menu .logo{font-size:25px}#menu .lvl i{display:none}#menu .lvl{padding:4px 4px 4px 8px}.hubtop{gap:8px}
+  .coinpill{padding:4px 8px;font-size:12px}.chestbtn{width:30px;height:28px;font-size:14px}
+  .shoplist{grid-template-columns:repeat(3,1fr);gap:6px}.sitem{padding:10px 4px 8px}.sitem b{font-size:12px}
+}
+@media (max-height:520px) and (orientation:landscape){
+  .hubtop{grid-template-columns:auto 1fr;row-gap:6px}
+  .hubstat{order:2}
+  #menu .hubnav{grid-column:1/-1;order:3;justify-content:space-between;display:grid;grid-template-columns:repeat(6,1fr);gap:4px}
+  #menu .hb{width:auto;height:30px}.coinpill{padding:3px 8px;font-size:11px}.coinpill b{font-size:11px}.chestbtn{width:28px;height:26px;font-size:13px}
+  .shoplist{grid-template-columns:repeat(auto-fill,minmax(104px,1fr))}.sitem canvas.sball{width:48px;height:48px}.sitem .sfx{font-size:30px;line-height:48px;height:48px}.sitem .strail{margin:15px 0}
+  .chestbox{width:120px;height:96px;margin:8px 0 0}.chestbox .cb{height:56px}.chestbox .cl{bottom:52px;height:36px}.chestbox .ck{bottom:40px;height:24px}
+  .bossrow{padding:6px 8px}.bossrow small{font-size:11px}
+  .carnext b{font-size:17px}.cartab td{padding:3px 6px}
+}
 </style>
 </head>
 <body>
 <div class="app">
   <div class="stage" id="stage">
     <div class="flash" id="flash"></div>
+    <div class="bossfog" id="bossFog"></div>
     <div class="tko" id="tko" hidden><div class="tt"></div><div class="tr"></div><div class="tw"></div><div class="tw b"></div><div class="tf"></div>
       <div class="tb"><small id="tkoP">TOI</small><b>TAKEOVER</b><span id="tkoN">SNIPER</span><i id="tkoD"></i></div></div>
     <div class="votes" id="votes" hidden></div>
@@ -839,6 +961,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
       <div class="clock" id="clock">12</div>
       <div class="subhud" id="subHud" hidden></div>
       <div class="tkrow"><span class="tkl" id="tklP">TAKEOVER</span><i class="tkb" id="tkP"><b></b></i><span class="gclock" id="gclock" hidden></span><i class="tkb" id="tkA"><b></b></i><span class="tkl" id="tklA">TAKEOVER</span></div>
+      <div class="bossbar" id="bossHud" hidden><b id="bossHudN">BOSS</b><i><s id="bossHudBar"></s></i></div>
     </div>
     <div class="stam" id="stP"><b></b></div><div class="stam" id="stA"><b></b></div>
     <div class="msg" id="msg" hidden></div>
@@ -867,10 +990,12 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
   <div class="card hub">
     <header class="hubtop">
       <h1 class="logo">Bitume<span>1c1</span></h1>
-      <div class="lvl" id="lvlBox"><b id="lvlN">NIV 1</b><i><s id="lvlBar"></s></i><span id="lvlXp"></span><button class="linkbtn" id="dailyBtn">🎯 Défis</button></div>
+      <div class="hubstat"><button class="coinpill" id="coinBtn" aria-label="Mes pièces · boutique">🪙 <b id="coinN">0</b></button><button class="chestbtn" id="chestBtn" aria-label="Coffre du jour">🎁<i id="chestDot" hidden></i></button>
+      <div class="lvl" id="lvlBox"><b id="lvlN">NIV 1</b><i><s id="lvlBar"></s></i><span id="lvlXp"></span><button class="linkbtn" id="dailyBtn">🎯 Défis</button></div></div>
       <nav class="hubnav" aria-label="Menu">
         <button class="hb" id="customBtn"><i>👤</i><span>Mon joueur</span></button>
-        <button class="hb" id="histBtn"><i>📜</i><span>Historique</span></button>
+        <button class="hb" id="shopBtn"><i>🛒</i><span>Boutique</span></button>
+        <button class="hb" id="trophyBtn"><i>🏆</i><span>Trophées</span></button>
         <button class="hb" id="athBtn"><i>⚙️</i><span>Réglages</span></button>
         <button class="hb" id="phoneBtn"><i>📱</i><span>Appareils</span></button>
         <button class="hb" id="fsBtn"><i>⛶</i><span>Plein écran</span></button>
@@ -884,6 +1009,8 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
         <div class="seg modes" role="radiogroup" aria-labelledby="modeLbl" id="modeSeg">
           <button id="m-solo" role="radio" data-v="solo" aria-checked="true"><i>🏀</i><b>Solo</b><small>Contre l'IA</small></button>
           <button id="m-histoire" role="radio" data-v="histoire" aria-checked="false"><i>📖</i><b>Histoire</b><small>La Légende</small></button>
+          <button id="m-carriere" class="new" role="radio" data-v="carriere" aria-checked="false"><i>🗓️</i><b>Carrière</b><small>Saison + playoffs</small></button>
+          <button id="m-boss" class="new" role="radio" data-v="boss" aria-checked="false"><i>👹</i><b>Boss</b><small>7 monstres</small></button>
           <button id="m-fete" role="radio" data-v="fete" aria-checked="false"><i>🎉</i><b>Fête</b><small>2 à 8 joueurs</small></button>
           <button id="m-online" role="radio" data-v="online" aria-checked="false"><i>🌐</i><b>En ligne</b><small>Avec un ami</small></button>
           <button id="m-local" role="radio" data-v="local" aria-checked="false"><i>👥</i><b>À deux</b><small>Même écran</small></button>
@@ -905,6 +1032,8 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
         <label class="chk" id="libreDefRow" hidden><input type="checkbox" id="libreDef"> Avec un défenseur (IA)</label></div>
       <div class="tour" id="tourPanel" hidden><p class="label">Tournoi du Bitume · 8 adversaires, de plus en plus forts</p><div id="tourList"></div>
         <p class="champ" id="tourChamp" hidden>🏆 CHAMPION DU BITUME ! Tu as battu les 8.</p><button class="linkbtn" id="tourReset">Recommencer le tournoi</button></div>
+      <div class="carp" id="carPanel" hidden><span class="label">Carrière · La Ligue du Bitume</span><div id="carBody"></div><button class="linkbtn" id="carReset">Recommencer cette saison</button></div>
+      <div class="bossp" id="bossPanel" hidden><span class="label">Les Boss · chacun a un pouvoir</span><div id="bossList" style="display:flex;flex-direction:column;gap:6px"></div><p class="champ" id="bossDone" hidden>😈 TOUS LES BOSS SONT TOMBÉS ! Rejoue-les quand tu veux.</p></div>
       <div class="online" id="onlinePanel" hidden>
         <button class="play alt" id="onBuildBtn">Mon build : <b id="onBuildN">PERSO</b></button>
         <button class="play" id="createBtn">Créer une partie</button>
@@ -960,7 +1089,9 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
             <button id="map-ouest" role="radio" data-v="ouest" aria-checked="false" style="--mc:#ff7e5f">Côte Ouest</button>
             <button id="map-volcan" role="radio" data-v="volcan" aria-checked="false" style="--mc:#ff4a1c">Volcan</button>
             <button id="map-ferme" role="radio" data-v="ferme" aria-checked="false" style="--mc:#9bcf53">La Ferme</button>
-            <button id="map-sanctuaire" role="radio" data-v="sanctuaire" aria-checked="false" style="--mc:#c79bff">Sanctuaire ✦</button>
+            <button id="map-sanctuaire" role="radio" data-v="sanctuaire" aria-checked="false" style="--mc:#c79bff">Sanctuaire</button>
+            <button id="map-rucker" role="radio" data-v="rucker" aria-checked="false" style="--mc:#3b82f6">Rucker Park ✦</button>
+            <button id="map-tokyo" role="radio" data-v="tokyo" aria-checked="false" style="--mc:#ff2d95">Shibuya ✦</button>
           </div>
         </div>
         <div class="field">
@@ -1110,6 +1241,37 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
   <div class="schoice" id="stChoice" hidden><p id="stQ"></p><div id="stOpts"></div></div>
   <button class="sskip" id="stSkip">Passer la scène ⏭</button>
 </div>
+<div class="overlay top" id="shopPanel" hidden>
+  <div class="card wide">
+    <div class="shophead"><div><p class="eyebrow">Dépense tes pièces</p><h2 class="h2">Boutique</h2></div><span class="coinpill">🪙 <b id="shopCoins">0</b></span></div>
+    <div class="seg" role="tablist" id="shopTabs"><button role="tab" data-v="ball" aria-selected="true">🏀 Ballons</button><button role="tab" data-v="trail" aria-selected="false">☄️ Traînées</button><button role="tab" data-v="fx" aria-selected="false">✨ Effets</button></div>
+    <p class="note">Gagne des pièces en jouant (victoires, dunks, tirs verts…), avec les succès, les boss, la carrière et le coffre du jour. Les traînées et effets s'affichent sur tes tirs et tes paniers.</p>
+    <div class="shoplist" id="shopList"></div>
+    <button class="play" id="shopClose">Fermer</button>
+  </div>
+</div>
+<div class="overlay top" id="trophyPanel" hidden>
+  <div class="card wide">
+    <div class="trhead"><div><p class="eyebrow">Ta carrière</p><h2 class="h2">Trophées</h2></div><small id="trCount"></small></div>
+    <div class="seg" role="tablist" id="trTabs"><button role="tab" data-v="profil" aria-selected="true">👤 Profil &amp; stats</button><button role="tab" data-v="ach" aria-selected="false">🏅 Succès</button></div>
+    <div id="trBody" style="display:flex;flex-direction:column;gap:10px"></div>
+    <div class="trfoot"><button class="play alt" id="histBtn">📜 Historique</button><button class="play" id="trophyClose">Fermer</button></div>
+  </div>
+</div>
+<div class="overlay top" id="chestPanel" hidden>
+  <div class="card">
+    <div class="chestwrap">
+      <p class="eyebrow">Récompense quotidienne</p><h2 class="h2">Coffre du jour</h2>
+      <div class="chestbox" id="chestBox"><div class="cg"></div><div class="cb"></div><div class="cl"></div><div class="ck"></div></div>
+      <div class="chestamt" id="chestAmt"></div>
+      <p id="chestStreak"></p>
+      <p class="note" id="chestNote"></p>
+      <button class="play" id="chestOpen" style="width:100%">Ouvrir le coffre</button>
+      <button class="play alt" id="chestClose" style="width:100%">Fermer</button>
+    </div>
+  </div>
+</div>
+<div class="ctoasts" id="coinToasts"></div>
 <div class="partyov" id="partyOv" hidden></div><div class="partybar" id="partyBar" hidden></div>
 <div class="stphoto" id="stPhoto" hidden><div class="fr"></div><p><b>LA GÉNÉRATION MIRACLE</b><span id="stPhotoN"></span></p></div>
 <div class="stcard" id="stCard" hidden><b id="stCardT"></b><span id="stCardS"></span></div>
@@ -1259,13 +1421,15 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
   const tkType = p => tkTypeOf(stBase(p));
   function fxTick(p) {
     const st = p.stam == null ? 1 : p.stam, tired = st < .5 ? st / .5 : 1, tk = p.tkoT > 0 ? tkType(p) : null;
-    if (tired >= 1 && !tk) { p.fx = null; return; }
+    const cu = p.curse && p.curse.until > S.time ? p.curse.m : null;
+    if (tired >= 1 && !tk && !cu) { p.fx = null; return; }
     const o = Object.assign({}, stBase(p)), t = lerp(.7, 1, tired);
     o.sh3 *= t; o.shm *= t; o.fade *= t; o.drib *= t; o.sp *= lerp(.68, 1, tired); o.jmp *= lerp(.86, 1, tired);
     if (tk === 'tireur') { o.sh3 *= 1.14; o.shm *= 1.1; o.deep += .5; o.fade *= 1.1; }
     else if (tk === 'slasher') { o.dnk += .4; o.post *= 1.4; o.sp *= 1.04; o.jmp *= 1.04; }
     else if (tk === 'meneur') { o.drib *= 1.3; o.sp *= 1.03; o.stl *= 1.1; }
     else if (tk === 'mur') { o.blk *= 1.22; o.stl *= 1.25; }
+    if (cu) for (const k in cu) o[k] *= cu[k];
     p.fx = o;
   }
   function applyBalance() { for (const q of P) q.sc = S.balanced ? 1 : (q.st || PROFILES.perso).h / 1.98; }
@@ -1759,7 +1923,13 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
       grade: { hiT: [.05, .02, -.03], shT: [-.015, .004, .026], sat: 1.14, con: 1.14, bloom: 1.2, th: 1.3 },
       court: { outer: '#6a5a40', base: '#6e665c', paint: 'rgba(170,48,30,.55)', line: 'rgba(250,240,222,.88)', label: 'SANCTUAIRE', text: 'rgba(250,240,222,.12)', noise: .16 } },
     ferme: { name: 'La Ferme', sky: ['#5a8ad0', '#a8ccf0', '#fff0c8'], fog: ['#c8dcef', 40, 140], hemi: [0xfff4dc, 0x6a5a3a, .9], sun: [0xfff0c0, 1.1], moon: .1, ground: '#6a8a3a',
-      court: { outer: '#7a6a4a', base: '#8a7a5a', paint: 'rgba(160,40,30,.4)', line: 'rgba(255,250,235,.85)', label: 'LA FERME', text: 'rgba(0,0,0,.1)', noise: .16 } }
+      court: { outer: '#7a6a4a', base: '#8a7a5a', paint: 'rgba(160,40,30,.4)', line: 'rgba(255,250,235,.85)', label: 'LA FERME', text: 'rgba(0,0,0,.1)', noise: .16 } },
+    // v36
+    rucker: { name: 'Rucker Park', sky: ['#33447a', '#d98a66', '#ffd49a'], fog: ['#e2b48e', 40, 150], hemi: [0xffe2c4, 0x4a4a3a, .82], sun: [0xffd2a0, 1.1], moon: .15, ground: '#3a463a', skySun: [-.3, .2, -1], clouds: .45,
+      court: { outer: '#2a5a8a', base: '#1d4f91', paint: 'rgba(40,140,80,.75)', line: 'rgba(255,255,255,.95)', label: 'RUCKER', text: 'rgba(255,255,255,.12)', noise: .06 } },
+    tokyo: { name: 'Shibuya', sky: ['#04020c', '#140a2e', '#2a0f3f'], fog: ['#160a2a', 24, 80], hemi: [0x8a6cff, 0x120a22, .58], sun: [0xff5ad8, .65], moon: .45, ground: '#0d0b16',
+      grade: { bloom: 1.8, th: .7, sat: 1.2 },
+      court: { outer: '#14121e', base: '#1b1830', paint: 'rgba(255,45,149,.3)', line: 'rgba(255,255,255,.92)', label: '渋谷 SHIBUYA', text: 'rgba(0,229,255,.16)', noise: .05, gloss: true } }
   };
   const courtC = canvas(1024, 1024), courtT = tex(courtC);
   let MAP = MAPS.bitume;
@@ -2454,6 +2624,130 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
       const y = o.y[0] + r() * (o.y[1] - o.y[0]), z = o.z[0] + r() * (o.z[1] - o.z[0]), sp = (6 + r() * 8) * (r() < .5 ? 1 : -1), x0 = r() * 120 - 60;
       g.rotation.y = sp > 0 ? 0 : Math.PI; g.userData.tick = (dt, t) => { g.position.set(((x0 + t * sp) % 120 + 180) % 120 - 60, y + Math.sin(t + i) * .3, z); }; }
   }
+
+  // ---------- v36: two new courts — Rucker Park (Harlem, New York) and Shibuya (Tokyo) ----------
+  function maxiMapEnv(id, grp) {
+    if (id === 'rucker') {
+      // tall cage all around
+      fenceMesh(grp, 17.6, -8.8, 7.2, Math.PI / 2, 4.6); fenceMesh(grp, 17.6, 8.8, 7.2, Math.PI / 2, 4.6); fenceMesh(grp, 17.6, 0, -1.6, 0, 4.6);
+      const postM = M('#1f2a24', { metalness: .5, roughness: .5 });
+      for (const [x, z] of [[-8.8, -1.6], [8.8, -1.6], [-8.8, 4], [8.8, 4], [-8.8, 10], [8.8, 10], [-8.8, 16], [8.8, 16]]) { const p = new THREE.Mesh(new THREE.CylinderGeometry(.06, .06, 4.7, 8), postM); p.position.set(x, 2.35, z); grp.add(p); }
+      // bleachers packed with people on both sides
+      const seatM = M('#6b7280', { metalness: .5, roughness: .45 }), stepM = M('#374151', { roughness: .7 });
+      for (const sd of [-1, 1]) {
+        for (let k = 0; k < 5; k++) {
+          const st = new THREE.Mesh(new THREE.BoxGeometry(1.1, .45 + k * .45, 15), stepM); st.position.set(sd * (9.9 + k * 1.05), (.45 + k * .45) / 2, 7); grp.add(st);
+          const pl = new THREE.Mesh(new THREE.BoxGeometry(1.1, .06, 15), seatM); pl.position.set(sd * (9.9 + k * 1.05), .45 + k * .45 + .03, 7); grp.add(pl);
+        }
+        crowd(grp, { a: [sd * 9.9, 0], b: [sd * 9.9, 14], n: 14, rows: 5, rdx: sd * 1.05, rdy: .45, y: .48, sit: false, seed: sd > 0 ? 31 : 32 });
+      }
+      // red-brick Harlem buildings with black fire escapes and wooden water towers
+      const brick = canvas(256, 512), bg = brick.getContext('2d'), r = seeded(77);
+      bg.fillStyle = '#8a3a2a'; bg.fillRect(0, 0, 256, 512);
+      for (let y = 0; y < 512; y += 6) for (let x = (y / 6) % 2 ? -8 : 0; x < 256; x += 16) { bg.fillStyle = `rgba(${40 + r() * 40},${10 + r() * 15},${5 + r() * 10},${.15 + r() * .2})`; bg.fillRect(x, y, 15, 5); }
+      for (let fl = 0; fl < 7; fl++) for (let c = 0; c < 4; c++) { const x = 18 + c * 60, y = 22 + fl * 70, lit = r() < .35;
+        bg.fillStyle = '#e8dccb'; bg.fillRect(x - 3, y - 3, 36, 50); bg.fillStyle = lit ? '#ffcf7a' : '#2b3442'; bg.fillRect(x, y, 30, 44); bg.fillStyle = '#e8dccb'; bg.fillRect(x + 14, y, 2, 44); bg.fillRect(x, y + 20, 30, 2); }
+      const brickT = tex(brick), brickM = new THREE.MeshStandardMaterial({ map: brickT, roughness: .9 }), ironM = M('#141414', { metalness: .6, roughness: .5 }), woodM = M('#6b4a2e', { roughness: .9 });
+      const tenement = (x, z, w, h, rot) => {
+        const g2 = new THREE.Group(); g2.position.set(x, 0, z); g2.rotation.y = rot || 0; grp.add(g2);
+        const b2 = new THREE.Mesh(new THREE.BoxGeometry(w, h, 9), brickM); b2.position.y = h / 2; g2.add(b2);
+        const cor = new THREE.Mesh(new THREE.BoxGeometry(w + .4, .5, 9.4), M('#d6c7ae')); cor.position.y = h + .25; g2.add(cor);
+        for (let fy = 3; fy < h - 1; fy += 3.2) { // fire escape landings + ladders
+          const lnd = new THREE.Mesh(new THREE.BoxGeometry(w * .42, .08, 1), ironM); lnd.position.set(-w * .12, fy, 5); g2.add(lnd);
+          const rail = new THREE.Mesh(new THREE.BoxGeometry(w * .42, .5, .04), ironM); rail.position.set(-w * .12, fy + .27, 5.48); g2.add(rail);
+          const lad = new THREE.Mesh(new THREE.BoxGeometry(.06, 3.4, .06), ironM); lad.position.set(-w * .12 + (fy / 3.2 % 2 ? -1 : 1) * w * .17, fy - 1.6, 5.3); lad.rotation.z = (fy / 3.2 % 2 ? 1 : -1) * .5; g2.add(lad);
+        }
+        if (r() < .75) { // water tower
+          const wt = new THREE.Group(); wt.position.set((r() - .5) * w * .5, h + .5, -1 + r() * 2); g2.add(wt);
+          for (const [lx, lz] of [[-.8, -.8], [.8, -.8], [-.8, .8], [.8, .8]]) { const lg = new THREE.Mesh(new THREE.CylinderGeometry(.06, .06, 2, 5), ironM); lg.position.set(lx, 1, lz); wt.add(lg); }
+          const tank = new THREE.Mesh(new THREE.CylinderGeometry(1.25, 1.25, 2.4, 14), woodM); tank.position.y = 3.2; wt.add(tank);
+          for (const hy of [2.4, 3.2, 4]) { const hoop = new THREE.Mesh(new THREE.TorusGeometry(1.27, .04, 4, 18), ironM); hoop.rotation.x = Math.PI / 2; hoop.position.y = hy; wt.add(hoop); }
+          const cap = new THREE.Mesh(new THREE.ConeGeometry(1.35, 1.1, 14), M('#3a2a1a')); cap.position.y = 4.95; wt.add(cap);
+        }
+      };
+      for (let x = -36; x <= 36; x += 12) tenement(x, -17 - (Math.abs(x) % 3), 11, 15 + (Math.abs(x * 7) % 9));
+      for (let z = 0; z < 30; z += 12) { tenement(-24, z, 11, 14 + (z % 7), Math.PI / 2); tenement(24, z, 11, 16 + (z % 5), -Math.PI / 2); }
+      // Manhattan far away, one Art-Deco tower in the middle
+      const wc = windowsTex(91, .5);
+      for (let x = -80; x < 80; x += 7 + (Math.abs(x) % 5)) building(grp, wc, x, -95 - (Math.abs(x * 3) % 20), 6, 6, 18 + (Math.abs(x * 13) % 40), '#2a2f45');
+      const deco = new THREE.Group(); deco.position.set(-14, 0, -110); grp.add(deco);
+      [[14, 60], [10, 22], [7, 14], [4.5, 10], [2.6, 8]].reduce((y, [w, h]) => { const b = building(deco, wc, 0, 0, w, w, h, '#343a55', y); return y + h; }, 0);
+      const mast = new THREE.Mesh(new THREE.CylinderGeometry(.2, .6, 14, 6), M('#cfd6e6', { emissive: '#fff4d0', emissiveIntensity: .4 })); mast.position.set(0, 121, 0); deco.add(mast);
+      // trees along the park, speakers and the DJ table, string lights over the court
+      const leafM = M('#3f7a3a'), trunkM = M('#4a3524');
+      for (const [x, z, s] of [[-13, -4, 1.2], [13, -5, 1.3], [-14.5, 18, 1.1], [14.6, 19, 1.2], [-6, -6, 1.4], [6, -7, 1.3], [0, -8, 1.5]]) {
+        const tr = new THREE.Mesh(new THREE.CylinderGeometry(.18 * s, .25 * s, 3.4 * s, 7), trunkM); tr.position.set(x, 1.7 * s, z); grp.add(tr);
+        for (let k = 0; k < 4; k++) { const lf = new THREE.Mesh(new THREE.IcosahedronGeometry((1.3 + k * .15) * s, 0), leafM); lf.position.set(x + (k % 2 - .5) * s, (3.6 + k * .45) * s, z + (k > 1 ? .6 : -.6) * s); grp.add(lf); }
+      }
+      const spk = M('#111111', { roughness: .5 }), cone = M('#3a3a3a', { metalness: .4 });
+      for (const sx of [-1, 1]) { for (let k = 0; k < 2; k++) { const b = new THREE.Mesh(new THREE.BoxGeometry(.9, 1.1, .8), spk); b.position.set(sx * 3.8, .55 + k * 1.1, 16.6); grp.add(b); const c2 = new THREE.Mesh(new THREE.CircleGeometry(.32, 16), cone); c2.position.set(sx * 3.8, .55 + k * 1.1, 16.19); c2.rotation.y = Math.PI; grp.add(c2); } }
+      const dj = new THREE.Mesh(new THREE.BoxGeometry(2.4, .9, .9), M('#1f2937')); dj.position.set(0, .45, 16.8); grp.add(dj);
+      for (const z of [1.5, 8]) garland(grp, [-8.8, 4.6, z], [8.8, 4.6, z], 24, .7, ['#fff2c0', '#ffd27a', '#ffffff']);
+      lamp(grp, -9.6, 1, '#ffdca0'); lamp(grp, 9.6, 12, '#ffdca0');
+      car(grp, -17, 6, .05, '#facc15', true); car(grp, 17.2, 10, Math.PI, '#1f2937', false); car(grp, -17.3, 14, -.03, '#e2e8f0', false);
+      birds(grp, { n: 8, c: [0, -10], r: 16, h: 16, color: '#2a2a2a', s: .7 });
+      motes(grp, { n: 70, color: '#ffd8a0', glow: 2, size: .05, y: [.5, 5], R: 14, speed: .2, seed: 41 });
+    } else if (id === 'tokyo') {
+      // neon towers, giant screens, the scramble crossing, an elevated train, rain
+      const r = seeded(808), wc = windowsTex(51, .55), wc2 = windowsTex(52, .3);
+      const SIGN = ['渋谷', 'ネオン', 'バスケ', '東京', 'ラーメン', '夜', 'BITUME', 'NEO TOKYO', 'カラオケ', '24H', 'ゲーム', '1on1'];
+      const COLS = ['#ff2d95', '#00e5ff', '#ffe600', '#7c4dff', '#ff6a00', '#39ff14'];
+      const screens = [];
+      const tower = (x, z, w, d, h) => {
+        building(grp, r() < .5 ? wc : wc2, x, z, w, d, h, '#0f0d1c');
+        // vertical neon sign on the corner
+        const sc = canvas(64, 256), sg = sc.getContext('2d'), col = COLS[Math.floor(r() * COLS.length)], word = SIGN[Math.floor(r() * SIGN.length)];
+        sg.fillStyle = '#06040c'; sg.fillRect(0, 0, 64, 256); sg.strokeStyle = col; sg.lineWidth = 4; sg.strokeRect(4, 4, 56, 248);
+        sg.fillStyle = col; sg.font = 'bold 40px "Dela Gothic One","Hiragino Sans","Noto Sans JP",sans-serif'; sg.textAlign = 'center'; sg.textBaseline = 'middle';
+        const ch = [...word].slice(0, 5), nC = ch.length; sg.font = `bold ${nC > 3 ? 34 : 40}px "Dela Gothic One","Hiragino Sans","Noto Sans JP",sans-serif`; ch.forEach((c, k) => sg.fillText(c, 32, 128 + (k - (nC - 1) / 2) * 46));
+        const sm = new THREE.Mesh(new THREE.PlaneGeometry(1.4, 5.6), new THREE.MeshBasicMaterial({ map: tex(sc), color: linC('#ffffff').multiplyScalar(2.2) }));
+        const face = z < 0 ? 1 : 0, sx = x + (x < 0 ? w / 2 + .05 : -w / 2 - .05);
+        sm.position.set(z < -5 ? x + w / 2 - .8 : sx, Math.min(h - 3, 6 + r() * 6), z < -5 ? z + d / 2 + .05 : z); sm.rotation.y = z < -5 ? 0 : x < 0 ? Math.PI / 2 : -Math.PI / 2; grp.add(sm);
+        // a big video screen on some towers
+        if (r() < .55) {
+          const vc = canvas(256, 144), vt = tex(vc), vm = new THREE.Mesh(new THREE.PlaneGeometry(w * .8, w * .8 * .5625), new THREE.MeshBasicMaterial({ map: vt, color: linC('#ffffff').multiplyScalar(1.6) }));
+          vm.position.set(z < -5 ? x : sx, h * .62, z < -5 ? z + d / 2 + .06 : z); vm.rotation.y = z < -5 ? 0 : x < 0 ? Math.PI / 2 : -Math.PI / 2; grp.add(vm);
+          screens.push({ c: vc, t: vt, ph: r() * 10, word: SIGN[Math.floor(r() * SIGN.length)], col: COLS[Math.floor(r() * COLS.length)], col2: COLS[Math.floor(r() * COLS.length)] });
+        }
+      };
+      for (let x = -40; x <= 40; x += 8 + r() * 4) if (Math.abs(x) > 4) tower(x, -16 - r() * 8, 7, 7, 14 + r() * 26);
+      for (let z = -6; z < 30; z += 8 + r() * 3) { tower(-18 - r() * 4, z, 7, 7, 12 + r() * 22); tower(18 + r() * 4, z, 7, 7, 12 + r() * 22); }
+      for (let x = -90; x < 90; x += 6 + r() * 5) building(grp, wc, x, -70 - r() * 30, 5 + r() * 4, 6, 20 + r() * 50, '#151229');
+      let scrT = 0;
+      grp.userData.tick = (dt, t) => {
+        scrT -= dt; if (scrT > 0) return; scrT = .12;
+        for (const s of screens) { const g = s.c.getContext('2d'), u = (t + s.ph);
+          const gr = g.createLinearGradient(0, 0, 256, 144); gr.addColorStop(0, s.col); gr.addColorStop(1, s.col2); g.fillStyle = gr; g.fillRect(0, 0, 256, 144);
+          g.fillStyle = 'rgba(0,0,0,.35)'; for (let y = 0; y < 144; y += 4) g.fillRect(0, y, 256, 1);
+          g.save(); g.translate(128, 72); g.rotate(Math.sin(u * .7) * .08); g.fillStyle = '#fff'; g.font = 'bold 54px "Dela Gothic One","Hiragino Sans","Noto Sans JP",Impact,sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle';
+          g.fillText(s.word, ((u * 60) % 520) - 260 + 128 - 128, 0); g.restore();
+          g.fillStyle = '#fff'; g.beginPath(); g.arc(30 + (Math.sin(u * 2) * .5 + .5) * 196, 120, 6, 0, 6.3); g.fill(); s.t.needsUpdate = true; }
+      };
+      // scramble crossing stripes around the court
+      const zebra = M('#e8e8f0', { roughness: .4, metalness: .1 });
+      for (let k = -7; k <= 7; k++) { const z1 = new THREE.Mesh(new THREE.BoxGeometry(.9, .02, 4.2), zebra); z1.position.set(k * 1.6, .015, 21); grp.add(z1); }
+      for (let k = 0; k < 9; k++) for (const sd of [-1, 1]) { const z2 = new THREE.Mesh(new THREE.BoxGeometry(4.2, .02, .9), zebra); z2.position.set(sd * 12.4, .015, -2 + k * 1.9); grp.add(z2); }
+      // elevated train crossing behind the hoop
+      const viaduct = new THREE.Mesh(new THREE.BoxGeometry(200, .8, 3), M('#3a3a46')); viaduct.position.set(0, 6.4, -26); grp.add(viaduct);
+      for (let x = -90; x <= 90; x += 12) { const pil = new THREE.Mesh(new THREE.BoxGeometry(1, 6.4, 1.6), M('#2a2a34')); pil.position.set(x, 3.2, -26); grp.add(pil); }
+      const train = new THREE.Group(); grp.add(train);
+      const tc = canvas(256, 64), tg = tc.getContext('2d'); tg.fillStyle = '#d8dde6'; tg.fillRect(0, 0, 256, 64); tg.fillStyle = '#22c55e'; tg.fillRect(0, 44, 256, 8); for (let x = 10; x < 256; x += 32) { tg.fillStyle = '#ffe9a8'; tg.fillRect(x, 12, 20, 22); }
+      const tM = new THREE.MeshStandardMaterial({ map: tex(tc), emissive: '#ffffff', emissiveMap: tex(tc), emissiveIntensity: .45, roughness: .5 });
+      for (let k = 0; k < 6; k++) { const wag = new THREE.Mesh(new THREE.BoxGeometry(9.6, 2.6, 2.6), tM); wag.position.set(k * 10, 0, 0); train.add(wag); }
+      train.position.set(-120, 8.2, -26);
+      train.userData.tick = (dt, t) => { train.position.x = ((t * 14) % 280) - 160; };
+      // lanterns, vending machines, crowd, rain
+      for (const z of [1, 8]) garland(grp, [-8.6, 4.4, z], [8.6, 4.4, z], 12, .5, ['#ff3b3b', '#ff6a3d']);
+      for (const [x, z, c] of [[-10, 2, '#e5484d'], [-10, 3.1, '#3b82f6'], [10.1, 12, '#f4f4f5'], [10.1, 13.1, '#22c55e']]) { const vm = new THREE.Mesh(new THREE.BoxGeometry(.8, 1.9, 1), M(c, { emissive: c, emissiveIntensity: .55 })); vm.position.set(x, .95, z); grp.add(vm); const fr = new THREE.Mesh(new THREE.PlaneGeometry(.6, .9), new THREE.MeshBasicMaterial({ color: linC('#fff6d8').multiplyScalar(1.6) })); fr.position.set(x + (x < 0 ? .41 : -.41), 1.2, z); fr.rotation.y = x < 0 ? Math.PI / 2 : -Math.PI / 2; grp.add(fr); }
+      crowd(grp, { a: [-9.6, 0], b: [-9.6, 15], n: 15, rows: 3, rdx: -.7, seed: 61, pal: ['#1f2937', '#111827', '#ff2d95', '#00e5ff', '#f4f4f5', '#7c4dff', '#ffe600'] });
+      crowd(grp, { a: [9.6, 0], b: [9.6, 15], n: 15, rows: 3, rdx: .7, seed: 62, pal: ['#1f2937', '#111827', '#ff2d95', '#00e5ff', '#f4f4f5', '#7c4dff', '#ffe600'] });
+      fenceMesh(grp, 17.2, 0, -1.5, 0, 2.6);
+      lamp(grp, -9.2, -.5, '#ff7ad8'); lamp(grp, 9.2, 8, '#7ae8ff');
+      beam(grp, -6, 12, -12, '#ff2d95', 3, .05); beam(grp, 6, 12, -12, '#00e5ff', 3, .05);
+      rain(grp, { n: 900, box: [-22, 22, 0, 16, -14, 22], color: '#b8c8ff' });
+      motes(grp, { n: 60, color: '#ff9ae0', glow: 2.5, size: .05, y: [.5, 5], R: 14, speed: .15, seed: 63 });
+    }
+  }
   // which maps get what
   function mapDetail(id, grp) {
     const R = seeded(333);
@@ -2665,7 +2959,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
     sun.color.set(MAP.sun[0]); sun.intensity = MAP.sun[1]; moon.intensity = MAP.moon;
     outerMat.color.set(MAP.ground); outer.visible = id !== 'toit' && id !== 'orbite' && id !== 'volcan'; // on the roof, the city lies below
     court.material.roughness = MAP.court.gloss ? .5 : .92; court.material.metalness = MAP.court.gloss ? .12 : 0; court.material.needsUpdate = true;
-    drawCourt(); buildEnv(id, envGroup); try { mapDetail(id, envGroup); } catch (e) { console.warn('mapDetail', e); } FX_MAP(id);
+    drawCourt(); buildEnv(id, envGroup); try { mapDetail(id, envGroup); } catch (e) { console.warn('mapDetail', e); } try { maxiMapEnv(id, envGroup); } catch (e) { console.warn('maxiMapEnv', e); } FX_MAP(id);
     SFX.ambient(id);
     const tag = document.getElementById('mapTag'); if (tag) tag.textContent = MAP.name.toUpperCase();
     if (typeof flash === 'function' && S.time > .5) flash();
@@ -3012,7 +3306,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
     const def = LOOK_P1.name, n1 = p1.look.name, n2 = p2.look.name;
     let n;
     if (S.mode === 'solo' && S.story) n = [n1, p2.look.name];
-    else if (S.mode === 'solo') n = [n1, modeKey === 'tournoi' ? TOUR[tourIdx()].name : modeKey === 'roi' ? p2.look.name : 'LE MUR'];
+    else if (S.mode === 'solo') n = [n1, modeKey === 'tournoi' ? TOUR[tourIdx()].name : modeKey === 'roi' || MAXI_MODES.includes(modeKey) ? p2.look.name : 'LE MUR'];
     else if (S.mode === 'local') n = [n1 === def ? 'J1' : n1, n2 === def || n2 === LOOK_P2.name || n2 === n1 ? 'J2' : n2];
     else { // online: your own name, and "AMI" when the friend kept the default one
       const mine = me(), oth = other(mine), mn = mine.look.name || def, on = oth.look.name;
@@ -3343,7 +3637,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
   function score(p, pts) {
     if (S.phase !== 'play') return; // whistle already blown (shot clock / out of bounds): the basket doesn't count
     if (S.sub && subScore(p, pts)) return;
-    S.score[p.id] += pts;
+    S.score[p.id] += pts; maxiScore(p, pts, S.playKind);
     // "the Zone" (Kuroko no Basket): three baskets in a row and you're in the Zone until the other one scores
     const o = other(p); o.streak = 0; o.zoneT = 0; p.streak = (p.streak || 0) + 1;
     if (S.blk && S.blk.who !== p) S.blk = null;
@@ -3929,9 +4223,9 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
     if (r) applyKey(r[0], r[1], false, e);
   });
   // ---------- controller / phone navigation in the menus ----------
-  const NAV_LAYERS = ['lvUp', 'fsHelp', 'phonePanel', 'dailyPanel', 'histPanel', 'keysPanel', 'athPanel', 'customPanel', 'vsScr', 'pause', 'selectScr', 'menu'];
+  const NAV_LAYERS = ['lvUp', 'fsHelp', 'chestPanel', 'phonePanel', 'dailyPanel', 'histPanel', 'shopPanel', 'trophyPanel', 'keysPanel', 'athPanel', 'customPanel', 'vsScr', 'pause', 'selectScr', 'menu'];
   function navLayer() { for (const id of NAV_LAYERS) { const el = $(id); if (el && !el.hidden) return el; } return null; }
-  const navActive = () => S.phase !== 'story' && !!navLayer() && (inMenu() || isPaused() || !$('dailyPanel').hidden || !$('histPanel').hidden || !$('lvUp').hidden || !$('phonePanel').hidden || !$('fsHelp').hidden);
+  const navActive = () => S.phase !== 'story' && !!navLayer() && (inMenu() || isPaused() || !$('dailyPanel').hidden || !$('histPanel').hidden || !$('shopPanel').hidden || !$('trophyPanel').hidden || !$('chestPanel').hidden || !$('lvUp').hidden || !$('phonePanel').hidden || !$('fsHelp').hidden);
   const navEls = L => [...L.querySelectorAll('button, input, select, [tabindex]:not([tabindex="-1"])')].filter(x => !x.disabled && x.offsetParent !== null && x.getClientRects().length && getComputedStyle(x).visibility !== 'hidden');
   function navFocus(e) { document.querySelectorAll('.padfocus').forEach(x => x.classList.remove('padfocus')); if (!e) return; e.classList.add('padfocus'); try { e.focus({ preventScroll: true }); } catch (_) {} try { e.scrollIntoView({ block: 'nearest', inline: 'nearest' }); } catch (_) {} }
   function navGo(dir) {
@@ -3971,6 +4265,9 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
     if (!$('fsHelp').hidden) { $('fsHelp').hidden = true; return; }
     if (!$('dailyPanel').hidden) { $('dailyPanel').hidden = true; return; }
     if (!$('histPanel').hidden) { $('histPanel').hidden = true; return; }
+    if (!$('chestPanel').hidden) { $('chestPanel').hidden = true; return; }
+    if (!$('shopPanel').hidden) { $('shopPanel').hidden = true; return; }
+    if (!$('trophyPanel').hidden) { $('trophyPanel').hidden = true; return; }
     padNav(0, false, true);
   }
   function padNav(dir, ok, back) {
@@ -5578,6 +5875,8 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
     if (NET.R && NET.party && v !== 'fete') feteLeave();
     else if (v !== 'online' && v !== 'fete' && NET.R && !NET.party) { leaveRoom(); codeOut.hidden = true; }
     if (v !== 'fete' && playBtn.textContent.startsWith('★ Lancer')) playBtn.textContent = 'Jouer';
+    if (!MAXI_MODES.includes(v) && /^(Journée|Jouer la|🏆 Jouer|Lancer la saison)/.test(playBtn.textContent)) playBtn.textContent = 'Jouer';
+    maxiMode(v);
   });
   let buildKey = store.get('builds', 'legendes');
   const pickBuild = bindSeg('buildSeg', v => { buildKey = v; store.set('builds', v); if (S.mode !== 'guest') { S.balanced = v === 'equilibre'; applyBalance(); } });
@@ -5603,6 +5902,8 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
   function setTouch() { $('touch').classList.toggle('duo', S.mode === 'local' || !!(S.party && S.party.duo)); $('touch').classList.toggle('team', !!S.team3); }
   function startGame() {
     if (modeKey === 'online') return;
+    if (S.boss) bossPowerOff(); S.boss = null; S.car = null;
+    if (MAXI_MODES.includes(modeKey)) { maxiStart(); return; }
     if (modeKey === 'tournoi' && !window.__noIntro) { S.sub = null; S.tour = null; storyStart(tourScene(tourIdx(), null)); return; }
     S.sub = SUBS.includes(modeKey) ? modeKey : null;
     S.mode = modeKey === 'tournoi' || S.sub ? 'solo' : modeKey; S.diff = modeKey === 'tournoi' ? tourDiff(tourIdx()) : S.sub === 'roi' ? tourDiff(Math.min(7, (S.roiStreak || 0) * .9)) : DIFFS[diffKey];
@@ -5642,7 +5943,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
     $('replayBtn').hidden = !S.hls.length;
     menu.hidden = false;
   }
-  function endGame() { if (S.party && partyEndGame()) return; if (S.story) { storyMatchEnd(); return; } if (S.tour != null && S.mode === 'solo' && !window.__noIntro) { tourEnd(); return; } S.phase = 'over'; showMsg(''); showEnd(); recordHist(); roiEnd(); matchRewards(); if (S.hls && S.hls.length) setTimeout(() => { if (S.phase === 'over' && !menu.hidden) startReplay(); }, 1400); }
+  function endGame() { if (S.party && partyEndGame()) return; if (S.story) { storyMatchEnd(); return; } if (S.tour != null && S.mode === 'solo' && !window.__noIntro) { tourEnd(); return; } S.phase = 'over'; showMsg(''); showEnd(); recordHist(); roiEnd(); matchRewards(); maxiAfter(); if (S.hls && S.hls.length) setTimeout(() => { if (S.phase === 'over' && !menu.hidden) startReplay(); }, 1400); }
 
   // ---------- pause menu (☰ / Échap) ----------
   const pauseEl = $('pause');
@@ -5658,7 +5959,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
   }
   function closePause() { pauseEl.hidden = true; S.paused = false; releaseAll(); try { document.activeElement && document.activeElement.blur(); } catch (_) {} }
   async function quitToMenu() {
-    pauseEl.hidden = true; S.paused = false; releaseAll();
+    pauseEl.hidden = true; S.paused = false; releaseAll(); if (S.boss) bossPowerOff(); S.boss = null; S.car = null;
     if (S.party) { partyStop(); return; }
     if (S.gParty) { await feteLeave('Tu as quitté la salle.'); openMenu(''); pickMode('fete'); return; }
     const online = S.mode === 'host' || S.mode === 'guest';
@@ -6043,7 +6344,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
   }
   $('tourReset').addEventListener('click', () => { store.set('tourP', 0); renderTour(); });
   // ---------- match history, head to head ----------
-  function oppKey() { return S.tour != null ? TOUR[S.tour].name : S.mode === 'solo' ? 'LE MUR' : S.mode === 'local' ? (p2.name || 'J2') : other(me()).name || 'AMI'; }
+  function oppKey() { return S.tour != null ? TOUR[S.tour].name : S.boss || S.car ? p2.name : S.mode === 'solo' ? 'LE MUR' : S.mode === 'local' ? (p2.name || 'J2') : other(me()).name || 'AMI'; }
   function recordHist() {
     const mine = S.mode === 'local' ? p1 : me(), oth = other(mine), ms = S.score[mine.id], os = S.score[oth.id];
     const h = store.get('hist', []);
@@ -6060,7 +6361,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
   $('histClose').addEventListener('click', () => { $('histPanel').hidden = true; });
 
   // ===================== extra modes =====================
-  const SUBS = ['libre', 'horse', 'trois', 'dunkc', 'roi'];
+  const SUBS = ['libre', 'horse', 'trois', 'dunkc', 'roi'], MAXI_MODES = ['boss', 'carriere'];
   const SUB_INFO = {
     libre: ['Terrain libre', 'Pas de chrono, pas de score à atteindre : entraîne-toi aux dribbles, dunks, alley-oops et tirs. Le ballon revient toujours vers toi.'],
     horse: ['H-O-R-S-E', 'Le meneur tire d\'où il veut. S\'il marque, l\'autre doit marquer du même endroit, sinon il prend une lettre. 5 lettres = perdu. Pas de dunks.'],
@@ -7499,6 +7800,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
   }
   function faceActor(b) { const t = b.lookAt; if (t === 'cam') b.face = Math.atan2(camPos.x - b.x, camPos.z - b.z); else if (SA[t]) b.face = Math.atan2(SA[t].x - b.x, SA[t].z - b.z); }
   function storyStart(id) {
+    if (S.boss) bossPowerOff(); S.boss = null; S.car = null;
     const node = typeof id === 'object' ? id : STORY[id];
     if (!node) { storyFinish(id); return; }
     if (typeof id === 'string') { S.book = bookOf(id); storySave(id); } else id = '_scene';
@@ -7796,7 +8098,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
   function tourMatch(i) {
     storyFxClear();
     $('storyUI').hidden = true; stage.classList.remove('intro-on'); renderer.domElement.classList.remove('fb'); $('stFb').hidden = true; hideEx(); S.st = null;
-    S.sub = null; S.story = null; S.team3 = null; S.mode = 'solo'; S.tour = i; S.diff = tourDiff(i);
+    S.sub = null; S.story = null; S.team3 = null; S.mode = 'solo'; S.tour = i; S.boss = null; S.car = null; S.diff = tourDiff(i);
     p1.ctrl = 'local'; p2.ctrl = 'ai'; setLook(p1, Object.assign({}, looks.p1)); setLook(p2, Object.assign({}, TOUR[i].look)); p1.m.g.visible = p2.m.g.visible = true;
     if (S.map !== TOUR[i].map) buildMap(TOUR[i].map);
     setNames(); p2.name = TOUR[i].name; $('tA').textContent = p2.name; $('tagA').textContent = p2.name; setTouch(); menu.hidden = true; result.hidden = true; refreshGoal();
@@ -7806,7 +8108,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
     S.phase = 'over'; showMsg('');
     const i = S.tour, won = S.score[p1.id] > S.score[p2.id], cur = store.get('tourP', 0);
     if (won && i === cur) store.set('tourP', cur + 1);
-    recordHist(); matchRewards(); renderTour();
+    recordHist(); matchRewards(); maxiMatchEnd(); renderTour();
     const res = S.score.p + ' – ' + S.score.ai;
     const after = () => { hideEx(); if (!won) storyStart(tourLoss(i, res)); else if (i >= TOUR.length - 1) storyStart(tourChamp(res)); else storyStart(tourScene(i + 1, res)); };
     popup(won ? 'VICTOIRE' : 'DÉFAITE', 0, 3, 8, won ? '#ffd166' : '#ff8a80', 30, 'huge', won ? 'green' : 'whistle');
@@ -8018,7 +8320,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
   }
   // ---------- player select: both players on stage, pick a legend, then the VS splash ----------
   let selWho = 'p1';
-  const aiLook = () => modeKey === 'roi' ? Object.assign({}, S.roiOpp || (S.roiOpp = roiOpponent())) : modeKey === 'tournoi' ? Object.assign({}, TOUR[tourIdx()].look) : Object.assign({}, LOOK_AI, { arch: store.get('aiArch', 'perso') });
+  const aiLook = () => modeKey === 'boss' ? bossLook() : modeKey === 'carriere' ? carLook() : modeKey === 'roi' ? Object.assign({}, S.roiOpp || (S.roiOpp = roiOpponent())) : modeKey === 'tournoi' ? Object.assign({}, TOUR[tourIdx()].look) : Object.assign({}, LOOK_AI, { arch: store.get('aiArch', 'perso') });
   const SHOW = ['flex', 'poing', 'shimmy', 'dab', '6-7', 'griddy', 'scuba', 'craie', 'ciel'];
   function selLook(who) { return who === 'p1' ? looks.p1 : modeKey === 'local' ? looks.p2 : aiLook(); }
   function selBars(el, look, right) {
@@ -8034,7 +8336,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
     const cur = selLook(selWho).arch, list = $('selCards'); list.innerHTML = '';
     const bar = (lab, v) => `<span class="pb"><i>${lab}</i><b style="width:${Math.round(clamp(v, 0, 1) * 100)}%"></b></span>`;
     { const bar2 = $('selPos'); bar2.innerHTML = ''; for (const ps of ['Tous', 'Meneur', 'Arrière', 'Ailier', 'Ailier fort', 'Pivot']) { const b2 = document.createElement('button'); b2.textContent = ps; b2.setAttribute('aria-selected', String(ps === selPos)); b2.addEventListener('click', () => { selPos = ps; selRefresh(); }); bar2.appendChild(b2); } }
-    if (!(selWho === 'p2' && modeKey === 'tournoi')) { const r = document.createElement('button'); r.className = 'pcard rand'; r.id = 'sel-random'; r.innerHTML = '<span class="pn">? ALÉATOIRE</span><span class="pd">Un build au hasard, surprise !</span>'; r.addEventListener('click', pickRandom); list.appendChild(r); }
+    if (!(selWho === 'p2' && (modeKey === 'tournoi' || MAXI_MODES.includes(modeKey)))) { const r = document.createElement('button'); r.className = 'pcard rand'; r.id = 'sel-random'; r.innerHTML = '<span class="pn">? ALÉATOIRE</span><span class="pd">Un build au hasard, surprise !</span>'; r.addEventListener('click', pickRandom); list.appendChild(r); }
     for (const [key, P0] of Object.entries(PROFILES)) {
       if (isTourKey(key)) continue;
       if (selPos !== 'Tous' && POS[key] !== selPos && key !== 'perso') continue;
@@ -8043,7 +8345,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
       b.addEventListener('click', () => pickArch(key));
       list.appendChild(b);
     }
-    $('selNote').hidden = !S.balanced; $('selWho2').textContent = modeKey === 'local' ? 'Joueur 2' : modeKey === 'tournoi' ? TOUR[tourIdx()].name : 'Adversaire';
+    $('selNote').hidden = !S.balanced; $('selWho2').textContent = modeKey === 'local' ? 'Joueur 2' : modeKey === 'tournoi' ? TOUR[tourIdx()].name : modeKey === 'boss' || modeKey === 'carriere' ? aiLook().name : 'Adversaire';
   }
   // random build: the cards light up one after the other, then it stops on one
   function pickRandom() {
@@ -8054,7 +8356,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
   }
   function pickArch(key) {
     const who = selWho;
-    if (who === 'p2' && modeKey === 'tournoi') return; // the opponent's build is his own
+    if (who === 'p2' && (modeKey === 'tournoi' || MAXI_MODES.includes(modeKey))) return; // the opponent's build is his own
     if (who === 'p1') { looks.p1.arch = key; store.set('look1', looks.p1);
       if (S.mode === 'guest') { setLook(p2, Object.assign({}, looks.p1)); NET.lastSent = ''; if (NET.R) NET.R.presence({ role: 'guest', look: looks.p1, in: {} }).catch(() => {}); } // my player is p2 here
       else { setLook(p1, Object.assign({}, looks.p1)); if (S.mode === 'host') hostSend(); } }
@@ -8077,7 +8379,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
     selOnline = !!online || modeKey === 'online';
     if (modeKey === 'online' && !selOnline) return;
     $('selectScr').classList.toggle('online', selOnline); $('selGo').textContent = selOnline ? 'Valider mon build' : 'C\'est parti !';
-    S.mode = selOnline || modeKey === 'tournoi' || SUBS.includes(modeKey) ? 'solo' : modeKey; S.balanced = buildKey === 'equilibre'; applyBalance();
+    S.mode = selOnline || modeKey === 'tournoi' || SUBS.includes(modeKey) || MAXI_MODES.includes(modeKey) ? 'solo' : modeKey; S.balanced = buildKey === 'equilibre'; applyBalance();
     setLook(p1, Object.assign({}, looks.p1)); setLook(p2, modeKey === 'local' ? Object.assign({}, looks.p2) : aiLook()); setNames();
     S.phase = 'select'; menu.hidden = true; result.hidden = true; $('selectScr').hidden = false; showMsg('');
     for (const [q, x] of [[p1, selOnline ? 0 : -1.05], [p2, selOnline ? 40 : 1.05]]) Object.assign(q, { x, z: 7.3, y: 0, vx: 0, vz: 0, vy: 0, shooting: false, dunking: false, pend: null, fallT: 0, stun: 0, sad: false, showCeleb: { type: CELEBS.indexOf(SHOW[Math.floor(rnd() * SHOW.length)]), t: rnd() } });
@@ -8306,7 +8608,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
     ptMe(); const g = FGAMES[PT.game], list = PT.pl.slice();
     if (list.length < 2) { $('fStatus').textContent = 'Il faut au moins 2 joueurs : ajoute un bot, J2 ou des amis.'; return; }
     if (g.turn && !list.some(p => p.kind !== 'bot')) return;
-    S.sub = null; S.tour = null; S.story = null; S.st = null; teamOff(); hideEx(); storyFxClear();
+    S.sub = null; S.tour = null; S.story = null; S.st = null; teamOff(); hideEx(); storyFxClear(); if (S.boss) bossPowerOff(); S.boss = null; S.car = null;
     for (const p of list) Object.assign(p, { crowns: 0, wins: 0, alive: true, score: null, streak: 0 });
     S.party = { game: PT.game, g, mods: Object.assign({}, PT.mods), it: 0, ov: null, bar: '', duel: null, queue: [], order: [], ti: 0 };
     S.mode = NET.party && NET.role === 'host' ? 'host' : 'solo'; S.evs = S.evs || []; S.diff = DIFFS[diffKey] || DIFFS.normal; S.gm = 'eclair'; S.lv = 'pro';
@@ -8393,7 +8695,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
     P2.it = 7; P2.then = () => partyStop(); S.phase = 'party'; renderPartyOv(P2.ov); showMsg('');
     storyConfetti(); SFX.roar && SFX.roar(); flash();
     const meWon = wp ? wp.id === 'h' || (wp.kind === 'j2') : PT.pl.some(p => p.id === 'h' && p.team === side);
-    awardXP(meWon ? 140 : 60); incStat && meWon && incStat('wins');
+    awardXP(meWon ? 140 : 60); incStat && meWon && incStat('wins'); cstAdd({ party: 1 }); addCoins(meWon ? 40 : 15, meWon ? 'Fête · victoire' : 'Fête');
   }
   function partyNextOrOver() {
     const P2 = S.party, alive = PT.pl.filter(p => p.alive !== false);
@@ -8465,7 +8767,8 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
   }
   function bombLook(frac) {
     const m = ballMesh.material;
-    if (frac == null || frac < 0) { if (m.emissive && m.emissiveIntensity) { m.emissive.set('#000000'); m.emissiveIntensity = 0; } return; }
+    if (frac == null || frac < 0) { if (m.userData.bomb) { m.userData.bomb = false; ballSkinApply(); } return; }
+    m.userData.bomb = true;
     const u = 1 - clamp(frac, 0, 1), blink = Math.sin(S.time * (6 + u * 30)) > 0;
     m.emissive.set('#ff2a10'); m.emissiveIntensity = (.3 + u * 2.6) * (blink ? 1 : .35);
     if (rnd() < .25 + u * .5) sparks(ball.x, ball.y + .12, ball.z, '#ffb347');
@@ -8669,6 +8972,515 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
     drawCourt();
     for (const j of jerseys) { paintJersey(j.c, j.look); j.mat.map.needsUpdate = true; }
   }).catch(() => {});
+
+  // ======================================================================================
+  //  v36 · MAXI MISE À JOUR — pièces, boutique (ballons, traînées, effets), succès, profil,
+  //  coffre du jour, mode Boss (7 monstres à pouvoirs), mode Carrière (saison + playoffs)
+  // ======================================================================================
+  const coins = () => store.get('coins', 0);
+  function renderCoins() { const e = $('coinN'); if (e) e.textContent = coins().toLocaleString('fr-FR'); }
+  function coinToast(n, why) {
+    const box = $('coinToasts'); if (!box) return;
+    const d = document.createElement('div'); d.className = 'ctoast'; d.innerHTML = `<b>+${n} 🪙</b><span>${why}</span>`; box.appendChild(d);
+    setTimeout(() => d.classList.add('out'), 2600); setTimeout(() => d.remove(), 3200);
+  }
+  function addCoins(n, why) { n = Math.round(n); if (!n) return 0; store.set('coins', coins() + n); renderCoins(); if (why) coinToast(n, why); setTimeout(achCheck, 50); return n; }
+  function spendCoins(n) { if (coins() < n) return false; store.set('coins', coins() - n); renderCoins(); return true; }
+
+  // ---------- career totals ----------
+  const CST0 = { games: 0, wins: 0, pts: 0, threes: 0, dunks: 0, oops: 0, posters: 0, greens: 0, blocks: 0, steals: 0, ankles: 0, best: 0, cur: 0, maps: {}, shut: 0, comeback: 0, party: 0, chests: 0, bought: 0, titles: 0, seasons: 0, time: 0 };
+  const cst = () => Object.assign({}, CST0, store.get('cst', {}));
+  function cstAdd(o) { const c = cst(); for (const [k, v] of Object.entries(o)) c[k] = (c[k] || 0) + v; store.set('cst', c); return c; }
+  // called from score(): counts my points, 2-pointers and dunks; tracks the comeback
+  function maxiScore(p, pts, kind) {
+    if (!S.ms) S.ms = {};
+    const mine = S.mode === 'local' ? p === p1 : isMine(p);
+    if (mine) {
+      S.ms.pts = (S.ms.pts || 0) + pts; if (pts >= 2) S.ms.threes = (S.ms.threes || 0) + 1;
+      if (kind === 'dunk' || kind === 'poster' || kind === 'oop') S.ms.dunks = (S.ms.dunks || 0) + 1;
+      fxBasket(p);
+    }
+    const m = S.mode === 'local' ? p1 : me(); if (m && S.score) { const def = S.score[other(m).id] - S.score[m.id]; S.ms.maxDef = Math.max(S.ms.maxDef || 0, def); }
+  }
+  // called at the end of every normal / tournament / boss / career match
+  function maxiMatchEnd() {
+    const m = S.mode === 'local' ? p1 : me(); if (!m) return 0;
+    const ms = S.ms || {}, mine = S.score[m.id], theirs = S.score[other(m).id], won = mine > theirs, c0 = cst();
+    const cur = won ? c0.cur + 1 : 0;
+    const maps = Object.assign({}, c0.maps); maps[S.map] = (maps[S.map] || 0) + 1;
+    const c = Object.assign(c0, { games: c0.games + 1, wins: c0.wins + (won ? 1 : 0), pts: c0.pts + (ms.pts || 0), threes: c0.threes + (ms.threes || 0), dunks: c0.dunks + (ms.dunks || 0), oops: c0.oops + (ms.oops || 0),
+      posters: c0.posters + (ms.posters || 0), greens: c0.greens + (ms.greens || 0), blocks: c0.blocks + (ms.blocks || 0), steals: c0.steals + (ms.steals || 0), ankles: c0.ankles + (ms.ankles || 0),
+      cur, best: Math.max(c0.best, cur), maps, shut: c0.shut + (won && theirs === 0 ? 1 : 0), comeback: c0.comeback + (won && (ms.maxDef || 0) >= 5 ? 1 : 0), time: c0.time + (S.time || 0) });
+    store.set('cst', c);
+    let n = 15 + (won ? 35 : 0) + (ms.pts || 0) + (ms.dunks || 0) * 2 + (ms.greens || 0) + (ms.ankles || 0) * 5 + (ms.posters || 0) * 8 + (won && theirs === 0 ? 30 : 0);
+    if (S.lv === 'hof') n *= 1.5; else if (S.lv === 'arcade') n *= .8;
+    if (S.mode === 'host' || S.mode === 'guest') n += 20;
+    n = Math.round(n); store.set('coins', coins() + n); renderCoins();
+    setTimeout(achCheck, 900);
+    return n;
+  }
+
+  // ---------- achievements ----------
+  const ACH = [
+    ['first', '🏀', 'Premier panier', 'Marque ton premier point', c => c.pts, 1, 25],
+    ['w1', '✌️', 'Première victoire', 'Gagne un match', c => c.wins, 1, 50],
+    ['w10', '🔥', 'Ça chauffe', 'Gagne 10 matchs', c => c.wins, 10, 120],
+    ['w50', '💪', 'Patron du quartier', 'Gagne 50 matchs', c => c.wins, 50, 350],
+    ['w100', '👑', 'Légende du Bitume', 'Gagne 100 matchs', c => c.wins, 100, 800],
+    ['p100', '💯', 'Centurion', 'Marque 100 points', c => c.pts, 100, 80],
+    ['p1000', '🚀', 'Machine à points', 'Marque 1 000 points', c => c.pts, 1000, 500],
+    ['d10', '💥', 'Au-dessus du cercle', 'Fais 10 dunks', c => c.dunks, 10, 80],
+    ['d100', '🦅', 'Air Bitume', 'Fais 100 dunks', c => c.dunks, 100, 400],
+    ['t25', '🎯', 'Sniper', 'Mets 25 paniers à 2 pts', c => c.threes, 25, 120],
+    ['g50', '🟢', 'Le vert parfait', 'Réussis 50 tirs verts', c => c.greens, 50, 200],
+    ['a10', '🦶', 'Brise-chevilles', 'Casse 10 chevilles', c => c.ankles, 10, 180],
+    ['po5', '🖼️', 'Affiche', 'Fais 5 posters', c => c.posters, 5, 180],
+    ['o10', '🤝', 'Alley-oop !', 'Réussis 10 alley-oops', c => c.oops, 10, 150],
+    ['b25', '🧱', 'Le Mur', 'Contre 25 tirs', c => c.blocks, 25, 150],
+    ['s25', '🕵️', 'Pickpocket', 'Vole 25 ballons', c => c.steals, 25, 150],
+    ['st5', '⚡', 'Inarrêtable', '5 victoires d\'affilée', c => c.best, 5, 250],
+    ['shut', '🧹', 'Capot !', 'Gagne sans encaisser un point', c => c.shut, 1, 300],
+    ['comeback', '🔄', 'Remontada', 'Gagne après avoir été mené de 5 points', c => c.comeback, 1, 300],
+    ['maps10', '🗺️', 'Globe-trotter', 'Joue sur 10 terrains différents', c => Object.keys(c.maps || {}).length, 10, 200],
+    ['mapsAll', '🌍', 'Tour du monde', 'Joue sur tous les terrains', c => Object.keys(c.maps || {}).length, () => Object.keys(MAPS).length, 600],
+    ['tour', '🏆', 'Champion du tournoi', 'Bats les 8 adversaires du tournoi', () => store.get('tourP', 0), 8, 500],
+    ['boss1', '👹', 'Chasseur de monstres', 'Bats un boss', () => store.get('bossP', 0), 1, 150],
+    ['bossAll', '😈', 'Tueur de boss', 'Bats les 7 boss', () => store.get('bossP', 0), 7, 1000],
+    ['champ', '🥇', 'Champion de la Ligue', 'Gagne une saison de Carrière', c => c.titles, 1, 600],
+    ['champ3', '🏅', 'Dynastie', 'Gagne 3 saisons de Carrière', c => c.titles, 3, 1500],
+    ['party', '🎉', 'Fêtard', 'Joue une partie de Fête', c => c.party, 1, 80],
+    ['online', '🌐', 'Roi d\'Internet', 'Gagne un match en ligne', () => (store.get('hist', []).filter(h => h.on && h.w).length), 1, 150],
+    ['lvl10', '⭐', 'Niveau 10', 'Atteins le niveau 10', () => lvlOf(store.get('xp', 0)), 10, 300],
+    ['shop1', '🛍️', 'Premier achat', 'Achète un objet à la boutique', c => c.bought, 1, 50],
+    ['shop10', '💎', 'Collectionneur', 'Achète 10 objets', c => c.bought, 10, 400],
+    ['chest7', '🎁', 'Fidèle', 'Ouvre 7 coffres du jour', c => c.chests, 7, 250]
+  ];
+  const achGoal = a => typeof a[5] === 'function' ? a[5]() : a[5];
+  function achCheck() {
+    const c = cst(), got = store.get('ach', {}); let changed = false, k = 0;
+    for (const a of ACH) {
+      if (got[a[0]]) continue;
+      if (a[4](c) >= achGoal(a)) {
+        got[a[0]] = Date.now(); changed = true; const d = k++ * 1400;
+        setTimeout(() => { achToast(a); store.set('coins', coins() + a[6]); renderCoins(); }, d);
+      }
+    }
+    if (changed) store.set('ach', got);
+  }
+  function achToast(a) {
+    const box = $('coinToasts'); if (!box) return;
+    const d = document.createElement('div'); d.className = 'ctoast ach'; d.innerHTML = `<i>${a[1]}</i><span><small>SUCCÈS DÉBLOQUÉ</small><b>${a[2]}</b></span><em>+${a[6]} 🪙</em>`; box.appendChild(d);
+    SFX.cheer && SFX.cheer(); setTimeout(() => d.classList.add('out'), 3600); setTimeout(() => d.remove(), 4300);
+  }
+
+  // ---------- particles (trails, basket effects, boss powers): one cheap point cloud ----------
+  const PN = 700, pPos = new Float32Array(PN * 3), pCol = new Float32Array(PN * 3), pBase = new Float32Array(PN * 3), pVel = new Float32Array(PN * 3), pLife = new Float32Array(PN), pMax = new Float32Array(PN), pGrav = new Float32Array(PN);
+  for (let i = 0; i < PN; i++) pPos[i * 3 + 1] = -200;
+  const pGeo = new THREE.BufferGeometry(); pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3)); pGeo.setAttribute('color', new THREE.BufferAttribute(pCol, 3));
+  const pDot = (() => { const c = canvas(64, 64), g = c.getContext('2d'), gr = g.createRadialGradient(32, 32, 0, 32, 32, 32); gr.addColorStop(0, 'rgba(255,255,255,1)'); gr.addColorStop(.35, 'rgba(255,255,255,.75)'); gr.addColorStop(1, 'rgba(255,255,255,0)'); g.fillStyle = gr; g.fillRect(0, 0, 64, 64); return new THREE.CanvasTexture(c); })();
+  const pts3 = new THREE.Points(pGeo, new THREE.PointsMaterial({ size: .34, map: pDot, vertexColors: true, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, sizeAttenuation: true }));
+  pts3.frustumCulled = false; pts3.renderOrder = 6; scene.add(pts3);
+  let pNext = 0; const pc = new THREE.Color();
+  function emit(x, y, z, col, vx, vy, vz, life, grav) {
+    const i = pNext; pNext = (pNext + 1) % PN; pc.set(col).convertSRGBToLinear().multiplyScalar(1.6);
+    pPos.set([x, y, z], i * 3); pVel.set([vx, vy, vz], i * 3); pBase.set([pc.r, pc.g, pc.b], i * 3); pLife[i] = pMax[i] = life; pGrav[i] = grav || 0;
+  }
+  function pTick(dt) {
+    let any = false;
+    for (let i = 0; i < PN; i++) {
+      if (pLife[i] <= 0) continue; any = true;
+      pLife[i] -= dt; const k = i * 3;
+      if (pLife[i] <= 0) { pPos[k + 1] = -200; pCol[k] = pCol[k + 1] = pCol[k + 2] = 0; continue; }
+      pVel[k + 1] -= pGrav[i] * dt; pPos[k] += pVel[k] * dt; pPos[k + 1] += pVel[k + 1] * dt; pPos[k + 2] += pVel[k + 2] * dt;
+      const u = pLife[i] / pMax[i], f = u < .3 ? u / .3 : 1; pCol[k] = pBase[k] * f; pCol[k + 1] = pBase[k + 1] * f; pCol[k + 2] = pBase[k + 2] * f;
+    }
+    if (any || pTick.was) { pGeo.attributes.position.needsUpdate = true; pGeo.attributes.color.needsUpdate = true; } pTick.was = any;
+  }
+
+  // ---------- shop ----------
+  const SHOP = {
+    ball: { t: 'Ballons', i: '🏀', items: [['classique', 'Classique', 0], ['retro', 'Rétro tricolore', 300], ['camo', 'Camo', 300], ['damier', 'Damier', 350], ['plage', 'Ballon de plage', 250], ['pasteque', 'Pastèque', 250],
+      ['glace', 'Glace', 400], ['neon', 'Néon', 450], ['feu', 'Lave', 550], ['galaxie', 'Galaxie', 800], ['or', 'Or 24 carats', 1000], ['diamant', 'Diamant', 1500]] },
+    trail: { t: 'Traînées', i: '☄️', items: [['aucune', 'Aucune', 0], ['fumee', 'Fumée', 250], ['coeurs', 'Cœurs', 300], ['feu', 'Feu', 400], ['matrix', 'Matrix', 400], ['etoiles', 'Étoiles', 500], ['eclair', 'Éclair', 550], ['arcenciel', 'Arc-en-ciel', 700]] },
+    fx: { t: 'Effets de panier', i: '✨', items: [['aucun', 'Aucun', 0], ['confettis', 'Confettis', 350], ['glace', 'Éclats de glace', 400], ['flammes', 'Flammes', 500], ['eclair', 'Foudre', 600], ['or', 'Pluie d\'or', 900]] }
+  };
+  const owned = () => Object.assign({ ball: ['classique'], trail: ['aucune'], fx: ['aucun'] }, store.get('owned', {}));
+  const equip = () => Object.assign({ ball: 'classique', trail: 'aucune', fx: 'aucun' }, store.get('equip', {}));
+  // ball skins, painted like the original ball (equirectangular canvas)
+  const ballOrig = ballMesh.material.map;
+  const skinCache = {};
+  function paintBall(id) {
+    if (skinCache[id]) return skinCache[id];
+    const c = canvas(256, 128), g = c.getContext('2d'), e = canvas(256, 128), eg = e.getContext('2d'), R = seeded(id.length * 7 + 3);
+    eg.fillStyle = '#000'; eg.fillRect(0, 0, 256, 128);
+    const seams = (col, w, gg) => { (gg || g).strokeStyle = col; (gg || g).lineWidth = w; for (const x of [0, 64, 128, 192, 256]) { (gg || g).beginPath(); (gg || g).moveTo(x, 0); (gg || g).lineTo(x, 128); (gg || g).stroke(); } (gg || g).beginPath(); (gg || g).moveTo(0, 64); (gg || g).lineTo(256, 64); (gg || g).stroke(); };
+    const grain = (a) => { for (let i = 0; i < 1200; i++) { g.fillStyle = `rgba(0,0,0,${R() * a})`; g.fillRect(R() * 256, R() * 128, 2, 2); } };
+    let mat = { rough: .65, metal: 0, emis: 0, ecol: '#ffffff' };
+    if (id === 'or') { const gr = g.createLinearGradient(0, 0, 0, 128); gr.addColorStop(0, '#fff2b0'); gr.addColorStop(.45, '#e0a92a'); gr.addColorStop(1, '#8a5a0a'); g.fillStyle = gr; g.fillRect(0, 0, 256, 128); seams('#5a3a05', 4); mat = { rough: .22, metal: .85, emis: .15, ecol: '#ffcc55' }; eg.fillStyle = '#553300'; eg.fillRect(0, 0, 256, 128); }
+    else if (id === 'neon') { g.fillStyle = '#0b0b1c'; g.fillRect(0, 0, 256, 128); seams('#00f0ff', 5); seams('#00f0ff', 6, eg); mat = { rough: .35, metal: .2, emis: 1.6, ecol: '#ffffff' }; }
+    else if (id === 'feu') { g.fillStyle = '#1a0a06'; g.fillRect(0, 0, 256, 128); for (let i = 0; i < 46; i++) { const x = R() * 256, y = R() * 128; for (const gg of [g, eg]) { gg.strokeStyle = gg === g ? '#ff6a1a' : '#ff8a2a'; gg.lineWidth = 2 + R() * 2; gg.beginPath(); gg.moveTo(x, y); let px = x, py = y; for (let k = 0; k < 4; k++) { px += (R() - .5) * 40; py += (R() - .5) * 30; gg.lineTo(px, py); } gg.stroke(); } } seams('#2a0d05', 4); mat = { rough: .7, metal: 0, emis: 1.4, ecol: '#ffffff' }; }
+    else if (id === 'glace') { const gr = g.createLinearGradient(0, 0, 256, 128); gr.addColorStop(0, '#e8faff'); gr.addColorStop(1, '#7cc8f0'); g.fillStyle = gr; g.fillRect(0, 0, 256, 128); for (let i = 0; i < 30; i++) { g.strokeStyle = 'rgba(255,255,255,.7)'; g.lineWidth = 1; g.beginPath(); const x = R() * 256, y = R() * 128; g.moveTo(x, y); g.lineTo(x + (R() - .5) * 50, y + (R() - .5) * 40); g.stroke(); } seams('#3a7ab0', 3); mat = { rough: .15, metal: .15, emis: .25, ecol: '#bfe9ff' }; eg.fillStyle = '#3a6a8a'; eg.fillRect(0, 0, 256, 128); }
+    else if (id === 'galaxie') { const gr = g.createLinearGradient(0, 0, 256, 128); gr.addColorStop(0, '#1a0638'); gr.addColorStop(.5, '#3a0f6a'); gr.addColorStop(1, '#0a1a4a'); g.fillStyle = gr; g.fillRect(0, 0, 256, 128);
+      for (let i = 0; i < 9; i++) { const x = R() * 256, y = R() * 128, rg = g.createRadialGradient(x, y, 0, x, y, 30); rg.addColorStop(0, R() < .5 ? 'rgba(255,90,200,.35)' : 'rgba(90,160,255,.35)'); rg.addColorStop(1, 'rgba(0,0,0,0)'); g.fillStyle = rg; g.fillRect(x - 30, y - 30, 60, 60); }
+      for (let i = 0; i < 160; i++) { const x = R() * 256, y = R() * 128, s = R() < .1 ? 2 : 1; g.fillStyle = '#fff'; g.fillRect(x, y, s, s); eg.fillStyle = '#fff'; eg.fillRect(x, y, s, s); } seams('rgba(200,180,255,.55)', 2); mat = { rough: .4, metal: .1, emis: 1.2, ecol: '#ffffff' }; }
+    else if (id === 'retro') { const cs = ['#d42a2a', '#f4ede0', '#1f4fa8', '#f4ede0']; for (let i = 0; i < 8; i++) { g.fillStyle = cs[i % 4]; g.fillRect(i * 32, 0, 32, 128); } grain(.08); seams('#1d1d24', 3); }
+    else if (id === 'camo') { g.fillStyle = '#4a5a32'; g.fillRect(0, 0, 256, 128); const cs = ['#2f3a20', '#7a7a4a', '#5a4a2a']; for (let i = 0; i < 40; i++) { g.fillStyle = cs[i % 3]; g.beginPath(); g.ellipse(R() * 256, R() * 128, 10 + R() * 18, 6 + R() * 10, R() * 3, 0, 6.3); g.fill(); } seams('#1a1a10', 4); }
+    else if (id === 'damier') { for (let y = 0; y < 128; y += 16) for (let x = 0; x < 256; x += 16) { g.fillStyle = ((x + y) / 16) % 2 ? '#111' : '#f4ede0'; g.fillRect(x, y, 16, 16); } seams('#ff9a2e', 3); }
+    else if (id === 'plage') { const cs = ['#e5484d', '#f4ede0', '#facc15', '#f4ede0', '#3b82f6', '#f4ede0', '#22c55e', '#f4ede0']; for (let i = 0; i < 8; i++) { g.fillStyle = cs[i]; g.fillRect(i * 32, 0, 32, 128); } g.fillStyle = '#fff'; g.fillRect(0, 0, 256, 8); g.fillRect(0, 120, 256, 8); mat = { rough: .3, metal: 0, emis: 0 }; }
+    else if (id === 'pasteque') { g.fillStyle = '#2f7a2a'; g.fillRect(0, 0, 256, 128); for (let x = 0; x < 256; x += 22) { g.fillStyle = '#123f12'; g.beginPath(); g.moveTo(x, 0); for (let y = 0; y <= 128; y += 8) g.lineTo(x + Math.sin(y * .2 + x) * 4 + 6, y); for (let y = 128; y >= 0; y -= 8) g.lineTo(x + Math.sin(y * .2 + x) * 4, y); g.fill(); } mat = { rough: .45, metal: 0, emis: 0 }; }
+    else if (id === 'diamant') { for (let y = 0; y < 128; y += 16) for (let x = 0; x < 256; x += 16) { const l = 60 + R() * 35; g.fillStyle = `hsl(${185 + R() * 30},80%,${l}%)`; g.beginPath(); g.moveTo(x, y); g.lineTo(x + 16, y); g.lineTo(x + (y / 16 % 2 ? 0 : 16), y + 16); g.fill(); g.fillStyle = `hsl(${190 + R() * 30},70%,${l - 18}%)`; g.beginPath(); g.moveTo(x, y + 16); g.lineTo(x + 16, y + 16); g.lineTo(x + (y / 16 % 2 ? 16 : 0), y); g.fill(); }
+      eg.fillStyle = '#0a3a4a'; eg.fillRect(0, 0, 256, 128); for (let i = 0; i < 40; i++) { eg.fillStyle = '#fff'; eg.fillRect(R() * 256, R() * 128, 2, 2); } mat = { rough: .08, metal: .9, emis: 1, ecol: '#ffffff' }; }
+    else { return skinCache[id] = { map: ballOrig, emap: null, rough: .65, metal: 0, emis: 0 }; }
+    return skinCache[id] = { map: tex(c), emap: mat.emis ? tex(e) : null, rough: mat.rough, metal: mat.metal, emis: mat.emis, ecol: mat.ecol || '#ffffff' };
+  }
+  function ballSkinApply(id) {
+    const sk = paintBall(id || equip().ball), m = ballMesh.material;
+    m.map = sk.map; m.emissiveMap = sk.emap; m.roughness = sk.rough; m.metalness = sk.metal;
+    m.emissive.set(sk.emis ? sk.ecol : '#000000'); m.emissiveIntensity = sk.emis || 0; m.needsUpdate = true;
+  }
+  ballSkinApply();
+  const TRAIL_C = { fumee: ['#8a8a96', '#5a5a66'], coeurs: ['#ff4d8a', '#ff9ac2'], feu: ['#ff4a12', '#ffb21f', '#ffe08a'], matrix: ['#22ff66', '#0aa83a'], etoiles: ['#ffd166', '#fff6c8'], eclair: ['#9fd8ff', '#ffffff', '#5aa8ff'] };
+  let trailAcc = 0;
+  function trailTick(dt) {
+    const tr = equip().trail; if (tr === 'aucune' || S.phase === 'menu' || S.phase === 'select') return;
+    const flying = ball.state === 'flight' || ball.state === 'through' || (ball.state === 'loose' && Math.hypot(ball.vx, ball.vy, ball.vz) > 2);
+    const lt = ball.lastTouch || (ball.fl && ball.fl.shooter); if (!flying || !lt || !(S.mode === 'local' ? lt === p1 : isMine(lt))) return;
+    trailAcc += dt * (tr === 'eclair' ? 90 : 60);
+    while (trailAcc >= 1) { trailAcc--;
+      const j = () => (Math.random() - .5) * .12;
+      let col; if (tr === 'arcenciel') { pc.setHSL((S.time * .6 + Math.random() * .08) % 1, 1, .55); col = '#' + pc.getHexString(); } else { const L = TRAIL_C[tr]; col = L[Math.floor(Math.random() * L.length)]; }
+      const up = tr === 'fumee' ? .5 : tr === 'feu' ? .9 : 0;
+      emit(ball.x + j(), ball.y + j(), ball.z + j(), col, j() * 4, up + j() * 3, j() * 4, tr === 'fumee' ? .9 : tr === 'eclair' ? .25 : .55, tr === 'etoiles' ? 2 : 0);
+    }
+  }
+  function fxBasket(p) {
+    const fx = equip().fx; if (fx === 'aucun') return;
+    const x = RIM.x, y = RIM.y, z = RIM.z, R2 = Math.random;
+    const burst = (n, cols, sp, up, life, grav) => { for (let i = 0; i < n; i++) { const a = R2() * 6.283, s = sp * (.4 + R2() * .8); emit(x + (R2() - .5) * .3, y + (R2() - .5) * .2, z + (R2() - .5) * .3, cols[i % cols.length], Math.cos(a) * s, up * (.5 + R2()), Math.sin(a) * s, life * (.7 + R2() * .6), grav); } };
+    if (fx === 'confettis') burst(110, ['#e5484d', '#facc15', '#3b82f6', '#22c55e', '#f472b6', '#ffffff'], 3.2, 5, 1.6, 6);
+    else if (fx === 'glace') { burst(80, ['#bfe9ff', '#ffffff', '#5ab8f0'], 4, 3, .9, 8); ringFlash(x, y, z, '#9fd8ff'); }
+    else if (fx === 'flammes') { for (let i = 0; i < 120; i++) emit(x + (R2() - .5) * .6, y - .2 + R2() * .3, z + (R2() - .5) * .6, ['#ff4a12', '#ffb21f', '#ffe08a'][i % 3], (R2() - .5) * 1.2, 2.5 + R2() * 3.5, (R2() - .5) * 1.2, .5 + R2() * .5, -1.5); }
+    else if (fx === 'eclair') { ringFlash(x, y, z, '#bfe0ff'); flash(); burst(90, ['#ffffff', '#9fd8ff', '#5aa8ff'], 6, 2, .35, 0); S.shakeT = Math.max(S.shakeT || 0, .25); }
+    else if (fx === 'or') { for (let i = 0; i < 140; i++) emit(x + (R2() - .5) * 5, y + 2 + R2() * 3, z + (R2() - .5) * 4, R2() < .7 ? '#ffd166' : '#fff2b0', (R2() - .5) * .4, -1 - R2() * 2, (R2() - .5) * .4, 1.4 + R2() * .8, 3); }
+  }
+
+  // shop panel
+  let shopTab = 'ball';
+  function shopPreview(cat, id) {
+    if (cat === 'ball') { const sk = paintBall(id), src = sk.map === ballOrig ? ballC : sk.map.image; return `<canvas class="sball" data-src="${id}"></canvas>`; }
+    if (cat === 'trail') { const L = id === 'arcenciel' ? ['#ff3b3b', '#ffd23b', '#3bff6a', '#3bb4ff', '#b43bff'] : TRAIL_C[id] || ['#3a3150']; return `<i class="strail" style="background:linear-gradient(90deg,transparent,${L.join(',')})"></i>`; }
+    return `<i class="sfx">${{ aucun: '∅', confettis: '🎊', glace: '❄️', flammes: '🔥', eclair: '⚡', or: '🪙' }[id]}</i>`;
+  }
+  function drawBallPreviews() {
+    document.querySelectorAll('#shopList canvas.sball').forEach(cv => {
+      const id = cv.dataset.src, sk = paintBall(id), img = sk.map === ballOrig ? ballC : sk.map.image;
+      cv.width = cv.height = 72; const g = cv.getContext('2d'); g.save(); g.beginPath(); g.arc(36, 36, 32, 0, 6.283); g.clip(); g.drawImage(img, 40, 0, 128, 128, 4, 4, 64, 64);
+      const sh = g.createRadialGradient(26, 24, 4, 36, 36, 34); sh.addColorStop(0, 'rgba(255,255,255,.35)'); sh.addColorStop(.6, 'rgba(0,0,0,0)'); sh.addColorStop(1, 'rgba(0,0,0,.5)'); g.fillStyle = sh; g.fillRect(0, 0, 72, 72); g.restore();
+    });
+  }
+  function renderShop() {
+    renderCoins(); $('shopCoins').textContent = coins().toLocaleString('fr-FR');
+    document.querySelectorAll('#shopTabs button').forEach(b => b.setAttribute('aria-selected', String(b.dataset.v === shopTab)));
+    const O = owned(), E = equip(), cat = SHOP[shopTab];
+    $('shopList').innerHTML = cat.items.map(([id, n, price]) => {
+      const has = O[shopTab].includes(id), on = E[shopTab] === id;
+      return `<div class="sitem ${on ? 'on' : ''} ${has ? 'has' : ''}" data-id="${id}">${shopPreview(shopTab, id)}<b>${n}</b>${on ? '<span class="sbtn eq">✓ Équipé</span>' : has ? '<button class="sbtn" data-a="eq">Équiper</button>' : `<button class="sbtn buy ${coins() < price ? 'poor' : ''}" data-a="buy">🪙 ${price.toLocaleString('fr-FR')}</button>`}</div>`;
+    }).join('');
+    drawBallPreviews();
+  }
+  function shopAct(id, a) {
+    const cat = SHOP[shopTab], it = cat.items.find(x => x[0] === id); if (!it) return;
+    const O = owned(), E = equip();
+    if (a === 'buy') {
+      if (!spendCoins(it[2])) { const b = document.querySelector(`#shopList [data-id="${id}"] .sbtn`); if (b) { b.classList.remove('shake'); void b.offsetWidth; b.classList.add('shake'); } SFX.click && SFX.click(); return; }
+      O[shopTab] = O[shopTab].concat(id); store.set('owned', O); cstAdd({ bought: 1 }); SFX.cheer && SFX.cheer(); a = 'eq'; setTimeout(achCheck, 200);
+    }
+    if (a === 'eq') { E[shopTab] = id; store.set('equip', E); if (shopTab === 'ball') ballSkinApply(id); SFX.click && SFX.click();
+      if (shopTab !== 'ball') { const x = ball.x, y = Math.max(1.2, ball.y), z = ball.z; for (let i = 0; i < 40; i++) emit(x, y, z, shopTab === 'trail' ? (TRAIL_C[id] || ['#ffd166'])[0] : '#ffd166', (Math.random() - .5) * 3, Math.random() * 3, (Math.random() - .5) * 3, .8, 3); } }
+    renderShop();
+  }
+  document.querySelectorAll('#shopTabs button').forEach(b => b.addEventListener('click', () => { shopTab = b.dataset.v; SFX.click && SFX.click(); renderShop(); }));
+  $('shopList').addEventListener('click', e => { const b = e.target.closest('button[data-a]'); if (!b) return; shopAct(b.closest('.sitem').dataset.id, b.dataset.a); });
+  $('shopBtn').addEventListener('click', () => { renderShop(); $('shopPanel').hidden = false; });
+  $('coinBtn').addEventListener('click', () => { renderShop(); $('shopPanel').hidden = false; });
+  $('shopClose').addEventListener('click', () => { $('shopPanel').hidden = true; });
+
+  // ---------- trophies: profile + achievements ----------
+  let trTab = 'profil';
+  function renderTrophies() {
+    document.querySelectorAll('#trTabs button').forEach(b => b.setAttribute('aria-selected', String(b.dataset.v === trTab)));
+    const c = cst(), got = store.get('ach', {}), nGot = ACH.filter(a => got[a[0]]).length;
+    $('trCount').textContent = nGot + ' / ' + ACH.length + ' succès';
+    if (trTab === 'profil') {
+      const pct = c.games ? Math.round(c.wins / c.games * 100) : 0, mapsN = Object.keys(c.maps || {}).length, fav = Object.entries(c.maps || {}).sort((a, b) => b[1] - a[1])[0];
+      const titles = [];
+      if (c.titles) titles.push(`🥇 Champion de la Ligue ×${c.titles}`); if (store.get('bossP', 0) >= BOSSES.length) titles.push('😈 Tueur de boss'); if (store.get('tourP', 0) >= 8) titles.push('🏆 Champion du tournoi');
+      if (c.wins >= 100) titles.push('👑 Légende du Bitume');
+      const tile = (v, l) => `<div class="pst"><b>${v}</b><span>${l}</span></div>`;
+      const mins = Math.round((c.time || 0) / 60);
+      $('trBody').innerHTML = `<div class="phead"><div><b>${looks.p1.name || 'TOI'}</b><span>Niveau ${lvlOf(store.get('xp', 0))} · 🪙 ${coins().toLocaleString('fr-FR')} · cote en ligne ${store.get('elo', 1000)}</span></div></div>
+        ${titles.length ? `<div class="ptitles">${titles.map(t => `<span>${t}</span>`).join('')}</div>` : ''}
+        <div class="pgrid">${tile(c.games, 'matchs')}${tile(c.wins, 'victoires')}${tile(pct + '%', 'de victoires')}${tile(c.best, 'meilleure série')}${tile(c.pts, 'points')}${tile(c.threes, 'paniers à 2 pts')}${tile(c.dunks, 'dunks')}${tile(c.oops, 'alley-oops')}${tile(c.posters, 'posters')}${tile(c.greens, 'tirs verts')}${tile(c.blocks, 'contres')}${tile(c.steals, 'vols')}${tile(c.ankles, 'chevilles cassées')}${tile(mapsN + ' / ' + Object.keys(MAPS).length, 'terrains joués')}${tile(store.get('bossP', 0) + ' / ' + BOSSES.length, 'boss battus')}${tile(mins + ' min', 'de jeu')}</div>
+        ${fav ? `<p class="note">Terrain préféré : <b>${(MAPS[fav[0]] || MAPS.bitume).name}</b> (${fav[1]} matchs)</p>` : ''}`;
+    } else {
+      $('trBody').innerHTML = ACH.map(a => { const g = achGoal(a), v = Math.min(g, a[4](c)), ok = !!got[a[0]];
+        return `<div class="achrow ${ok ? 'ok' : ''}"><i>${ok ? a[1] : '🔒'}</i><span><b>${a[2]}</b><em>${a[3]}</em><s><u style="width:${Math.round(v / g * 100)}%"></u></s></span><small>${ok ? '✓' : v + '/' + g}<br>🪙 ${a[6]}</small></div>`; }).join('');
+    }
+  }
+  document.querySelectorAll('#trTabs button').forEach(b => b.addEventListener('click', () => { trTab = b.dataset.v; SFX.click && SFX.click(); renderTrophies(); }));
+  $('trophyBtn').addEventListener('click', () => { achCheck(); renderTrophies(); $('trophyPanel').hidden = false; });
+  $('trophyClose').addEventListener('click', () => { $('trophyPanel').hidden = true; });
+
+  // ---------- daily chest ----------
+  const chestState = () => store.get('chest', { day: 0, streak: 0 });
+  const chestReady = () => chestState().day !== today();
+  function renderChestDot() { const d = $('chestDot'); if (d) d.hidden = !chestReady(); $('chestBtn').classList.toggle('ready', chestReady()); }
+  function openChestPanel() {
+    const ready = chestReady(), st = chestState(), y = new Date(); y.setDate(y.getDate() - 1);
+    const yk = y.getFullYear() * 10000 + (y.getMonth() + 1) * 100 + y.getDate(), streak = ready ? (st.day === yk ? st.streak + 1 : 1) : st.streak;
+    $('chestBox').className = 'chestbox' + (ready ? ' shake' : ' done'); $('chestAmt').textContent = ''; $('chestAmt').className = 'chestamt';
+    $('chestStreak').innerHTML = `Série : <b>${streak} jour${streak > 1 ? 's' : ''}</b> d'affilée · bonus +${Math.min(7, streak) * 20} 🪙` + `<span class="cdays">${[1, 2, 3, 4, 5, 6, 7].map(d => `<i class="${d <= Math.min(7, streak) ? 'on' : ''}">${d}</i>`).join('')}</span>`;
+    $('chestOpen').hidden = !ready; $('chestNote').textContent = ready ? 'Un coffre gratuit chaque jour. Reviens tous les jours pour faire monter la série !' : 'Déjà ouvert aujourd\'hui. Reviens demain !';
+    $('chestPanel').hidden = false;
+  }
+  function openChest() {
+    if (!chestReady()) return;
+    const st = chestState(), y = new Date(); y.setDate(y.getDate() - 1);
+    const yk = y.getFullYear() * 10000 + (y.getMonth() + 1) * 100 + y.getDate(), streak = st.day === yk ? st.streak + 1 : 1;
+    const jackpot = Math.random() < .08, n = jackpot ? 500 : 60 + Math.round(Math.random() * 10) * 10 + Math.min(7, streak) * 20;
+    store.set('chest', { day: today(), streak }); cstAdd({ chests: 1 });
+    $('chestOpen').hidden = true; const box = $('chestBox'); box.className = 'chestbox opening'; SFX.click && SFX.click();
+    setTimeout(() => { box.className = 'chestbox open'; flash(); SFX.cheer && SFX.cheer(); const a = $('chestAmt'); a.className = 'chestamt show' + (jackpot ? ' jack' : ''); let k = 0; const t0 = performance.now();
+      const step = now => { const u = Math.min(1, (now - t0) / 900); k = Math.round(n * (1 - Math.pow(1 - u, 3))); a.textContent = (jackpot ? 'JACKPOT ! ' : '') + '+' + k + ' 🪙'; if (u < 1) requestAnimationFrame(step); };
+      requestAnimationFrame(step); addCoins(n, jackpot ? 'Coffre · JACKPOT' : 'Coffre du jour'); renderChestDot(); $('chestNote').textContent = 'Reviens demain pour un nouveau coffre !'; }, 1100);
+  }
+  $('chestBtn').addEventListener('click', openChestPanel);
+  $('chestOpen').addEventListener('click', openChest);
+  $('chestClose').addEventListener('click', () => { $('chestPanel').hidden = true; });
+  renderChestDot(); renderCoins();
+
+  // ======================================================================================
+  //  MODE BOSS — 7 monstres, chacun avec un pouvoir qui se déclenche pendant le match
+  // ======================================================================================
+  const BL = o => Object.assign({}, LOOK_AI, XTRA, o);
+  const BOSSES = [
+    { name: 'LE TITAN', title: '2,60 m de muscles', map: 'arene', sc: 1.42, power: 'seisme', pn: 'SÉISME', pd: 'Il frappe le sol : tu es ralenti pendant 3 secondes.', every: 13, d: 2.2, coins: 200,
+      prof: { n: 'LE TITAN', d: 'Géant de pierre', h: 2.6, sp: .88, sh3: .55, shm: .95, fade: .7, deep: -1, drib: .6, blk: 2.2, stl: .8, dnk: 1.4, post: 3, jmp: 1 },
+      look: BL({ name: 'LE TITAN', num: '1', jersey: '#57534e', shorts: '#292524', style: 'camo', skin: 4, hair: 'rasé', hairColor: '#111', headband: '#a8a29e', sleeve: 'aucun', wrist: true, shoes: '#292524', beard: 'pleine', knee: '#292524', aura: '#a8a29e' }) },
+    { name: 'FLASH', title: 'Plus rapide que la lumière', map: 'neon', sc: 1, power: 'eclair', pn: 'VITESSE LUMIÈRE', pd: 'Il devient deux fois plus rapide pendant 4 secondes.', every: 12, d: 3.2, coins: 250,
+      prof: { n: 'FLASH', d: 'Vitesse pure', h: 1.85, sp: 1.28, sh3: 1.05, shm: 1.1, fade: 1.1, deep: .2, drib: 1.6, blk: .7, stl: 1.7, dnk: 0, post: .6, jmp: 1.08 },
+      look: BL({ name: 'FLASH', num: '0', jersey: '#facc15', shorts: '#b91c1c', style: 'éclair', skin: 1, hair: 'crête', hairColor: '#facc15', headband: '#b91c1c', sleeve: 'droit', wrist: true, shoes: '#facc15', glasses: true, aura: '#facc15' }) },
+    { name: 'LA SORCIÈRE', title: 'Les yeux du brouillard', map: 'jungle', sc: 1, power: 'brouillard', pn: 'BROUILLARD', pd: 'Un brouillard magique te cache le terrain pendant 5 secondes.', every: 14, d: 4, coins: 300,
+      prof: { n: 'LA SORCIÈRE', d: 'Tireuse maudite', h: 1.9, sp: 1.04, sh3: 1.3, shm: 1.25, fade: 1.35, deep: .7, drib: 1.2, blk: .9, stl: 1.2, dnk: -.3, post: .7, jmp: 1 },
+      look: BL({ name: 'LA SORCIÈRE', num: '13', jersey: '#3b0764', shorts: '#1e1b4b', style: 'dégradé', skin: 0, hair: 'nattes', hairColor: '#a3e635', headband: '#a3e635', sleeve: 'gauche', wrist: true, shoes: '#3b0764', hoodie: '#2e1065', aura: '#a3e635' }) },
+    { name: 'L\'ASTRONAUTE', title: 'Venu d\'en haut', map: 'orbite', sc: 1.05, power: 'gravite', pn: 'APESANTEUR', pd: 'La gravité disparaît pendant 6 secondes : tout flotte.', every: 15, d: 4.8, coins: 350,
+      prof: { n: 'L\'ASTRONAUTE', d: 'Saute jusqu\'aux étoiles', h: 2.03, sp: 1.04, sh3: 1.05, shm: 1.1, fade: 1.1, deep: .2, drib: 1.1, blk: 1.4, stl: 1.1, dnk: 1.3, post: 1.6, jmp: 1.25 },
+      look: BL({ name: 'L\'ASTRONAUTE', num: '69', jersey: '#f4f4f5', shorts: '#e4e4e7', style: 'bande', skin: 2, hair: 'high-top', hairColor: '#111', headband: '#3b82f6', sleeve: 'aucun', wrist: true, shoes: '#f4f4f5', glasses: true, aura: '#38bdf8' }) },
+    { name: 'LE YÉTI', title: 'Le monstre du Sommet', map: 'neige', sc: 1.24, power: 'blizzard', pn: 'BLIZZARD', pd: 'Une tempête de neige te gèle : tu es très lent pendant 4 secondes.', every: 13, d: 5.6, coins: 400,
+      prof: { n: 'LE YÉTI', d: 'Colosse des glaces', h: 2.3, sp: .96, sh3: .8, shm: 1.05, fade: .9, deep: 0, drib: .85, blk: 1.8, stl: 1.2, dnk: 1, post: 2.4, jmp: 1.05 },
+      look: BL({ name: 'LE YÉTI', num: '44', jersey: '#e0f2fe', shorts: '#bae6fd', style: 'camo', skin: 0, hair: 'afro', hairColor: '#f8fafc', headband: '#7dd3fc', sleeve: 'aucun', wrist: false, shoes: '#e0f2fe', beard: 'pleine', aura: '#bae6fd' }) },
+    { name: 'LE DRAGON', title: 'Né dans la lave', map: 'volcan', sc: 1.08, power: 'fournaise', pn: 'FOURNAISE', pd: 'La chaleur fait trembler tes mains : tes tirs sont bien plus durs pendant 5 secondes.', every: 12, d: 6.6, coins: 500,
+      prof: { n: 'LE DRAGON', d: 'Attaque brûlante', h: 2.06, sp: 1.08, sh3: 1.25, shm: 1.25, fade: 1.35, deep: .5, drib: 1.4, blk: 1.3, stl: 1.3, dnk: .8, post: 1.9, jmp: 1.1 },
+      look: BL({ name: 'LE DRAGON', num: '66', jersey: '#7f1d1d', shorts: '#1c0a0a', style: 'flammes', skin: 3, hair: 'dreads', hairColor: '#b91c1c', headband: '#f97316', sleeve: 'droit', wrist: true, shoes: '#f97316', chain: true, aura: '#ef4444' }) },
+    { name: 'LE ROI DÉMON', title: 'Le dernier boss', map: 'sanctuaire', sc: 1.18, head: 1.3, power: 'chaos', pn: 'CHAOS', pd: 'Il utilise tous les pouvoirs des autres boss, au hasard.', every: 10, d: 7.6, coins: 1000,
+      prof: { n: 'LE ROI DÉMON', d: 'Tout, et pire encore', h: 2.18, sp: 1.12, sh3: 1.28, shm: 1.3, fade: 1.4, deep: .7, drib: 1.5, blk: 1.6, stl: 1.4, dnk: 1, post: 2.2, jmp: 1.12 },
+      look: BL({ name: 'LE ROI DÉMON', num: '666', jersey: '#0a0a0a', shorts: '#450a0a', style: 'dégradé', skin: 4, hair: 'locks', hairColor: '#0a0a0a', headband: '#dc2626', sleeve: 'droit', wrist: true, shoes: '#dc2626', glasses: true, durag: '#7f1d1d', chain: true, socks: 'noires', aura: '#a855f7' }) }
+  ];
+  BOSSES.forEach((b, i) => { PROFILES['s_boss' + i] = b.prof; b.look.arch = 's_boss' + i; HINTS['s_boss' + i] = b.title; });
+  const bossIdx = () => Math.min(BOSSES.length - 1, store.get('bossP', 0));
+  const bossPick = () => { const s = store.get('bossSel', null); return s != null && s <= store.get('bossP', 0) && s < BOSSES.length ? s : bossIdx(); };
+  function renderBoss() {
+    const P0 = store.get('bossP', 0), sel = bossPick();
+    $('bossList').innerHTML = BOSSES.map((b, i) => { const lock = i > P0, done = i < P0;
+      return `<button class="bossrow ${lock ? 'lock' : ''} ${done ? 'done' : ''} ${i === sel ? 'sel' : ''}" data-i="${i}" ${lock ? 'disabled' : ''}><i>${lock ? '🔒' : ['🗿', '⚡', '🧙', '🚀', '❄️', '🐉', '😈'][i]}</i><span><b>${lock ? '???' : b.name}</b><em>${lock ? 'Bats le boss précédent' : b.title + ' · ' + (MAPS[b.map] || MAPS.bitume).name}</em>${!lock && i === sel ? `<small>⚡ ${b.pn} : ${b.pd}</small>` : ''}</span><u>${done ? '✓' : lock ? '' : '🪙 ' + b.coins}</u></button>`; }).join('');
+    $('bossDone').hidden = P0 < BOSSES.length;
+    if (modeKey === 'boss') playBtn.textContent = 'Affronter ' + BOSSES[sel].name;
+  }
+  $('bossList').addEventListener('click', e => { const b = e.target.closest('.bossrow'); if (!b || b.disabled) return; store.set('bossSel', +b.dataset.i); SFX.click && SFX.click(); renderBoss(); });
+  const bossLook = () => Object.assign({}, BOSSES[bossPick()].look);
+
+  // ======================================================================================
+  //  MODE CARRIÈRE — La Ligue du Bitume : 8 joueurs, 7 journées, demi-finale, finale
+  // ======================================================================================
+  const CAR_MAPS = ['bitume', 'plage', 'toit', 'gymnase', 'cage', 'paris', 'lycee', 'neon', 'port', 'desert', 'metro', 'favela', 'ouest', 'ferme', 'rucker', 'tokyo'];
+  function carNew(season) {
+    const names = ROI_NAMES.slice().sort(() => Math.random() - .5).slice(0, 7);
+    const rivals = names.map((n, i) => { const look = roiOpponent(); look.name = n; return { name: n, look, r: clamp((season - 1) * .8 + i * .72 + Math.random() * .5, 0, 9) }; });
+    rivals.sort(() => Math.random() - .5);
+    const tab = {}; for (let i = 0; i <= 7; i++) tab[i] = { w: 0, l: 0, pf: 0, pa: 0 };
+    const maps = CAR_MAPS.slice().sort(() => Math.random() - .5);
+    return { season, round: 0, phase: 'reg', rivals, tab, maps, semi: null, final: null, log: [] };
+  }
+  const carGet = () => { let c = store.get('car', null); if (!c) { c = carNew(1); store.set('car', c); } return c; };
+  // circle method: team 0 = you, 1..7 = rivals; every team meets every other once
+  function carPairs(round) { const a = [1, 2, 3, 4, 5, 6, 7]; for (let k = 0; k < round; k++) a.unshift(a.pop()); const arr = [0].concat(a); return [0, 1, 2, 3].map(i => [arr[i], arr[7 - i]]); }
+  const carRating = (c, id) => id === 0 ? null : c.rivals[id - 1].r;
+  const carName = (c, id) => id === 0 ? (looks.p1.name || 'TOI') : c.rivals[id - 1].name;
+  function carSim(c, a, b, bonus) {
+    const ra = c.rivals[a - 1].r, rb = c.rivals[b - 1].r, pa = 1 / (1 + Math.exp(-(ra - rb) * .55)), aw = Math.random() < pa;
+    const win = GM().win || 11, lose = Math.floor(Math.random() * (win - 2)) + 1;
+    return aw ? [a, b, win, lose] : [b, a, win, lose];
+  }
+  function carRecord(c, w, l, sw, sl) { c.tab[w].w++; c.tab[w].pf += sw; c.tab[w].pa += sl; c.tab[l].l++; c.tab[l].pf += sl; c.tab[l].pa += sw; }
+  function carStand(c) { return [0, 1, 2, 3, 4, 5, 6, 7].sort((a, b) => (c.tab[b].w - c.tab[a].w) || ((c.tab[b].pf - c.tab[b].pa) - (c.tab[a].pf - c.tab[a].pa)) || (a === 0 ? -1 : b === 0 ? 1 : 0)); }
+  // the current opponent: [rival id, label, rating bonus]
+  function carOpp(c) {
+    c = c || carGet();
+    if (c.phase === 'reg') { const pr = carPairs(c.round).find(p => p[0] === 0 || p[1] === 0); return [pr[0] === 0 ? pr[1] : pr[0], 'Journée ' + (c.round + 1) + ' / 7', 0]; }
+    if (c.phase === 'semi') return [c.semi[0], 'Demi-finale', .6];
+    if (c.phase === 'final') return [c.final, '🏆 FINALE', 1.1];
+    return null;
+  }
+  function carRender() {
+    const c = carGet(), st = carStand(c), o = carOpp(c);
+    const ph = c.phase === 'reg' ? 'Saison régulière' : c.phase === 'semi' ? 'Playoffs' : c.phase === 'final' ? 'Playoffs' : c.phase === 'champ' ? 'Saison terminée' : 'Saison terminée';
+    let head = `<div class="carhead"><b>SAISON ${c.season}</b><span>${ph}${c.phase === 'reg' ? ' · journée ' + (c.round + 1) + '/7' : ''}</span></div>`;
+    if (o) { const R = c.rivals[o[0] - 1], P0 = PROFILES[R.look.arch] || PROFILES.perso, mp = MAPS[c.maps[(c.round + (c.phase === 'semi' ? 7 : c.phase === 'final' ? 8 : 0)) % c.maps.length]] || MAPS.bitume;
+      head += `<div class="carnext"><small>${o[1]}</small><b>${R.name}</b><span>${P0.n} · niveau ${'★'.repeat(Math.max(1, Math.min(5, Math.round((R.r + o[2]) / 1.8))))} · ${mp.name}</span></div>`; }
+    else if (c.phase === 'champ') head += `<div class="carnext champ"><small>🏆 CHAMPION DE LA LIGUE</small><b>${carName(c, 0)}</b><span>Lance la saison ${c.season + 1} : les rivaux seront plus forts.</span></div>`;
+    else head += `<div class="carnext out"><small>${c.phase === 'out-reg' ? 'Pas qualifié pour les playoffs' : 'Éliminé en playoffs'}</small><b>Saison ${c.season} finie</b><span>Retente ta chance la saison prochaine.</span></div>`;
+    const rows = st.map((id, k) => { const t = c.tab[id], df = t.pf - t.pa; return `<tr class="${id === 0 ? 'me' : ''} ${k === 3 ? 'cut' : ''}"><td>${k + 1}</td><td>${carName(c, id)}</td><td>${t.w}</td><td>${t.l}</td><td>${df > 0 ? '+' : ''}${df}</td></tr>`; }).join('');
+    $('carBody').innerHTML = head + `<table class="cartab"><thead><tr><th>#</th><th>Joueur</th><th>V</th><th>D</th><th>+/-</th></tr></thead><tbody>${rows}</tbody></table><p class="note">Les 4 premiers vont en playoffs. Victoire : 🪙 40 · demi : 🪙 120 · titre : 🪙 400.</p>` +
+      (c.log.length ? `<div class="carlog">${c.log.slice(-4).reverse().map(l => `<span>${l}</span>`).join('')}</div>` : '');
+    if (modeKey === 'carriere') playBtn.textContent = o ? (c.phase === 'final' ? '🏆 Jouer la finale' : c.phase === 'semi' ? 'Jouer la demi-finale' : 'Journée ' + (c.round + 1) + ' · Affronter ' + c.rivals[o[0] - 1].name) : 'Lancer la saison ' + (c.season + 1);
+  }
+  $('carReset').addEventListener('click', () => { const c = carGet(); store.set('car', carNew(c.season)); carRender(); });
+  const carLook = () => { const c = carGet(), o = carOpp(c); return o ? Object.assign({}, c.rivals[o[0] - 1].look) : Object.assign({}, LOOK_AI); };
+  // after a match of the season
+  function carAfter(won, sm, so) {
+    const c = carGet(), o = carOpp(c); if (!o) return '';
+    let txt = '', gain = 0;
+    if (c.phase === 'reg') {
+      for (const [a, b] of carPairs(c.round)) {
+        if (a === 0 || b === 0) { const opp = a === 0 ? b : a; if (won) carRecord(c, 0, opp, sm, so); else carRecord(c, opp, 0, so, sm); }
+        else { const [w, l, sw, sl] = carSim(c, a, b); carRecord(c, w, l, sw, sl); }
+      }
+      c.log.push(`J${c.round + 1} : ${won ? 'victoire' : 'défaite'} ${sm}–${so} contre ${carName(c, o[0])}`);
+      if (won) gain = 40; c.round++;
+      if (c.round >= 7) {
+        const st = carStand(c), rank = st.indexOf(0) + 1;
+        if (rank <= 4) { const pair = rank === 1 || rank === 4 ? [st[0], st[3]] : [st[1], st[2]], other2 = rank === 1 || rank === 4 ? [st[1], st[2]] : [st[0], st[3]];
+          c.phase = 'semi'; c.semi = [pair[0] === 0 ? pair[1] : pair[0], other2]; txt = `Qualifié en playoffs (${rank}e) ! Demi-finale contre ${carName(c, c.semi[0])}.`; }
+        else { c.phase = 'out-reg'; c.seasonsDone = true; txt = `Saison finie à la ${rank}e place : pas de playoffs cette fois.`; cstAdd({ seasons: 1 }); }
+      } else txt = won ? 'Victoire en championnat !' : 'Défaite en championnat.';
+    } else if (c.phase === 'semi') {
+      const [w] = carSim(c, c.semi[1][0], c.semi[1][1]);
+      if (won) { gain = 120; c.phase = 'final'; c.final = w; txt = `En finale ! Adversaire : ${carName(c, w)}.`; c.log.push(`Demi-finale gagnée ${sm}–${so}`); }
+      else { c.phase = 'out'; txt = 'Éliminé en demi-finale…'; c.log.push(`Demi-finale perdue ${sm}–${so}`); cstAdd({ seasons: 1 }); }
+    } else if (c.phase === 'final') {
+      if (won) { gain = 400; c.phase = 'champ'; txt = '🏆 CHAMPION DE LA LIGUE DU BITUME !'; c.log.push(`FINALE GAGNÉE ${sm}–${so}`); cstAdd({ titles: 1, seasons: 1 }); setTimeout(() => { flash(); SFX.roar && SFX.roar(); popup('CHAMPION !', 0, 3.2, 6, '#ffd166', 46, 'huge', 'green'); }, 300); }
+      else { c.phase = 'out'; txt = 'Finale perdue… si proche !'; c.log.push(`Finale perdue ${sm}–${so}`); cstAdd({ seasons: 1 }); }
+    }
+    store.set('car', c);
+    if (gain) { store.set('coins', coins() + gain); renderCoins(); }
+    carAfter.gain = gain; return txt;
+  }
+
+  // ---------- starting a boss / career match ----------
+  function maxiStart() {
+    S.sub = null; S.tour = null; S.mode = 'solo'; teamOff(); hideEx();
+    let look, name, map, diffK;
+    if (modeKey === 'boss') {
+      const i = bossPick(), B = BOSSES[i]; S.boss = { i, t: B.every * .7, on: null, onT: 0 }; S.car = null;
+      look = Object.assign({}, B.look); name = B.name; map = B.map; diffK = B.d; S.balanced = false;
+    } else {
+      let c = carGet(); if (!carOpp(c)) { c = carNew(c.season + 1); store.set('car', c); }
+      const o = carOpp(c), R = c.rivals[o[0] - 1]; S.car = { o: o[0], ph: c.phase }; S.boss = null;
+      look = Object.assign({}, R.look); name = R.name; diffK = R.r + o[2]; map = c.maps[(c.round + (c.phase === 'semi' ? 7 : c.phase === 'final' ? 8 : 0)) % c.maps.length];
+    }
+    S.diff = tourDiff(clamp(diffK, 0, 9));
+    p1.ctrl = 'local'; p2.ctrl = 'ai'; setLook(p1, Object.assign({}, looks.p1)); setLook(p2, look); p1.m.g.visible = p2.m.g.visible = true;
+    if (S.map !== map) buildMap(map);
+    applyBalance(); bossVisual();
+    setNames(); p2.name = name; $('tA').textContent = name; $('tagA').textContent = name;
+    setTouch(); menu.hidden = true; result.hidden = true; refreshGoal();
+    if (window.__noIntro) newGame(); else startIntro(null, true);
+  }
+  const bossSc = B => clamp((B.prof.h / 1.98) * (B.sc || 1), .9, 1.6);
+  function bossVisual() {
+    if (!S.boss) { if (p2.m && p2.m.head) p2.m.head.scale.setScalar(1); return; }
+    const B = BOSSES[S.boss.i]; p2.sc = bossSc(B);
+    if (p2.m && p2.m.head) p2.m.head.scale.setScalar(B.head || 1);
+  }
+  // results: called once the match ends (after showEnd)
+  function maxiAfter() {
+    const coinsWon = maxiMatchEnd();
+    let extra = ' · +' + coinsWon + ' 🪙';
+    if (S.boss) {
+      const i = S.boss.i, B = BOSSES[i], won = S.score[p1.id] > S.score[p2.id], P0 = store.get('bossP', 0);
+      bossPowerOff();
+      if (won) {
+        const first = i === P0; if (first) store.set('bossP', P0 + 1);
+        const nx = Math.min(BOSSES.length - 1, store.get('bossP', 0)); store.set('bossSel', nx);
+        const g = first ? B.coins : Math.round(B.coins / 4); store.set('coins', coins() + g); renderCoins();
+        result.textContent = `👹 ${B.name} EST VAINCU ! ${S.score.p} – ${S.score.ai} · +${g + coinsWon} 🪙` + (first && i < BOSSES.length - 1 ? ` · Nouveau boss : ${BOSSES[i + 1].name}` : first ? ' · TOUS LES BOSS SONT TOMBÉS !' : '');
+        result.style.color = '#ffd166';
+      } else { result.textContent = `${B.name} gagne ${S.score.ai} – ${S.score.p} · Revanche ? · +${coinsWon} 🪙`; result.style.color = '#ff8a80'; }
+      renderBoss(); setTimeout(achCheck, 600);
+      return;
+    }
+    if (S.car) {
+      const won = S.score[p1.id] > S.score[p2.id]; carAfter.gain = 0; const t = carAfter(won, S.score.p, S.score.ai);
+      result.textContent = (won ? 'Victoire ' : 'Défaite ') + S.score.p + ' – ' + S.score.ai + ' · ' + t + ' · +' + (coinsWon + carAfter.gain) + ' 🪙'; result.style.color = won ? '#ffd166' : '#ff8a80';
+      carRender(); setTimeout(achCheck, 600);
+      return;
+    }
+    if (!result.hidden) result.textContent += extra;
+  }
+
+  // ---------- boss powers ----------
+  function bossPowerOff() {
+    const B = S.boss; if (B) B.on = null;
+    for (const q of P) q.curse = null;
+    if (!(S.party && PT.mods.lune)) { G = 14; BG = 12; }
+    const f = $('bossFog'); if (f) f.className = 'bossfog';
+  }
+  function bossPower(kind) {
+    const B = S.boss, boss = p2, hero = p1, now = S.time;
+    if (kind === 'chaos') kind = ['seisme', 'eclair', 'brouillard', 'gravite', 'blizzard', 'fournaise'][Math.floor(Math.random() * 6)];
+    const dur = { seisme: 3, eclair: 4, brouillard: 5, gravite: 6, blizzard: 4, fournaise: 5 }[kind];
+    B.on = kind; B.onT = dur; B.onN = { seisme: 'SÉISME', eclair: 'VITESSE LUMIÈRE', brouillard: 'BROUILLARD', gravite: 'APESANTEUR', blizzard: 'BLIZZARD', fournaise: 'FOURNAISE' }[kind];
+    const name = { seisme: 'SÉISME !', eclair: 'VITESSE LUMIÈRE !', brouillard: 'BROUILLARD !', gravite: 'APESANTEUR !', blizzard: 'BLIZZARD !', fournaise: 'FOURNAISE !' }[kind];
+    const col = { seisme: '#d6b38a', eclair: '#facc15', brouillard: '#a3e635', gravite: '#7dd3fc', blizzard: '#e0f2fe', fournaise: '#f97316' }[kind];
+    popup(name, boss.x, 3.4, boss.z, col, 40, 'huge', 'ankle'); SFX.roar && SFX.roar();
+    const f = $('bossFog'); if (f) f.className = 'bossfog on ' + kind;
+    if (kind === 'seisme') { S.shakeT = 1.3; flash(); ringFlash(boss.x, .2, boss.z, '#d6b38a'); hero.curse = { m: { sp: .55, jmp: .7, drib: .8 }, until: now + dur }; for (let i = 0; i < 90; i++) { const a = Math.random() * 6.28, s = 2 + Math.random() * 5; emit(boss.x, .15, boss.z, i % 2 ? '#a8865a' : '#d6b38a', Math.cos(a) * s, 1 + Math.random() * 2, Math.sin(a) * s, .8, 6); } }
+    else if (kind === 'eclair') boss.curse = { m: { sp: 1.5, stl: 1.3, drib: 1.2 }, until: now + dur };
+    else if (kind === 'gravite') { G = 14 * .4; BG = 12 * .42; }
+    else if (kind === 'blizzard') hero.curse = { m: { sp: .5, drib: .7, jmp: .85 }, until: now + dur };
+    else if (kind === 'fournaise') hero.curse = { m: { sh3: .68, shm: .72, fade: .7 }, until: now + dur };
+  }
+  function bossTick(dt) {
+    const B = S.boss; if (!B || S.party || S.story) return;
+    if (S.phase === 'over' || S.phase === 'menu') { if (B.on) bossPowerOff(); return; }
+    const hud = $('bossHud'); if (hud) { hud.hidden = false; }
+    const D = BOSSES[B.i];
+    if (B.on) {
+      B.onT -= dt; const k = B.on;
+      if (k === 'eclair' && Math.random() < .8) emit(p2.x, .4 + Math.random() * 1.6, p2.z, Math.random() < .5 ? '#facc15' : '#fff6c8', 0, .3, 0, .4, 0);
+      if (k === 'blizzard') for (let i = 0; i < 3; i++) emit(p1.x - 6 + Math.random() * 12, 4 + Math.random() * 2, p1.z - 4 + Math.random() * 8, '#ffffff', 3 + Math.random() * 2, -4, Math.random() - .5, 1.2, 0);
+      if (k === 'fournaise' && Math.random() < .6) emit(p2.x + (Math.random() - .5) * .5, 1 + Math.random(), p2.z + (Math.random() - .5) * .5, Math.random() < .5 ? '#ff4a12' : '#ffb21f', (Math.random() - .5), 2 + Math.random() * 2, (Math.random() - .5), .6, -1);
+      if (B.onT <= 0) { bossPowerOff(); B.t = D.every; }
+    } else if (S.phase === 'play' && !S.paused) { B.t -= dt; if (B.t <= 0) bossPower(D.power); }
+    const bar = $('bossHudBar'); if (bar) bar.style.width = (B.on ? 100 : Math.round((1 - clamp(B.t / D.every, 0, 1)) * 100)) + '%';
+    $('bossHudN').textContent = (B.on ? '⚡ ' : '👹 ') + D.name + (B.on ? ' · ' + (B.onN || D.pn) : '');
+    hud.classList.toggle('on', !!B.on);
+  }
+
+  // ---------- per-frame ----------
+  function maxiTick(dt) {
+    pTick(dt); trailTick(dt); bossTick(dt);
+    if (!S.boss) { const h = $('bossHud'); if (h && !h.hidden) h.hidden = true; }
+    else if (S.boss && p2.m && S.phase !== 'menu') { const B = BOSSES[S.boss.i]; p2.sc = bossSc(B); if (B.head && p2.m.head.scale.x !== B.head) p2.m.head.scale.setScalar(B.head); }
+  }
+
+  // ---------- menu: the two new modes ----------
+  function maxiMode(v) {
+    $('carPanel').hidden = v !== 'carriere'; $('bossPanel').hidden = v !== 'boss';
+    if (v === 'carriere') carRender(); if (v === 'boss') renderBoss();
+  }
+  achCheck();
+
   let last = performance.now();
   function frame(now) {
     const real = Math.min(.033, (now - last) / 1000); last = now;
@@ -8677,7 +9489,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
     const dt = S.freezeT > 0 ? 0 : S.slowT > 0 ? real * .3 : real; // freeze frame, then slow motion
     S.slowT = Math.max(0, S.slowT - real); S.shakeT = ATH.calm ? 0 : Math.max(0, S.shakeT - real);
     pollPads(real); padLinkTick(); lvTick(); cineTick(real); dynRes(real);
-    update(dt); render(dt); hostSend(); feteNet();
+    update(dt); maxiTick(dt); render(dt); hostSend(); feteNet();
     requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);
