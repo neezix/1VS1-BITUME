@@ -924,6 +924,41 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
   .bossrow{padding:6px 8px}.bossrow small{font-size:11px}
   .carnext b{font-size:17px}.cartab td{padding:3px 6px}
 }
+/* ===================== v37 · compte + carrière duo ===================== */
+.acpw{display:grid;grid-template-columns:1fr auto;gap:6px}.acpw .kb{min-width:0;padding:8px 12px;font-size:16px}
+#phAcct .txt{font-family:var(--body);text-transform:none;letter-spacing:.02em;font-size:17px}
+.acstatus{margin:0;font-size:13px;font-weight:700;color:#a79cc2;min-height:1.2em}.acstatus.ok{color:#5cc98a}.acstatus.warn{color:#ffb38a}
+.acard{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;background:linear-gradient(135deg,rgba(76,201,184,.18),rgba(255,255,255,.03));border:1px solid rgba(76,201,184,.4)}
+.acard i{font-style:normal;font-size:30px}.acard b{display:block;font-family:var(--display);font-weight:400;font-size:22px;color:#fff}.acard span{font-size:12px;color:#a79cc2}
+.hb.acct-on{border-color:rgba(76,201,184,.55);background:rgba(76,201,184,.12)}
+#phTabs{grid-template-columns:repeat(4,1fr)}#phTabs button{font-size:13px}
+.coopinfo{display:grid;gap:6px;padding:10px 12px;border-radius:12px;background:linear-gradient(135deg,rgba(244,114,182,.16),rgba(255,255,255,.03));border:1px solid rgba(244,114,182,.4)}
+.coopinfo b{font-family:var(--display);font-weight:400;font-size:15px;color:#fff}.coopinfo em{font-style:normal;font-size:12px;color:#c4bad6}
+.coopinfo span{display:flex;gap:4px}.coopinfo span i{flex:1;height:6px;border-radius:3px;background:rgba(255,255,255,.1)}.coopinfo span i.ok{background:#5cc98a}.coopinfo span i.now{background:#f472b6;box-shadow:0 0 8px #f472b6}
+#fGameSeg button[data-v="coop"]{grid-column:1/-1;background:linear-gradient(135deg,rgba(244,114,182,.22),rgba(255,255,255,.04));border-color:rgba(244,114,182,.5)}
+#fGameSeg button[data-v="coop"][aria-checked="true"]{background:linear-gradient(135deg,#f9a8d4,#f472b6);color:#2a0a1a}
+/* visual-novel scenes between the coop matches */
+.partyov.vn{top:auto;bottom:calc(14px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);width:min(880px,94vw);max-height:none;text-align:left;padding:16px 20px 12px;border-radius:18px;border:1px solid rgba(239,231,214,.22);border-left:6px solid var(--wc,#ff9a2e);background:linear-gradient(180deg,rgba(12,9,24,.94),rgba(12,9,24,.97));pointer-events:auto;cursor:pointer;animation:vnIn .3s cubic-bezier(.2,.9,.3,1)}
+@keyframes vnIn{from{opacity:0;transform:translate(-50%,16px)}}
+.partyov.vn .vnk{display:block;font-size:10px;font-weight:800;letter-spacing:.2em;color:#a79cc2;margin-bottom:6px}
+.partyov.vn .vnw{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.partyov.vn .vnw i{font-style:normal;display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--wc);color:#140f1f;font-size:20px;box-shadow:0 0 0 3px rgba(0,0,0,.4)}
+.partyov.vn .vnw b{font-family:var(--display);font-weight:400;font-size:clamp(16px,2.4vw,22px);color:var(--wc)}
+.partyov.vn p{margin:0;font-size:clamp(15px,2.2vw,20px);line-height:1.45;color:#f4ede0;font-weight:600}
+.partyov.vn.narr{border-left-color:#cfc6b5}.partyov.vn.narr p{font-style:italic;color:#e6dcc8;text-align:center}
+.partyov.vn small{display:block;margin-top:8px;text-align:right;color:#8a80a0;font-size:11px}
+.partyov.vn.title{top:50%;bottom:auto;transform:translate(-50%,-50%);text-align:center;border-left-width:1px;border-color:#ffd166;background:radial-gradient(circle at 50% 40%,rgba(60,38,8,.95),rgba(8,6,14,.97));padding:26px 20px;animation:vnT .6s cubic-bezier(.2,1.5,.4,1)}
+@keyframes vnT{from{opacity:0;transform:translate(-50%,-50%) scale(1.4)}}
+.partyov.vn.title h2{font-size:clamp(28px,6vw,54px);color:#fff;text-shadow:0 0 30px #ffb020,4px 4px 0 #0e0b1a}.partyov.vn.title p{color:#ffd166;font-weight:800;letter-spacing:.12em;text-align:center}
+.partyov.vn.ch{border-left-color:#ffd166}.partyov.vn.ch h3{margin:0 0 10px;font-family:var(--display);font-weight:400;font-size:clamp(16px,2.6vw,24px);color:#ffd166}
+.partyov.vn .vno{display:grid;gap:8px}
+.partyov.vn .vno button{display:flex;align-items:center;gap:10px;text-align:left;padding:12px 14px;border-radius:12px;border:2px solid rgba(255,209,102,.45);background:rgba(255,255,255,.04);color:#fff;font:800 clamp(14px,2vw,18px) var(--body);cursor:pointer;transition:background .15s,transform .1s}
+.partyov.vn .vno button:hover{background:#ffd166;color:#140f1f}.partyov.vn .vno button:active{transform:scale(.98)}
+.partyov.vn .vno button kbd{flex:0 0 auto;font-family:var(--display);font-size:11px;padding:3px 7px;border-radius:6px;background:#ffd166;color:#140f1f}
+@media (max-height:520px) and (orientation:landscape){ .partyov.vn{padding:10px 14px 8px;bottom:8px}.partyov.vn .vnw i{width:30px;height:30px;font-size:16px}.partyov.vn p{font-size:15px}.partyov.vn .vno button{padding:8px 10px} }
+body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gauge,.touch .joyhint){visibility:hidden}
+@media (pointer:coarse){ .partyov.vn:not(.title){top:calc(10px + env(safe-area-inset-top,0px));bottom:auto;animation-name:vnInT} }
+@keyframes vnInT{from{opacity:0;transform:translate(-50%,-14px)}}
 </style>
 </head>
 <body>
@@ -997,7 +1032,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
         <button class="hb" id="shopBtn"><i>🛒</i><span>Boutique</span></button>
         <button class="hb" id="trophyBtn"><i>🏆</i><span>Trophées</span></button>
         <button class="hb" id="athBtn"><i>⚙️</i><span>Réglages</span></button>
-        <button class="hb" id="phoneBtn"><i>📱</i><span>Appareils</span></button>
+        <button class="hb" id="phoneBtn"><i>☁️</i><span>Compte</span></button>
         <button class="hb" id="fsBtn"><i>⛶</i><span>Plein écran</span></button>
       </nav>
     </header>
@@ -1054,8 +1089,9 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
         <div class="flist" id="fList"></div>
         <div class="frow"><button class="play alt" id="fBot">🤖 + Bot</button><button class="play alt" id="fJ2">🎮 + J2 ici</button></div>
         <span class="label">Jeu</span>
-        <div class="seg fgames" id="fGameSeg" role="radiogroup" aria-label="Jeu de la fête"><button role="radio" data-v="gagnant">👑 Le gagnant reste</button><button role="radio" data-v="patate">💣 Patate chaude</button><button role="radio" data-v="roi">🦍 Le roi géant</button><button role="radio" data-v="tournoi">🏆 Tournoi éclair</button><button role="radio" data-v="equipes">🤝 Équipes</button><button role="radio" data-v="tirs">🎯 Concours 3 pts</button></div>
+        <div class="seg fgames" id="fGameSeg" role="radiogroup" aria-label="Jeu de la fête"><button role="radio" data-v="coop">📖 Carrière Duo · histoire en coop ✦</button><button role="radio" data-v="gagnant">👑 Le gagnant reste</button><button role="radio" data-v="patate">💣 Patate chaude</button><button role="radio" data-v="roi">🦍 Le roi géant</button><button role="radio" data-v="tournoi">🏆 Tournoi éclair</button><button role="radio" data-v="equipes">🤝 Équipes</button><button role="radio" data-v="tirs">🎯 Concours 3 pts</button></div>
         <p class="note" id="fGameD"></p>
+        <div class="coopinfo" id="coopInfo" hidden></div><button class="linkbtn" id="coopReset" hidden>Recommencer la Carrière Duo depuis le prologue</button>
         <span class="label">Délires (à cumuler)</span>
         <div class="fmods" id="fMods"><button data-v="tete" aria-pressed="false">🎈 Grosses têtes</button><button data-v="mini" aria-pressed="false">🐜 Mini</button><button data-v="geant" aria-pressed="false">🗿 Géants</button><button data-v="lune" aria-pressed="false">🌙 Lune</button><button data-v="turbo" aria-pressed="false">⚡ Turbo</button></div>
         <button class="play alt" id="fLeave" hidden>Quitter la salle</button>
@@ -1193,8 +1229,23 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
 </div>
 <div class="overlay top" id="phonePanel" hidden>
   <div class="card">
-    <h2 class="ptitle">📱 Téléphone ↔ PC</h2>
-    <div class="ph-tabs seg" role="tablist" id="phTabs"><button role="tab" data-v="pad" aria-selected="true">Manette</button><button role="tab" data-v="save" aria-selected="false">Progression</button><button role="tab" data-v="play" aria-selected="false">Jouer partout</button></div>
+    <h2 class="ptitle">☁️ Compte &amp; appareils</h2>
+    <div class="ph-tabs seg" role="tablist" id="phTabs"><button role="tab" data-v="acct" aria-selected="false">☁️ Compte</button><button role="tab" data-v="pad" aria-selected="true">Manette</button><button role="tab" data-v="save" aria-selected="false">Progression</button><button role="tab" data-v="play" aria-selected="false">Jouer partout</button></div>
+    <div class="ph-sec" id="phAcct" hidden>
+      <div id="acOut" style="display:grid;gap:10px">
+        <p class="note">Crée ton <b>compte Bitume</b> (gratuit) : niveau, pièces, tenues, succès, histoire, carrières… tout est sauvegardé en ligne. Sur un autre téléphone ou PC, connecte-toi avec le même pseudo et le même mot de passe : tu retrouves tout.</p>
+        <input class="txt" id="acUser" maxlength="16" placeholder="Pseudo" autocomplete="username" autocapitalize="off" spellcheck="false" aria-label="Pseudo">
+        <div class="acpw"><input class="txt" id="acPass" type="password" maxlength="64" placeholder="Mot de passe" autocomplete="current-password" aria-label="Mot de passe"><button class="kb" id="acShow" aria-label="Afficher le mot de passe">👁️</button></div>
+        <div class="row2"><button class="play" id="acGo">Me connecter</button><button class="play alt" id="acNew">Créer mon compte</button></div>
+        <p class="note" style="font-size:12px">Retiens bien ton mot de passe : il chiffre ta sauvegarde, personne (même pas nous) ne peut le récupérer.</p>
+      </div>
+      <div id="acIn" hidden style="display:grid;gap:10px">
+        <div class="acard"><i>☁️</i><div><b id="acName"></b><span id="acLast"></span></div></div>
+        <p class="note">Ta progression se sauvegarde toute seule après chaque match, achat ou succès. Si tu joues sur un autre appareil, elle se met à jour ici au prochain lancement.</p>
+        <div class="row2"><button class="play" id="acSave">Sauvegarder maintenant</button><button class="play alt" id="acOutBtn">Se déconnecter</button></div>
+      </div>
+      <p class="acstatus" id="acStatus"></p>
+    </div>
     <div class="ph-sec" id="phPad">
       <p class="note">Ton téléphone devient une manette pour le jeu ouvert sur l'ordi (ou la télé). Sur l'ordi, crée le code ; sur le téléphone, ouvre le jeu et tape le code (ou scanne le QR code).</p>
       <div class="row2"><button class="play" id="padHostA">Créer un code · J1</button><button class="play alt" id="padHostB">Code · J2</button></div>
@@ -8428,6 +8479,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
     roi: { n: 'Le roi géant', ico: '🦍', d: 'Chacun pour soi. Le roi grandit et devient plus fort à chaque victoire. Qui fera tomber le géant ? Premier à 4 victoires.', duel: true, target: 3 },
     tournoi: { n: 'Tournoi éclair', ico: '🏆', d: 'Tableau à élimination directe, duels en 3 points. Un seul champion.', duel: true, target: 3 },
     equipes: { n: 'Équipes', ico: '🤝', d: 'Deux équipes, du 2c2 au 4c4 (touche une ligne pour changer d\'équipe). Les places vides sont prises par des bots. Premier à 7.', team: true },
+    coop: { n: 'Carrière Duo', ico: '📖', d: 'L\'histoire en coop : votre équipe (vous tous + Kage, le Sixième Homme) contre les Cinq Couronnes de l\'Académie Sakura. Scènes, choix, rebondissements… et des rivaux avec des pouvoirs. Jouable seul aussi. La progression est gardée chez l\'hôte.', team: true, coop: true },
     tirs: { n: 'Concours 3 pts', ico: '🎯', d: 'Chacun son tour : 60 secondes pour marquer un max de 3 pts. Meilleur score gagne.', turn: 'trois' }
   };
   const FMODS = { tete: '🎈 Grosses têtes', mini: '🐜 Mini', geant: '🗿 Géants', lune: '🌙 Lune', turbo: '⚡ Turbo' };
@@ -8458,7 +8510,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
     if (!$('fetePanel')) return;
     const guest = NET.party && NET.role === 'guest';
     if (!guest) ptMe();
-    const g = FGAMES[PT.game] || FGAMES.gagnant, team = !!g.team, list = guest ? (PT.gl || []) : PT.pl.map(p => ({ id: p.id, n: pname(p), k: p.kind, t: p.team || '' }));
+    const g = FGAMES[PT.game] || FGAMES.gagnant, team = !!g.team && !g.coop, list = guest ? (PT.gl || []) : PT.pl.map(p => ({ id: p.id, n: pname(p), k: p.kind, t: p.team || '' }));
     if (team && !guest) { let a = 0, b = 0; for (const p of PT.pl) { if (p.team !== 'A' && p.team !== 'B') p.team = a <= b ? 'A' : 'B'; if (p.team === 'A') a++; else b++; } }
     $('fList').innerHTML = list.map((p, i) => `<div class="fp" style="--pc:${FCOL[i % FCOL.length]}"><span class="fi">${kindIco[p.k] || '📱'}</span><b>${p.n}</b>${p.id === PT.myId ? '<em>toi</em>' : ''}`
       + (team ? `<button class="ft${p.t === 'B' ? ' b' : ''}" data-id="${p.id}"${guest ? ' disabled' : ''}>Équipe ${p.t || 'A'}</button>` : '')
@@ -8473,6 +8525,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
     $('fJoinRow').hidden = NET.party; $('fLeave').hidden = !NET.party; $('fCode').hidden = !(NET.party && NET.role === 'host'); $('fInvite').hidden = !(NET.party && NET.role === 'host' && canInvite());
     if (NET.party && NET.role === 'host') $('fCode').textContent = (NET.code || '').toUpperCase();
     if (modeKey === 'fete') { playBtn.hidden = guest; playBtn.textContent = '★ Lancer la fête (' + list.length + ' joueurs)'; }
+    coopRender();
     if (guest) $('fStatus').textContent = PT.gst === 'play' ? 'La partie est en cours…' : '✅ Connecté. Attends que l\'hôte lance la fête !';
   }
   $('fList').addEventListener('click', e => {
@@ -8536,7 +8589,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
   // the buttons of every online player, each into his own input
   function partyReadGuests() {
     if (!NET.party || !NET.R) return;
-    const peers = NET.R.peers(), live = S.phase === 'play';
+    const peers = NET.R.peers(), live = S.phase === 'play' || (S.phase === 'party' && !!S.party && !!S.party.g.coop);
     for (const pl of PT.pl) {
       if (pl.kind !== 'guest') continue;
       const g = peers.find(q => q.peer === pl.id), i = g && g.presence && g.presence.in, R = pl.inp, L = pl.L;
@@ -8606,7 +8659,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
   // ---- the party itself (host / offline) ----
   function partyStart() {
     ptMe(); const g = FGAMES[PT.game], list = PT.pl.slice();
-    if (list.length < 2) { $('fStatus').textContent = 'Il faut au moins 2 joueurs : ajoute un bot, J2 ou des amis.'; return; }
+    if (list.length < 2 && !g.coop) { $('fStatus').textContent = 'Il faut au moins 2 joueurs : ajoute un bot, J2 ou des amis.'; return; }
     if (g.turn && !list.some(p => p.kind !== 'bot')) return;
     S.sub = null; S.tour = null; S.story = null; S.st = null; teamOff(); hideEx(); storyFxClear(); if (S.boss) bossPowerOff(); S.boss = null; S.car = null;
     for (const p of list) Object.assign(p, { crowns: 0, wins: 0, alive: true, score: null, streak: 0 });
@@ -8617,7 +8670,8 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
       const sh = list.slice().sort(() => rnd() - .5);
       if (PT.game === 'tournoi') { S.party.round = sh; S.party.next = []; S.party.rn = 1; tourneyNext(); }
       else { S.party.queue = sh; S.party.duel = [S.party.queue.shift(), S.party.queue.shift()]; if (PT.game === 'patate') S.party.king = null; partyDuel(); }
-    } else if (g.team) partyTeams();
+    } else if (g.coop) coopStart();
+    else if (g.team) partyTeams();
     else { S.party.order = list.filter(p => p.kind !== 'bot'); S.party.ti = 0; partyTurn(); }
     PT.v++; feteNet(true);
   }
@@ -8653,6 +8707,7 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
   // the end of a duel / team game / turn
   function partyEndGame() {
     const P2 = S.party; if (!P2) return false;
+    if (P2.g.coop) { coopAfter(S.score.p > S.score.ai); return true; }
     if (P2.g.team) { const wA = S.score.p > S.score.ai; partyOver(null, wA ? 'L\'ÉQUIPE ' + p1.name + ' GAGNE !' : 'L\'ÉQUIPE ' + p2.name + ' GAGNE !', (wA ? 'A' : 'B')); return true; }
     const w = S.score.p > S.score.ai ? p1 : p2, wp = plById(w.pid), lp = plById(other(w).pid);
     duelResult(wp, lp, false);
@@ -8746,12 +8801,14 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
     const king = P2.game === 'roi' && P2.king && (P2.king.streak || 0) > 0 ? { body: [p1, p2].find(b => b.pid === P2.king.id), k: 1 + Math.min(4, P2.king.streak) * .14 } : null;
     partyVisual(P2.mods, king);
     if (S.phase === 'party') {
+      if (P2.g.coop) coopInput();
       P2.it -= dt; renderPartyOv(P2.ov);
       if (inA.pressed || inB.pressed) P2.it = Math.min(P2.it, .3);
       for (const i of ALLIN()) i.pressed = i.released = i.pressed2 = false;
       if (P2.it <= 0) { $('partyOv').hidden = true; const f = P2.then; P2.then = null; if (f) f(); }
       return true;
     }
+    if (P2.g.coop) coopPowTick(dt);
     if (P2.g.turn && S.sub === 'trois' && S.c3) P2.bar = '🎯 ' + p1.name + ' · ' + S.c3.score + ' pts · ' + Math.ceil(Math.max(0, S.c3.t)) + ' s';
     else if (P2.game === 'equipes' || !P2.g.turn) partyBar();
     renderPartyBar(P2.bar);
@@ -8793,10 +8850,19 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
   // the scoreboard between two games
   function renderPartyOv(ov) {
     const el = $('partyOv'); if (!ov) { el.hidden = true; return; }
-    if (el.dataset.k !== JSON.stringify(ov)) { el.dataset.k = JSON.stringify(ov);
-      el.innerHTML = `<h2>${ov.t}</h2><p>${ov.s || ''}</p><ol>${(ov.r || []).map(r => `<li style="--pc:${r[2]}"><b>${r[0]}</b><span>${r[1]}</span></li>`).join('')}</ol><small>✕ / ESPACE pour passer</small>`; }
+    const key = JSON.stringify(ov);
+    if (el.dataset.k !== key) { el.dataset.k = key;
+      const esc = t => String(t == null ? '' : t).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' })[c]);
+      el.className = 'partyov' + (ov.mode ? ' vn ' + ov.mode + (ov.mode === 'dlg' && !ov.w ? ' narr' : '') : '');
+      el.style.removeProperty('--wc'); if (ov.c) el.style.setProperty('--wc', ov.c);
+      if (ov.mode === 'dlg') el.innerHTML = `<span class="vnk">${esc(ov.k)}</span>${ov.w ? `<div class="vnw"><i>${esc(ov.e || ov.w[0])}</i><b>${esc(ov.w)}</b></div>` : ''}<p>${esc(ov.x)}</p><small>▶ Touche / ESPACE / TIRER pour continuer</small>`;
+      else if (ov.mode === 'title') el.innerHTML = `<h2>${esc(ov.t)}</h2><p>${esc(ov.s)}</p>`;
+      else if (ov.mode === 'ch') el.innerHTML = `<span class="vnk">${esc(ov.k)}</span><h3>${esc(ov.q)}</h3><div class="vno">${(ov.o || []).map((o, i) => `<button data-o="${i}"><kbd>${i ? 'DRIBBLE' : 'TIRER'}</kbd>${esc(o)}</button>`).join('')}</div><small>Choix d'équipe : le premier qui appuie décide</small>`;
+      else el.innerHTML = `<h2>${ov.t}</h2><p>${ov.s || ''}</p><ol>${(ov.r || []).map(r => `<li style="--pc:${r[2]}"><b>${r[0]}</b><span>${r[1]}</span></li>`).join('')}</ol><small>✕ / ESPACE pour passer</small>`; }
     el.hidden = false;
   }
+  $('partyOv').addEventListener('click', e => { const P2 = S.party; if (!P2 || !P2.g.coop || !P2.ov || !P2.ov.mode) return; const b = e.target.closest('[data-o]');
+    if (P2.ov.mode === 'ch') { if (b && S.time - P2.scT > .3) coopPick(+b.dataset.o); } else if (S.time - P2.scT > .25) P2.it = Math.min(P2.it, .05); });
   function renderPartyBar(t) { const el = $('partyBar'); el.hidden = !t; if (t && el.textContent !== t) el.textContent = t; }
 
   // ---- guest side: follow the party ----
@@ -8829,6 +8895,267 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
     if (S.phase === 'party' && pi.ov) renderPartyOv(pi.ov); else $('partyOv').hidden = true;
     renderPartyBar(pi.bar);
   }
+
+  // ======================================================================================
+  //  v37 · CARRIÈRE DUO — « La Coupe d'Hiver du Bitume »
+  //  En coop (même écran, bots ou en ligne) : votre équipe contre les Cinq Couronnes de l'Académie Sakura.
+  //  Chaque chapitre = une scène + un match en équipe. Rebondissements garantis.
+  // ======================================================================================
+  const CL = o => Object.assign({}, LOOK_AI, XTRA, o);
+  Object.assign(PROFILES, {
+    s_co_kage: { n: 'KAGE', d: 'Le Sixième Homme fantôme', h: 1.7, sp: 1.03, sh3: .72, shm: .82, fade: .75, deep: -.5, drib: 1.35, blk: .65, stl: 1.85, dnk: -.8, post: .4, jmp: .96 },
+    s_co_crow: { n: 'CORBEAU', d: 'Le caïd du coin', h: 1.9, sp: 1.02, sh3: .95, shm: 1, fade: .95, deep: 0, drib: 1.1, blk: .9, stl: 1, dnk: .1, post: 1, jmp: 1 },
+    s_co_zen: { n: 'ZEN', d: 'Le Sniper Céleste', h: 1.95, sp: .98, sh3: 1.55, shm: 1.3, fade: 1.4, deep: 1.4, drib: .95, blk: 1, stl: .95, dnk: -.3, post: .8, jmp: 1 },
+    s_co_reo: { n: 'REO', d: 'Le Miroir', h: 1.89, sp: 1.08, sh3: 1.22, shm: 1.22, fade: 1.25, deep: .4, drib: 1.4, blk: 1.1, stl: 1.25, dnk: .5, post: 1.3, jmp: 1.08 },
+    s_co_muro: { n: 'MURO', d: 'Le Géant qui s\'ennuie', h: 2.25, sp: .92, sh3: .7, shm: 1, fade: .8, deep: -.5, drib: .8, blk: 2.1, stl: 1.1, dnk: 1.1, post: 2.7, jmp: 1.02 },
+    s_co_kuro: { n: 'KURO', d: 'La Panthère', h: 1.92, sp: 1.2, sh3: 1.2, shm: 1.3, fade: 1.4, deep: .3, drib: 1.75, blk: 1.15, stl: 1.4, dnk: .8, post: 1.6, jmp: 1.12 },
+    s_co_sei: { n: 'SEI', d: 'L\'Empereur', h: 1.8, sp: 1.12, sh3: 1.35, shm: 1.35, fade: 1.4, deep: .6, drib: 1.6, blk: 1.2, stl: 1.5, dnk: .2, post: 1.1, jmp: 1.05 },
+    s_co_sei2: { n: 'SEI', d: 'Le vrai Sei', h: 1.8, sp: 1.15, sh3: 1.45, shm: 1.45, fade: 1.5, deep: .8, drib: 1.7, blk: 1.3, stl: 1.6, dnk: .3, post: 1.2, jmp: 1.07 }
+  });
+  const CO = {
+    narr: { n: '', c: '#cfc6b5', e: '' },
+    aya: { n: 'COACH AYA', c: '#f472b6', e: '📋' },
+    kage: { n: 'KAGE', c: '#93c5fd', e: '👻', look: CL({ name: 'KAGE', num: '11', jersey: '#f4f4f5', shorts: '#1e3a8a', style: 'bande', skin: 0, hair: 'court', hairColor: '#7dd3fc', headband: '', sleeve: 'aucun', wrist: true, shoes: '#93c5fd', arch: 's_co_kage' }) },
+    crow: { n: 'CORBEAU', c: '#9ca3af', e: '🐦‍⬛', look: CL({ name: 'CORBEAU', num: '13', jersey: '#111827', shorts: '#111827', style: 'uni', skin: 2, hair: 'dreads', hairColor: '#111', headband: '#ef4444', sleeve: 'droit', shoes: '#111827', chain: true, arch: 's_co_crow' }) },
+    crow2: { n: 'PIAF', c: '#9ca3af', e: '', look: CL({ name: 'PIAF', num: '6', jersey: '#111827', shorts: '#374151', style: 'rayé', skin: 1, hair: 'dégradé', hairColor: '#111', shoes: '#ef4444', arch: 'perso' }) },
+    zen: { n: 'ZEN', c: '#22c55e', e: '🎯', look: CL({ name: 'ZEN', num: '7', jersey: '#166534', shorts: '#14532d', style: 'uni', skin: 0, hair: 'court', hairColor: '#15803d', glasses: true, headband: '', sleeve: 'gauche', wrist: true, shoes: '#22c55e', arch: 's_co_zen' }) },
+    reo: { n: 'REO', c: '#facc15', e: '🪞', look: CL({ name: 'REO', num: '8', jersey: '#1d4ed8', shorts: '#1e3a8a', style: 'éclair', skin: 0, hair: 'boucles', hairColor: '#facc15', headband: '', sleeve: 'aucun', wrist: true, shoes: '#facc15', chain: true, arch: 's_co_reo' }) },
+    muro: { n: 'MURO', c: '#a855f7', e: '🍬', look: CL({ name: 'MURO', num: '9', jersey: '#4c1d95', shorts: '#2e1065', style: 'uni', skin: 0, hair: 'tresses', hairColor: '#a855f7', headband: '#a855f7', sleeve: 'aucun', wrist: false, shoes: '#4c1d95', arch: 's_co_muro' }) },
+    kuro: { n: 'KURO', c: '#3b82f6', e: '🐆', look: CL({ name: 'KURO', num: '5', jersey: '#0f172a', shorts: '#1e293b', style: 'flammes', skin: 4, hair: 'court', hairColor: '#1e3a8a', headband: '', sleeve: 'droit', wrist: true, shoes: '#3b82f6', arch: 's_co_kuro' }) },
+    sei: { n: 'SEI', c: '#ef4444', e: '👁️', look: CL({ name: 'SEI', num: '4', jersey: '#f4f4f5', shorts: '#b91c1c', style: 'bande', skin: 0, hair: 'court', hairColor: '#dc2626', headband: '', sleeve: 'aucun', wrist: true, shoes: '#dc2626', aura: '#ef4444', arch: 's_co_sei' }) },
+    sei2: { n: 'SEI', c: '#fbbf24', e: '✨', look: CL({ name: 'SEI', num: '4', jersey: '#f4f4f5', shorts: '#b91c1c', style: 'bande', skin: 0, hair: 'court', hairColor: '#dc2626', headband: '#fbbf24', sleeve: 'aucun', wrist: true, shoes: '#fbbf24', aura: '#fbbf24', arch: 's_co_sei2' }) },
+    masque: { n: 'L\'HOMME AU MASQUE', c: '#a3a3a3', e: '🎭' },
+    team: { n: '{team}', c: '#ff9a2e', e: '🔥' },
+    p1: { n: '{p1}', c: '#ff9a2e', e: '🏀' },
+    p2: { n: '{p2}', c: '#4cc9b8', e: '🏀' }
+  };
+  const coLook = k => Object.assign({}, (CO[k] && CO[k].look) || roiOpponent());
+  // ---- the script ----
+  // beats: [who, text] · {title, sub} · {choice, o: [[label, flags], …]} · {if: f => bool, b: [beats]}
+  const COOP = [
+    { t: 'PROLOGUE · LES SANS-NOM', map: 'bitume', pre: [
+      { title: 'CARRIÈRE DUO', sub: 'La Coupe d\'Hiver du Bitume' },
+      ['narr', 'Un terrain grillagé, une nuit d\'hiver. Personne ne vous connaît. Pas encore.'],
+      ['aya', 'Toi. Oui, toi. 1,90 m, épaules larges, mais tu sautes trop tôt. Et toi, à côté : tu dribbles bien, mais tu regardes le ballon.'],
+      ['p1', 'Euh… on se connaît ?'],
+      ['aya', 'Coach Aya. Je vois les stats des gens rien qu\'en les regardant. Et vous, vous avez un potentiel… énorme.'],
+      ['kage', 'Bonsoir.'],
+      ['p1', 'AAAAH ! Depuis quand t\'es là, toi ?!'],
+      ['kage', 'Depuis le début. Je m\'appelle Kage. On me remarque rarement.'],
+      ['aya', 'Dans un mois, c\'est la Coupe d\'Hiver du Bitume. Cinq prodiges de l\'Académie Sakura vont tout écraser. On les appelle… les Cinq Couronnes.'],
+      ['aya', 'Personne ne les a jamais battus. Mais il vous faut un nom d\'équipe, d\'abord.'],
+      { choice: 'Comment s\'appelle votre équipe ?', o: [['🔥 Les Sans-Couronne', { team: 'LES SANS-COURONNE' }], ['🐯 Les Tigres du Bitume', { team: 'LES TIGRES DU BITUME' }]] },
+      ['aya', '{team}. Pas mal. Premier test : les Corbeaux, le crew du quartier. Montrez-moi ce que vous valez.']
+    ], opp: { cap: 'crow', mates: ['crow2'], d: 1.4, name: 'CORBEAUX' },
+    post: [['crow', 'Ok, ok… vous êtes chauds. Mais contre les Couronnes, vous allez pleurer.'], ['kage', 'Les Cinq Couronnes… je les connais bien.'], ['p1', 'Hein ? Comment ça ?'], ['kage', '…On en reparlera.']],
+    lose: [['crow', 'C\'est ça, l\'équipe qui veut battre les Couronnes ? Rentrez chez vous.']] },
+
+    { t: 'CHAPITRE 1 · LE SNIPER CÉLESTE', map: 'lycee', pre: [
+      { title: 'CHAPITRE 1', sub: 'Le Sniper Céleste' },
+      ['narr', 'Premier tour de la Coupe. En face : Zen, la première Couronne. Il tient un canard en plastique.'],
+      ['zen', 'Ne regarde pas mon canard. C\'est mon porte-bonheur du jour. L\'horoscope a dit : « objet jaune ».'],
+      ['zen', 'Je tire de n\'importe où sur le terrain. Et je ne rate pas. Je fais ce qu\'il faut, c\'est tout.'],
+      ['aya', 'Ses tirs montent si haut qu\'ils touchent presque le ciel. Collez-le, même loin du panier !'],
+      ['kage', 'Zen. Ça faisait longtemps.'],
+      ['zen', '…Kage. Tu traînes encore avec des inconnus ?']
+    ], opp: { cap: 'zen', d: 2.4, pow: 'sniper', name: 'SAKURA' },
+    post: [['zen', 'J\'ai… raté ? Le canard m\'a trahi.'], ['p1', 'Kage, il t\'a reconnu. Vous vous connaissez d\'où ?'], ['kage', 'Plus tard. Promis.']],
+    lose: [['zen', 'Tout était écrit. Mon horoscope ne se trompe jamais.']] },
+
+    { t: 'CHAPITRE 2 · LE MIROIR', map: 'plage', pre: [
+      { title: 'CHAPITRE 2', sub: 'Le Miroir' },
+      ['reo', 'Salut, les nouveaux ! Moi c\'est Reo. Tout ce que vous faites, je le copie. En mieux.'],
+      ['reo', 'Et coucou Kage ! Vous saviez pas ? Kage, c\'était notre Sixième Homme. Le joueur fantôme des Couronnes.'],
+      ['narr', '…Un silence. Même les vagues semblent s\'arrêter.'],
+      ['kage', 'C\'est vrai. J\'étais le sixième. Je suis parti… parce qu\'ils avaient oublié pourquoi on joue.'],
+      { choice: 'Kage vous a caché la vérité. Que lui dites-vous ?', o: [['🤝 « On te fait confiance, Kage. »', { trust: 1 }], ['😠 « Pourquoi tu nous l\'as caché ?! »', { trust: 0 }]] },
+      { if: f => f.trust, b: [['kage', 'Merci. Je vais vous montrer ce qu\'est un vrai Sixième Homme.']] },
+      { if: f => !f.trust, b: [['kage', 'Tu as le droit d\'être en colère. Laisse-moi te prouver ce que je vaux, sur le terrain.']] },
+      ['aya', 'Reo copie vos gestes : changez de rythme, sans arrêt !']
+    ], opp: { cap: 'reo', d: 3.3, pow: 'miroir', name: 'SAKURA' },
+    post: [['reo', 'Impossible de vous copier… vous jouez les uns POUR les autres. Ça, je sais pas le faire.'], ['reo', 'Kage, t\'avais raison. Ils sont différents.']],
+    lose: [['reo', 'Copié, collé, gagné ! Revenez quand vous aurez un style à vous.']] },
+
+    { t: 'CHAPITRE 3 · LE GÉANT QUI S\'ENNUIE', map: 'neige', pre: [
+      { title: 'CHAPITRE 3', sub: 'Le Géant qui s\'ennuie' },
+      ['narr', 'Au sommet de la montagne, un géant de 2,25 m mâche des bonbons, assis sur le banc.'],
+      ['muro', 'Le basket, c\'est nul. Transpirer, c\'est nul. Écraser les petits, par contre… c\'est rigolo.'],
+      ['aya', 'Ses bras couvrent toute la raquette. Tirez de loin et faites-le courir !'],
+      ['kage', 'Muro, tu jouais en souriant, avant.'],
+      ['muro', 'Avant, c\'était avant. Donne-moi un bonbon ou dégage.']
+    ], opp: { cap: 'muro', d: 4.1, pow: 'geant', name: 'SAKURA' },
+    post: [['muro', '…'], ['muro', 'C\'était pas nul, en fait. Tiens. Un bonbon. Pour toi.'], ['narr', 'Le géant sourit. Pour la première fois depuis des années.']],
+    lose: [['muro', 'Trop petits. Trop lents. Trop… fatigants.']] },
+
+    { t: 'CHAPITRE 4 · LA PANTHÈRE', map: 'tokyo', pre: [
+      { title: 'CHAPITRE 4', sub: 'La Panthère' },
+      ['narr', 'Quart de finale, à Shibuya. La pluie tombe sur les néons. Kuro attend, les mains dans les poches.'],
+      ['kuro', 'Vous avez battu Zen, Reo et Muro ? Cool. Mais moi c\'est différent.'],
+      ['kuro', 'Le seul qui peut me battre… c\'est moi.'],
+      ['aya', 'Quand il entre dans la Zone, ses yeux laissent une traînée bleue. Là, défendez à deux sur lui !'],
+      ['kage', 'Kuro… c\'est toi qui m\'as appris à faire la passe. Tu te souviens ?'],
+      ['kuro', 'Je me souviens de rien. Joue.']
+    ], opp: { cap: 'kuro', d: 5, pow: 'zone', name: 'SAKURA' },
+    post: [['kuro', 'Hé… j\'avais oublié que perdre, ça donnait envie de rejouer.'], ['narr', 'Dans les gradins, une silhouette masquée applaudit lentement.'], ['masque', 'Intéressant. L\'Empereur va adorer.'], ['aya', '…Cette voix. Non. C\'est impossible.']],
+    lose: [['kuro', 'Je vous l\'avais dit. Revenez quand vous serez au niveau.']] },
+
+    { t: 'CHAPITRE 5 · LA TRAHISON', map: 'metro', pre: [
+      { title: 'CHAPITRE 5', sub: 'La Trahison' },
+      ['narr', 'Le matin de la demi-finale. Coach Aya n\'est pas venue. Il ne reste qu\'une lettre, posée sur le banc.'],
+      ['kage', '« Sei, l\'Empereur des Couronnes, est mon petit frère. Avant, il riait sur le terrain. Puis un jour, un autre Sei s\'est réveillé en lui… Je dois aller le chercher. Aya. »'],
+      ['p1', 'La coach… c\'est la grande sœur de l\'Empereur ?!'],
+      ['kage', 'Et il y a autre chose. Pour la demi-finale… je joue dans l\'autre équipe.'],
+      ['p1', 'QUOI ?!'],
+      ['kage', 'Si je veux le sauver, je dois être de l\'autre côté. Pardonnez-moi.'],
+      { choice: 'Kage s\'en va rejoindre les Couronnes…', o: [['🕊️ « Vas-y. On te battra quand même. »', { letgo: 1 }], ['✋ « Reste avec nous, Kage ! »', { letgo: 0 }]] },
+      { if: f => !f.letgo, b: [['kage', 'Je reviendrai. Je te le promets.']] },
+      ['narr', 'Sans votre Sixième Homme, face à Kage et à Reo réunis. Le match de votre vie.']
+    ], opp: { cap: 'kage', mates: ['reo'], d: 5.8, pow: 'fantome', name: 'COURONNES' }, noKage: true,
+    post: [['kage', 'Vous avez gagné sans moi.'], ['kage', 'Maintenant, je sais que vous pouvez gagner AVEC moi.'],
+      ['p1', 'Attends… tu nous testais ?'],
+      ['kage', 'Je regardais Sei. L\'Œil de l\'Empereur voit tout… sauf ce qu\'il ne regarde pas. Et il ne regarde jamais l\'ombre. Moi.'],
+      { if: f => !f.trust, b: [['kage', 'Tu avais raison de douter de moi, au début. Mais regarde : je suis revenu.']] },
+      ['narr', 'Le Sixième Homme est de retour. Direction la finale.']],
+    lose: [['kage', 'Pas encore assez forts sans moi… Relevez-vous. Sei ne vous fera aucun cadeau.']] },
+
+    { t: 'CHAPITRE 6 · L\'EMPEREUR', map: 'arene', pre: [
+      { title: 'LA FINALE', sub: 'L\'Empereur' },
+      ['narr', 'L\'Arène est pleine à craquer. Au centre, un garçon aux cheveux rouges. Un œil rouge, un œil doré.'],
+      ['sei', 'Je suis absolu. Ceux qui me défient… finissent à genoux.'],
+      ['sei', 'Kage. Tu es revenu ramper avec eux ? Décevant.'],
+      ['aya', 'SEI ! Arrête ça ! Ce n\'est pas toi !'],
+      ['p1', 'Coach ! Vous êtes là !'],
+      ['aya', 'Son œil voit vos mouvements avant que vous les fassiez. Il va vous faire trébucher. Mais il ne voit pas Kage : jouez à travers lui !'],
+      ['narr', 'Première manche : premier à 5.']
+    ], opp: { cap: 'sei', mates: ['zen', 'reo'], d: 6.6, pow: 'oeil', target: 5, name: 'EMPEREUR' },
+    post: [['narr', 'Sei regarde le tableau, incrédule. Son œil doré se met à briller.'],
+      ['sei', '…Vous avez vaincu l\'Empereur.'],
+      ['sei2', 'Alors c\'est à moi, maintenant. Le vrai Sei. Celui qui jouait avant… pour le plaisir.'],
+      ['aya', 'Sei… c\'est toi ? C\'est vraiment toi ?'],
+      ['sei2', 'Grande sœur. Désolé pour tout ce temps. Et maintenant… jouons pour de vrai. Comme avant.'],
+      ['kage', 'Attention. Ce Sei-là est encore plus fort. Mais il ne veut pas vous écraser : il veut un vrai match.']],
+    lose: [['sei', 'Absolu. Je vous l\'avais dit.']] },
+
+    { t: 'CHAPITRE 7 · LE VRAI SEI', map: 'arene', pre: [
+      { title: 'DERNIÈRE MANCHE', sub: 'Le vrai Sei' },
+      ['narr', 'Les Cinq Couronnes entrent sur le terrain, au complet. Pour la première fois, elles sourient.'],
+      ['zen', 'Mon horoscope disait : « une défaite qui rend heureux ». Je n\'y croyais pas.'],
+      ['muro', 'Tiens, un bonbon pour la route. Après, je t\'écrase.'],
+      ['sei2', 'Montrez-moi ce lien qui vous rend si forts.'],
+      ['kage', 'Ensemble. C\'est la seule Zone qui compte.'],
+      ['narr', 'Premier à 7. Quand vous jouerez vraiment ensemble, la Zone sera à vous… à plusieurs.']
+    ], opp: { cap: 'sei2', mates: ['kuro', 'muro'], d: 7.5, pow: 'oeil2', ally: 'lien', name: 'COURONNES' },
+    post: [{ title: 'CHAMPIONS !', sub: 'La Coupe d\'Hiver du Bitume est à vous' },
+      ['sei2', 'Merci. Vous m\'avez rendu le basket.'], ['aya', 'Je vous avais dit que je voyais votre potentiel. Mais là… vous avez dépassé toutes vos stats.'],
+      ['kage', 'Plus la lumière est forte, plus l\'ombre est sombre. Vous étiez ma lumière.'],
+      ['narr', 'Plus tard, sur le parking désert. L\'homme au masque vous attend.'],
+      ['masque', 'Bravo. Les Couronnes n\'étaient qu\'un test. La saison prochaine… le Trône vous attend.'],
+      ['narr', 'Il retire son masque. Un maillot noir, le numéro 99. Un sourire que vous connaissez.'],
+      ['masque', 'On se reverra au sommet. Signé : Omega.'],
+      { title: 'À SUIVRE…', sub: 'Carrière Duo · Saison 2 : Le Trône' }],
+    lose: [['sei2', 'Encore. On rejoue. C\'est ça, le basket.']] }
+  ];
+  const coopSave = () => Object.assign({ ch: 0, f: {} }, store.get('coop', {}));
+  function coopFill(x) { const P2 = S.party, f = (P2 && P2.cf) || coopSave().f, hum = PT.pl.filter(p => p.kind !== 'bot');
+    return String(x).replace(/\{team\}/g, f.team || 'LES SANS-NOM').replace(/\{p1\}/g, hum[0] ? pname(hum[0]) : 'TOI').replace(/\{p2\}/g, hum[1] ? pname(hum[1]) : 'TON POTE'); }
+  function coopRender() {
+    const el = $('coopInfo'); if (!el) return; const show = PT.game === 'coop'; el.hidden = !show; $('coopReset').hidden = !show || !(NET.party && NET.role === 'guest') && coopSave().ch === 0;
+    if (NET.party && NET.role === 'guest') $('coopReset').hidden = true;
+    if (!show) return; const c = coopSave(), done = c.ch >= COOP.length;
+    if (modeKey === 'fete' && !(NET.party && NET.role === 'guest')) playBtn.textContent = '📖 ' + (done ? 'Rejouer l\'histoire' : c.ch ? 'Continuer · chapitre ' + (c.ch + 1) : 'Commencer l\'histoire') + ' (' + PT.pl.length + ' joueur' + (PT.pl.length > 1 ? 's' : '') + ')';
+    el.innerHTML = `<b>${done ? '🏆 Histoire terminée !' : '📖 ' + COOP[c.ch].t}</b><span>${COOP.map((_, i) => `<i class="${i < c.ch ? 'ok' : i === c.ch ? 'now' : ''}"></i>`).join('')}</span><em>${done ? 'Rejoue l\'histoire depuis le début quand tu veux.' : 'Chapitre ' + (c.ch + 1) + ' / ' + COOP.length + (c.f.team ? ' · équipe ' + c.f.team : '')}</em>`;
+  }
+  // ---- running it inside the party (host / offline) ----
+  function coopStart() {
+    const P2 = S.party, c = coopSave(); if (c.ch >= COOP.length) { c.ch = 0; c.f = {}; store.set('coop', c); }
+    P2.cf = Object.assign({}, c.f); P2.ch = c.ch; coopChapter(P2.ch);
+  }
+  function coopChapter(ch) { const C = COOP[ch]; if (!C) return; if (S.map !== C.map) buildMap(C.map); coopScene(C.pre, () => coopMatch(ch)); }
+  function coopScene(beats, then) { const P2 = S.party; P2.sc = { b: (beats || []).slice(), i: 0, then }; coopBeat(); }
+  function coopBeat() {
+    const P2 = S.party, sc = P2.sc; if (!sc) return;
+    // conditional beats are decided when reached, so a choice made earlier in the scene counts
+    while (sc.b[sc.i] && sc.b[sc.i].if) { const c = sc.b[sc.i]; sc.b.splice(sc.i, 1, ...(c.if(P2.cf || {}) ? c.b : [])); }
+    const bt = sc.b[sc.i];
+    if (!bt) { P2.sc = null; P2.ov = null; $('partyOv').hidden = true; const f = sc.then; if (f) f(); return; }
+    const C = COOP[P2.ch] || {};
+    if (bt.choice) { P2.ov = { mode: 'ch', k: C.t, q: coopFill(bt.choice), o: bt.o.map(o => coopFill(o[0])), n: sc.i }; P2.it = 30; P2.then = () => coopPick(0); }
+    else if (bt.title) { P2.ov = { mode: 'title', t: bt.title, s: coopFill(bt.sub || ''), n: sc.i }; P2.it = 3.2; P2.then = coopNext; SFX.vs && SFX.vs(); }
+    else { const W = CO[bt[0]] || CO.narr, x = coopFill(bt[1]); P2.ov = { mode: 'dlg', k: C.t, w: coopFill(W.n), c: W.c, e: W.e, x, n: sc.i }; P2.it = clamp(2.4 + x.length * .05, 3.4, 10); P2.then = coopNext; }
+    P2.scT = S.time; S.phase = 'party'; renderPartyOv(P2.ov); showMsg('');
+  }
+  function coopNext() { const P2 = S.party; if (!P2 || !P2.sc) return; P2.sc.i++; coopBeat(); }
+  function coopPick(i) {
+    const P2 = S.party, sc = P2 && P2.sc, bt = sc && sc.b[sc.i]; if (!bt || !bt.choice) return;
+    const o = bt.o[clamp(i, 0, bt.o.length - 1)]; Object.assign(P2.cf, o[1] || {}); SFX.click && SFX.click();
+    sc.i++;
+    coopSaveFlags(); coopBeat();
+  }
+  function coopSaveFlags() { const P2 = S.party, c = coopSave(), f = {}; for (const [k, v] of Object.entries(P2.cf)) if (k[0] !== '_') f[k] = v; c.f = Object.assign(c.f || {}, f); store.set('coop', c); }
+  function coopInput() {
+    const P2 = S.party, ov = P2 && P2.ov; if (!ov || !ov.mode) return false;
+    let a = false, b = false; for (const i of ALLIN()) { if (i.pressed) a = true; if (i.pressed2) b = true; }
+    if (ov.mode === 'ch') { if ((a || b) && S.time - P2.scT > .4) coopPick(a ? 0 : 1); }
+    else if ((a || b) && S.time - P2.scT > .3) P2.it = Math.min(P2.it, .05);
+    for (const i of ALLIN()) i.pressed = i.released = i.pressed2 = false;
+    return true;
+  }
+  function coopMatch(ch) {
+    const P2 = S.party, C = COOP[ch], O = C.opp, lobby = PT.pl.slice(0, 4);
+    const lk = p => Object.assign({}, p.look, { name: pname(p) });
+    const LA = lobby.map(lk); if (!C.noKage && LA.length < 4) LA.push(coLook('kage'));
+    while (LA.length < 2) LA.push(roiOpponent());
+    const n = clamp(LA.length, 2, 4), LB = [coLook(O.cap)].concat((O.mates || []).map(coLook)); while (LB.length < n) LB.push(roiOpponent()); LB.length = n;
+    const H = []; lobby.forEach(p => { if (p.kind !== 'bot') H.push({ inp: inpOf(p), side: 'A', pid: p.id }); });
+    teamOff(); hideEx();
+    team3Setup(LA, LB, H.length ? H : [{ inp: inA, side: 'A', pid: 'none' }]); if (!H.length) S.team3.H = [];
+    const bsA = [mainOf('A'), ...teamEx('A')]; S.team3.H.forEach(h => { const k = lobby.findIndex(p => p.id === h.pid); const b = bsA[k] || bsA[0]; h.look = b.look; });
+    p1.pid = lobby[0] ? lobby[0].id : ''; p2.pid = '';
+    const sdk = { facile: -1.4, normal: 0, difficile: 1.2, legende: 2.2 }[store.get('storyDiff', 'normal')] || 0;
+    S.diff = tourDiff(clamp(O.d + sdk + (n - 2) * .3, 0, 9));
+    P2.target = O.target || 7; P2.duo = false; P2.goal = 'PREMIER À ' + P2.target; goalEl.textContent = P2.goal;
+    P2.pow = O.pow ? { k: O.pow, t: { sniper: 12, miroir: 11, geant: 14, zone: 15, fantome: 12, oeil: 11, oeil2: 10 }[O.pow] || 13 } : null;
+    P2.ally = C.ally ? { t: 16 } : null;
+    teamCtl(); setTouch(); newGame(); S.phase = 'check'; S.phaseT = 1.6;
+    p1.name = coopFill(P2.cf.team || 'LES SANS-NOM').slice(0, 14); p2.name = O.name || CO[O.cap].n; partyNames();
+    showMsg(p1.name + '  VS  ' + p2.name, '#ffd166', true);
+    P2.bar = '📖 ' + C.t + '  ·  premier à ' + P2.target;
+    setTimeout(() => { if (S.party && P2.pow) popup('⚠️ ' + CO[O.cap].n + ' · ' + { sniper: 'TIR CÉLESTE', miroir: 'COPIE PARFAITE', geant: 'MUR GÉANT', zone: 'LA ZONE', fantome: 'PASSE FANTÔME', oeil: 'ŒIL DE L\'EMPEREUR', oeil2: 'ŒIL DE L\'EMPEREUR' }[O.pow], 0, 3.2, 8, CO[O.cap].c, 24, 'huge'); }, 2200);
+  }
+  // the rivals' signature powers (and the final "shared Zone" of your team)
+  function coopPowTick(dt) {
+    const P2 = S.party; if (!P2 || !P2.g.coop) return;
+    const O = (COOP[P2.ch] || {}).opp || {};
+    if (O.pow === 'geant') p2.sc = Math.max(p2.sc || 1, 1.3);
+    if (S.phase !== 'play') return;
+    const W = P2.pow;
+    if (W) { W.t -= dt; if (W.t <= 0) {
+      W.t = { sniper: 12, miroir: 11, geant: 14, zone: 15, fantome: 12, oeil: 11, oeil2: 10 }[W.k] || 13; const now = S.time, cap = CO[O.cap];
+      const say = (t, col) => { popup(t, p2.x, 3.3, p2.z, col || cap.c, 34, 'huge', 'ankle'); SFX.roar && SFX.roar(); };
+      if (W.k === 'sniper') { p2.curse = { m: { sh3: 1.45, shm: 1.3, fade: 1.3 }, until: now + 6 }; say('🎯 TIR CÉLESTE !'); for (let i = 0; i < 30; i++) emit(p2.x, 1 + Math.random() * 2, p2.z, '#22c55e', (Math.random() - .5) * 2, 2 + Math.random() * 3, (Math.random() - .5) * 2, .8, 1); }
+      else if (W.k === 'miroir') { p2.curse = { m: { sp: 1.28, drib: 1.4, jmp: 1.1 }, until: now + 5 }; say('🪞 COPIE PARFAITE !'); }
+      else if (W.k === 'geant') { p2.curse = { m: { blk: 1.6, post: 1.3 }, until: now + 6 }; say('🍬 TROP GRAND !'); S.shakeT = .5; }
+      else if (W.k === 'zone' || W.k === 'oeil2') { p2.curse = { m: { sp: 1.35, drib: 1.5, sh3: 1.25, shm: 1.25 }, until: now + 6 }; say(W.k === 'zone' ? '🐆 LA ZONE !' : '✨ LA ZONE DU VRAI SEI !'); }
+      else if (W.k === 'fantome') { p2.curse = { m: { stl: 1.8, sp: 1.15 }, until: now + 5 }; say('👻 PASSE FANTÔME !'); }
+      if (W.k === 'oeil' || W.k === 'oeil2') { p1.curse = { m: { sp: .55, drib: .6, jmp: .8 }, until: now + 2.6 }; popup('👁️ L\'ŒIL DE L\'EMPEREUR · TU ES LU !', p1.x, 3, p1.z, '#ef4444', 26, 'huge', 'ankle'); flash(); }
+    } }
+    if (W && (W.k === 'zone' || W.k === 'oeil2') && p2.curse && p2.curse.until > S.time && Math.random() < .7) emit(p2.x, 1.6 + Math.random() * .3, p2.z, '#3b82f6', 0, .2, 0, .5, 0);
+    const A2 = P2.ally;
+    if (A2) { A2.t -= dt; if (A2.t <= 0) { A2.t = 18; p1.curse = { m: { sp: 1.3, sh3: 1.3, shm: 1.25, drib: 1.3 }, until: S.time + 6 }; popup('🔗 LE LIEN · ZONE À PLUSIEURS !', p1.x, 3.3, p1.z, '#ffd166', 30, 'huge', 'zone'); flash(); }
+      if (p1.curse && p1.curse.until > S.time && Math.random() < .7) emit(p1.x, 1.6 + Math.random() * .3, p1.z, '#ffd166', 0, .2, 0, .5, 0); }
+  }
+  function coopAfter(won) {
+    const P2 = S.party, ch = P2.ch, C = COOP[ch]; for (const q of P) q.curse = null; P2.pow = null; P2.ally = null; teamOff(); hideEx();
+    if (won) {
+      const c = coopSave(); if (ch >= c.ch) { c.ch = ch + 1; store.set('coop', c); coopSaveFlags(); }
+      awardXP(150); addCoins(60 + ch * 20, 'Carrière Duo · ' + C.t.split(' · ')[0]);
+      coopScene(C.post, () => { if (ch + 1 >= COOP.length) { partyOver(null, '🏆 ' + coopFill(P2.cf.team || 'VOTRE ÉQUIPE') + ' GAGNE LA COUPE D\'HIVER !', 'A'); } else { P2.ch = ch + 1; coopChapter(P2.ch); } });
+    } else {
+      coopScene((C.lose || []).concat([{ choice: 'Défaite ' + S.score.p + ' – ' + S.score.ai + '. Et maintenant ?', o: [['🔁 On rejoue le match !', { _retry: 1 }], ['🏠 On s\'arrête là pour l\'instant', { _retry: 0 }]] }]),
+        () => { if (P2.cf._retry) { delete P2.cf._retry; coopMatch(ch); } else { delete P2.cf._retry; partyStop(); } });
+    }
+  }
+  $('coopReset').addEventListener('click', () => { store.set('coop', { ch: 0, f: {} }); coopRender(); });
   { const q = new URLSearchParams(location.search), f = q.get('fete');
     if (f && /^[a-z0-9]{4}$/i.test(f)) setTimeout(() => { pickMode('fete'); $('fCodeIn').value = f.toUpperCase(); feteJoin(f); }, 500); }
 
@@ -8845,9 +9172,9 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
   }
   function phoneOpen(tab) { $('phonePanel').hidden = false; phTab(tab || 'pad'); qrInto($('siteQr'), siteUrl()); setTimeout(() => navGo('d'), 50); }
   function phoneClose() { $('phonePanel').hidden = true; }
-  function phTab(v) { document.querySelectorAll('#phTabs button').forEach(b => b.setAttribute('aria-selected', String(b.dataset.v === v))); $('phPad').hidden = v !== 'pad'; $('phSave').hidden = v !== 'save'; $('phPlay').hidden = v !== 'play'; }
+  function phTab(v) { document.querySelectorAll('#phTabs button').forEach(b => b.setAttribute('aria-selected', String(b.dataset.v === v))); $('phAcct').hidden = v !== 'acct'; $('phPad').hidden = v !== 'pad'; $('phSave').hidden = v !== 'save'; $('phPlay').hidden = v !== 'play'; }
   document.querySelectorAll('#phTabs button').forEach(b => b.addEventListener('click', () => phTab(b.dataset.v)));
-  $('phoneBtn').addEventListener('click', () => phoneOpen('pad')); $('phoneClose').addEventListener('click', phoneClose);
+  $('phoneBtn').addEventListener('click', () => phoneOpen('acct')); $('phoneClose').addEventListener('click', phoneClose);
   // ---- PC side: wait for a phone and read its buttons ----
   async function padHost(slot) {
     const room = await roomReady; if (!room) { $('padStatus').textContent = 'La liaison n\'est pas disponible ici (pas d\'internet ?).'; $('padCodeBox').hidden = false; return; }
@@ -8931,6 +9258,156 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
     catch (_) { $('saveStatus').textContent = 'Code introuvable.'; }
   }
   $('saveGet').addEventListener('click', () => saveGet($('saveCodeIn').value));
+
+  // ======================================================================================
+  //  v37 · COMPTE BITUME — pseudo + mot de passe : la progression te suit sur tous tes appareils.
+  //  La sauvegarde est chiffrée (AES-GCM, clé tirée du mot de passe) avant de partir sur le serveur.
+  // ======================================================================================
+  const AK = 'b1c1acct'; // not "bitume-…": never copied into the save itself
+  const acctGet = () => { try { return JSON.parse(localStorage.getItem(AK) || 'null'); } catch (_) { return null; } };
+  const acctSet = a => { try { if (a) localStorage.setItem(AK, JSON.stringify(a)); else localStorage.removeItem(AK); } catch (_) {} };
+  const tEnc = new TextEncoder(), tDec = new TextDecoder();
+  const hexOf = b => [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, '0')).join('');
+  const sha256 = async s => hexOf(await crypto.subtle.digest('SHA-256', tEnc.encode(s)));
+  const u8b64 = u => { let s = ''; const a = new Uint8Array(u); for (let i = 0; i < a.length; i += 0x8000) s += String.fromCharCode.apply(null, a.subarray(i, i + 0x8000)); return btoa(s); };
+  const b64u8 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+  const normP = p => (p || '').trim().toLowerCase();
+  async function acctDerive(pseudo, pass) {
+    const k = (await sha256('bitume-acct-v1|' + normP(pseudo) + '|' + pass)).slice(0, 40);
+    const base = await crypto.subtle.importKey('raw', tEnc.encode(pass), 'PBKDF2', false, ['deriveBits']);
+    const salt = tEnc.encode('bitume-salt|' + normP(pseudo));
+    const bits = await crypto.subtle.deriveBits({ name: 'PBKDF2', salt, iterations: 150000, hash: 'SHA-256' }, base, 256);
+    return { k, x: u8b64(bits) };
+  }
+  const aesOf = x => crypto.subtle.importKey('raw', b64u8(x), 'AES-GCM', false, ['encrypt', 'decrypt']);
+  async function gzipU8(u8, inflate) {
+    if (typeof CompressionStream === 'undefined') return null;
+    const st = new Blob([u8]).stream().pipeThrough(inflate ? new DecompressionStream('gzip') : new CompressionStream('gzip'));
+    return new Uint8Array(await new Response(st).arrayBuffer());
+  }
+  async function sealSave(a, obj, t) {
+    let raw = tEnc.encode(JSON.stringify(obj)), z = 0; const c = await gzipU8(raw).catch(() => null); if (c && c.length < raw.length) { raw = c; z = 1; }
+    const iv = crypto.getRandomValues(new Uint8Array(12)), ct = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, await aesOf(a.x), raw);
+    return { v: 1, t, z, n: a.p, i: u8b64(iv), c: u8b64(ct) };
+  }
+  async function openSave(a, rec) {
+    let raw = new Uint8Array(await crypto.subtle.decrypt({ name: 'AES-GCM', iv: b64u8(rec.i) }, await aesOf(a.x), b64u8(rec.c)));
+    if (rec.z) raw = await gzipU8(raw, true);
+    return JSON.parse(tDec.decode(raw));
+  }
+  // <cloud> accounts on the website: kept as retained messages on every public server (each save is re-sent to all of them)
+  function mqttOnce(url, fn) { return new Promise(resolve => { let c, done = false; const fin = v => { if (done) return; done = true; try { c && c.end(true); } catch (_) {} resolve(v); };
+    try { c = window.mqtt.connect(url, { clientId: 'b1c1a_' + Math.random().toString(36).slice(2, 12), clean: true, reconnectPeriod: 0, connectTimeout: 9000 }); } catch (_) { resolve(undefined); return; }
+    c.on('error', () => fin(undefined)); setTimeout(() => fin(undefined), 15000);
+    c.once('connect', () => { Promise.resolve(fn(c)).then(fin, () => fin(undefined)); }); }); }
+  const ACCT_T = 'bitume1c1/acct/v1/';
+  const CLOUD = {
+    async get(k) { if (!window.mqtt) return undefined;
+      const res = await Promise.all(BROKERS.map(u => mqttOnce(u, c => new Promise(r => { let best = null, sub = false; const tp = ACCT_T + k;
+        c.on('message', (t, buf) => { if (t !== tp) return; try { const d = JSON.parse(typeof buf === 'string' ? buf : new TextDecoder().decode(buf)); if (d && d.c && (!best || (d.t || 0) > (best.t || 0))) best = d; } catch (_) {} if (best) setTimeout(() => r(best), 150); });
+        c.subscribe(tp, { qos: 1 }, err => { if (err) r(undefined); else { sub = true; setTimeout(() => r(best), 2200); } }); }))));
+      const ok = res.filter(x => x !== undefined); if (!ok.length) return undefined;
+      return ok.filter(Boolean).sort((a, b) => (b.t || 0) - (a.t || 0))[0] || null; },
+    async put(k, v) { if (!window.mqtt) return false; const body = JSON.stringify(v);
+      const res = await Promise.all(BROKERS.map(u => mqttOnce(u, c => new Promise(r => c.publish(ACCT_T + k, body, { qos: 1, retain: true }, e => r(!e)))))); return res.some(x => x === true); }
+  };
+  // </cloud>
+  // merging two saves (this device + the account): nothing earned is ever lost
+  function mergeVal(key, a, b, cloudNewer) {
+    if (typeof a === 'number' && typeof b === 'number') return Math.max(a, b);
+    if (key === 'bitume-hist' && Array.isArray(a) && Array.isArray(b)) { const m = new Map(); for (const g of a.concat(b)) if (g && g.d) m.set(g.d, g); return [...m.values()].sort((x, y) => y.d - x.d).slice(0, 80); }
+    if (Array.isArray(a) && Array.isArray(b)) { const s = new Map(); for (const v of a.concat(b)) s.set(JSON.stringify(v), v); return [...s.values()]; }
+    if (a && b && typeof a === 'object' && typeof b === 'object') {
+      if (key === 'bitume-owned') { const o = {}; for (const c of new Set(Object.keys(a).concat(Object.keys(b)))) o[c] = [...new Set((a[c] || []).concat(b[c] || []))]; return o; }
+      if (key === 'bitume-ach') return Object.assign({}, b, a);
+      if (key === 'bitume-cst') { const o = Object.assign({}, a); for (const [f, v] of Object.entries(b)) { if (typeof v === 'number') o[f] = Math.max(o[f] || 0, v); else if (f === 'maps') { o.maps = Object.assign({}, a.maps || {}); for (const [m, n] of Object.entries(v || {})) o.maps[m] = Math.max(o.maps[m] || 0, n); } } return o; }
+      if ('day' in a && 'day' in b) return (b.day || 0) > (a.day || 0) ? b : (a.day || 0) > (b.day || 0) ? a : cloudNewer ? b : a;
+      if (key === 'bitume-car') { const r = c => (c.season || 0) * 1000 + (c.round || 0) * 10 + ({ semi: 1, final: 2, champ: 3, out: 3, 'out-reg': 3 }[c.phase] || 0); return r(b) > r(a) ? b : r(a) > r(b) ? a : cloudNewer ? b : a; }
+      if (key === 'bitume-coop') return (b.ch || 0) > (a.ch || 0) ? b : (a.ch || 0) > (b.ch || 0) ? a : cloudNewer ? b : a;
+    }
+    return cloudNewer ? b : a;
+  }
+  function mergeSaves(L, C, cloudNewer) {
+    const out = Object.assign({}, L);
+    for (const [k, cv] of Object.entries(C || {})) {
+      if (!/^bitume-/.test(k) || typeof cv !== 'string') continue;
+      const lv = L[k]; if (lv == null) { out[k] = cv; continue; }
+      try { out[k] = JSON.stringify(mergeVal(k, JSON.parse(lv), JSON.parse(cv), cloudNewer)); } catch (_) { out[k] = cloudNewer ? cv : lv; }
+    }
+    return out;
+  }
+  const hasProgress = d => { try { return JSON.parse(d['bitume-xp'] || '0') > 0 || JSON.parse(d['bitume-coins'] || '0') > 0 || (d['bitume-hist'] && JSON.parse(d['bitume-hist']).length > 0); } catch (_) { return false; } };
+  // ---- saving ----
+  let acctBusy = false, acctDirty = false, acctTimer = 0;
+  function acctStatus(t, cls) { const e = $('acStatus'); if (e) { e.textContent = t; e.className = 'acstatus ' + (cls || ''); } renderAcctBtn(); }
+  async function acctPush(silent) {
+    const a = acctGet(); if (!a) return false;
+    if (acctBusy) { acctDirty = true; return false; } acctBusy = true; acctDirty = false;
+    if (!silent) acctStatus('⏳ Sauvegarde…');
+    try {
+      const t = Date.now(), rec = await sealSave(a, saveDump(), t), ok = await CLOUD.put(a.k, rec);
+      if (ok) { a.t = t; acctSet(a); acctStatus('☁️ Sauvegardé à ' + new Date(t).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }), 'ok'); }
+      else acctStatus('⚠️ Pas de connexion : ta progression est gardée sur cet appareil, on réessaie plus tard.', 'warn');
+      return ok;
+    } catch (e) { acctStatus('⚠️ Sauvegarde impossible pour l\'instant.', 'warn'); return false; }
+    finally { acctBusy = false; if (acctDirty) setTimeout(() => acctPush(true), 3000); }
+  }
+  function acctSoon() { if (!acctGet()) return; clearTimeout(acctTimer); acctTimer = setTimeout(() => acctPush(true), 6000); }
+  // every change to the progression schedules a save (bundled: at most one every few seconds)
+  { const set0 = store.set; store.set = (k, v) => { set0(k, v); if (!/^(fsTip|lastIntro)$/.test(k)) acctSoon(); }; }
+  addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden' && acctGet()) { clearTimeout(acctTimer); acctPush(true); } });
+  // ---- logging in / creating ----
+  async function acctLogin(create) {
+    const p = $('acUser').value.trim(), pw = $('acPass').value;
+    if (!/^[\p{L}\p{N}_.\- ]{3,16}$/u.test(p)) { acctStatus('Le pseudo doit faire de 3 à 16 caractères (lettres, chiffres).', 'warn'); return; }
+    if (pw.length < 4) { acctStatus('Le mot de passe doit faire au moins 4 caractères.', 'warn'); return; }
+    if (!(window.crypto && crypto.subtle)) { acctStatus('Ce navigateur ne permet pas les comptes (ouvre le jeu en https).', 'warn'); return; }
+    acctStatus(create ? '⏳ Création du compte…' : '⏳ Connexion…'); $('acGo').disabled = $('acNew').disabled = true;
+    try {
+      const d = await acctDerive(p, pw), a = { p, k: d.k, x: d.x, t: 0 };
+      const rec = await CLOUD.get(a.k);
+      if (rec === undefined) { acctStatus('⚠️ Impossible de joindre le serveur des comptes. Vérifie ta connexion et réessaie.', 'warn'); return; }
+      if (!rec) {
+        if (!create) { acctStatus('Aucun compte avec ce pseudo et ce mot de passe. Vérifie-les, ou crée ton compte.', 'warn'); return; }
+        acctSet(a); const ok = await acctPush(); if (ok) { acctStatus('✅ Compte créé ! Ta progression est maintenant sauvegardée en ligne.', 'ok'); coinToastAcct('Compte créé · bienvenue ' + p); }
+        else { acctSet(null); acctStatus('⚠️ Le compte n\'a pas pu être créé (pas de connexion). Réessaie.', 'warn'); }
+        renderAcct(); return;
+      }
+      let cloudSave; try { cloudSave = await openSave(a, rec); } catch (_) { acctStatus('Mot de passe incorrect.', 'warn'); return; }
+      const local = saveDump(), merged = hasProgress(local) ? mergeSaves(local, cloudSave, true) : cloudSave;
+      for (const k of saveKeys()) if (!(k in merged)) try { localStorage.removeItem(k); } catch (_) {}
+      saveApply(merged); a.t = rec.t || Date.now(); a.lastLoad = a.t; acctSet(a);
+      await acctPush(true);
+      acctStatus('✅ Connecté ! Chargement de ta progression…', 'ok');
+      setTimeout(() => location.reload(), 900);
+    } catch (e) { acctStatus('⚠️ Erreur pendant la connexion. Réessaie.', 'warn'); }
+    finally { $('acGo').disabled = $('acNew').disabled = false; }
+  }
+  function coinToastAcct(t) { const box = $('coinToasts'); if (!box) return; const d = document.createElement('div'); d.className = 'ctoast'; d.innerHTML = `<b>☁️</b><span>${t}</span>`; box.appendChild(d); setTimeout(() => d.classList.add('out'), 2800); setTimeout(() => d.remove(), 3400); }
+  function acctLogout() { const a = acctGet(); if (!a) return; acctPush(true).finally(() => { acctSet(null); renderAcct(); acctStatus('Déconnecté. Ta progression reste sur cet appareil.'); }); }
+  function renderAcctBtn() { const a = acctGet(), b = $('phoneBtn'); if (!b) return; const sp = b.querySelector('span'); if (sp) sp.textContent = a ? a.p.slice(0, 10) : 'Compte'; b.classList.toggle('acct-on', !!a); }
+  function renderAcct() {
+    const a = acctGet(); $('acOut').hidden = !!a; $('acIn').hidden = !a;
+    if (a) { $('acName').textContent = a.p; $('acLast').textContent = a.t ? 'Dernière sauvegarde : ' + new Date(a.t).toLocaleString('fr-FR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : 'Pas encore sauvegardé'; }
+    renderAcctBtn();
+  }
+  $('acGo').addEventListener('click', () => acctLogin(false));
+  $('acNew').addEventListener('click', () => acctLogin(true));
+  $('acPass').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); acctLogin(false); } });
+  $('acSave').addEventListener('click', () => acctPush());
+  $('acOutBtn').addEventListener('click', acctLogout);
+  $('acShow').addEventListener('click', () => { const i = $('acPass'); i.type = i.type === 'password' ? 'text' : 'password'; $('acShow').textContent = i.type === 'password' ? '👁️' : '🙈'; });
+  // on start: if this account was saved from another device since, take that progression
+  async function acctBoot() {
+    renderAcct(); const a = acctGet(); if (!a) return;
+    const rec = await CLOUD.get(a.k); if (!rec) { if (rec === null) acctPush(true); return; }
+    if ((rec.t || 0) > (a.t || 0) + 1000) {
+      try { const cs = await openSave(a, rec), merged = mergeSaves(saveDump(), cs, true); saveApply(merged); a.t = rec.t; acctSet(a); try { sessionStorage.setItem('b1c1sync', '1'); } catch (_) {} location.reload(); } catch (_) {}
+    } else if ((a.t || 0) > (rec.t || 0) + 1000) acctPush(true);
+    else acctStatus('☁️ À jour avec ton compte', 'ok');
+  }
+  setTimeout(acctBoot, 1200);
+  try { if (sessionStorage.getItem('b1c1sync')) { sessionStorage.removeItem('b1c1sync'); setTimeout(() => coinToastAcct('Progression synchronisée avec ton compte'), 1500); } } catch (_) {}
   { const q = new URLSearchParams(location.search), m = q.get('manette'), pr = q.get('progression');
     if (m && /^[a-z0-9]{4}$/i.test(m)) setTimeout(() => padJoin(m), 500);
     if (pr && /^[a-z0-9]{4}$/i.test(pr)) setTimeout(() => { phoneOpen('save'); $('saveCodeIn').value = pr.toUpperCase(); saveGet(pr); }, 600); }
