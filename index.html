@@ -16,7 +16,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Barlow+Semi+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&text=%E3%82%B4%E3%83%89%E3%83%B3%E3%83%83%E3%83%90%E3%82%B7%21ZONE%E6%A1%9C&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&text=%E3%82%B4%E3%83%89%E3%83%B3%E3%83%83%E3%83%90%E3%82%B7%21ZONE%E6%A1%9C%E9%A0%AD%E3%81%8C%E9%AB%98%E3%81%84%E3%81%9E%E5%A4%A9%E5%B8%9D%E3%81%AE%E7%9C%BC&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mqtt@5.10.1/dist/mqtt.min.js"></script>
 <style>
@@ -959,6 +959,51 @@ html.hc .tag{text-shadow:0 0 3px #000,0 0 3px #000}
 body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gauge,.touch .joyhint){visibility:hidden}
 @media (pointer:coarse){ .partyov.vn:not(.title){top:calc(10px + env(safe-area-inset-top,0px));bottom:auto;animation-name:vnInT} }
 @keyframes vnInT{from{opacity:0;transform:translate(-50%,-14px)}}
+/* ---------- L'Œil de l'Empereur ---------- */
+.stage>canvas.emp{filter:grayscale(1) contrast(1.5) brightness(.75) sepia(.35) hue-rotate(-30deg) saturate(2.2)!important}
+.empfx{position:absolute;inset:0;z-index:9;pointer-events:none;overflow:hidden}
+.empfx .eflash{position:absolute;inset:0;background:#fff;opacity:0}
+.empfx .eb{position:absolute;left:0;right:0;height:24%;background:#050203;transform:scaleY(0)}
+.empfx .eb.t{top:0;transform-origin:top}.empfx .eb.b{bottom:0;transform-origin:bottom}
+.empfx .eband{position:absolute;left:0;right:0;top:24%;bottom:24%;display:grid;place-items:center;background:radial-gradient(ellipse at center,#2a0606 0,#0a0203 70%);opacity:0;overflow:hidden}
+.empfx .eband::before{content:'';position:absolute;inset:-40%;background:repeating-conic-gradient(from 0deg,rgba(255,176,32,.0) 0 3deg,rgba(255,120,40,.22) 3deg 4deg);-webkit-mask-image:radial-gradient(circle,transparent 18%,#000 55%);mask-image:radial-gradient(circle,transparent 18%,#000 55%)}
+.empfx svg.eye{position:relative;height:92%;max-width:96%;filter:drop-shadow(0 0 18px rgba(255,120,30,.55))}
+.empfx .lid{transform-box:fill-box}
+.empfx .lid.t{transform-origin:50% 0}.empfx .lid.b{transform-origin:50% 100%}
+.empfx .iris{transform-box:fill-box;transform-origin:50% 50%}
+.empfx .gold{opacity:0}
+.empfx .ering{transform-box:fill-box;transform-origin:50% 50%;opacity:0}
+.empfx .ekanji{position:absolute;right:7%;top:12%;writing-mode:vertical-rl;font-family:'Dela Gothic One','Hiragino Sans','Yu Gothic','Noto Sans JP',var(--display),sans-serif;font-size:clamp(34px,9vh,86px);line-height:1;color:#fff;-webkit-text-stroke:2px #3a0505;paint-order:stroke fill;text-shadow:0 0 22px #ff3b1f,5px 5px 0 #050203;opacity:0;letter-spacing:.06em}
+.empfx .esub{position:absolute;left:50%;bottom:9%;transform:translateX(-50%);white-space:nowrap;font-weight:800;font-style:italic;font-size:clamp(15px,2.6vw,24px);color:#ffe2b0;text-shadow:0 2px 8px #000;opacity:0}
+.empfx .ename{position:absolute;left:4%;top:30%;opacity:0;padding:8px 22px 8px 14px;background:linear-gradient(90deg,#b91c1c,#ffb020);clip-path:polygon(0 0,100% 0,94% 100%,0 100%);color:#140505}
+.empfx .ename small{display:block;font-family:'Dela Gothic One','Hiragino Sans','Noto Sans JP',sans-serif;font-size:12px;letter-spacing:.3em}
+.empfx .ename b{display:block;font-family:var(--display);font-weight:400;font-size:clamp(20px,4.4vw,46px);line-height:1}
+.empfx.go .eflash{animation:eFlash .45s ease-out both}
+.empfx.go .eb{animation:eBar 2.9s cubic-bezier(.2,.9,.3,1) both}
+.empfx.go .eband{animation:eBand 2.9s ease both}
+.empfx.go .lid.t{animation:eLidT 2.9s cubic-bezier(.3,.9,.2,1) both}
+.empfx.go .lid.b{animation:eLidB 2.9s cubic-bezier(.3,.9,.2,1) both}
+.empfx.go .iris{animation:eIris 2.9s ease both}
+.empfx.go .gold{animation:eGold 2.9s ease both}
+.empfx.go .ering{animation:eRing 2.9s ease-out both}
+.empfx.go .ering.r2{animation-delay:.18s}
+.empfx.go .ekanji{animation:eKanji 2.9s cubic-bezier(.2,1.6,.4,1) both}
+.empfx.go .esub{animation:eSub 2.9s ease both}
+.empfx.go .ename{animation:eName 2.9s cubic-bezier(.2,1.4,.4,1) both}
+@keyframes eFlash{0%{opacity:.95}100%{opacity:0}}
+@keyframes eBar{0%{transform:scaleY(0)}9%,88%{transform:scaleY(1)}100%{transform:scaleY(0)}}
+@keyframes eBand{0%,4%{opacity:0}10%,40%{opacity:1}48%,100%{opacity:0}}
+@keyframes eLidT{0%,10%{transform:scaleY(1)}20%,40%{transform:scaleY(.04)}46%,100%{transform:scaleY(1)}}
+@keyframes eLidB{0%,10%{transform:scaleY(1)}20%,40%{transform:scaleY(.04)}46%,100%{transform:scaleY(1)}}
+@keyframes eIris{0%,18%{transform:scale(.86)}24%{transform:scale(1.14)}28%,40%{transform:scale(1)}}
+@keyframes eGold{0%,22%{opacity:0}27%,48%{opacity:1}100%{opacity:1}}
+@keyframes eRing{0%,22%{opacity:0;transform:scale(.4)}26%{opacity:1}42%{opacity:0;transform:scale(3.4)}100%{opacity:0}}
+@keyframes eKanji{0%,42%{opacity:0;transform:scale(2.2) translateY(-20px)}48%{opacity:1;transform:scale(1)}88%{opacity:1}100%{opacity:0}}
+@keyframes eSub{0%,50%{opacity:0}56%,86%{opacity:1}100%{opacity:0}}
+@keyframes eName{0%,46%{opacity:0;transform:translateX(-120%)}52%{opacity:1;transform:translateX(0)}86%{opacity:1}100%{opacity:0;transform:translateX(-20%)}}
+@media (orientation:portrait){ .empfx .eb{height:30%}.empfx .eband{top:30%;bottom:30%}.empfx .ekanji{top:4%;right:5%;font-size:clamp(28px,6vh,60px)}.empfx .ename{top:auto;bottom:31%} }
+@media (prefers-reduced-motion:reduce){ .empfx.go *{animation-duration:.01s!important} }
+#shopTabs{grid-template-columns:repeat(4,1fr)}#shopTabs button{font-size:13px}
 </style>
 </head>
 <body>
@@ -966,6 +1011,20 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
   <div class="stage" id="stage">
     <div class="flash" id="flash"></div>
     <div class="bossfog" id="bossFog"></div>
+    <div class="empfx" id="empFx" hidden><div class="eb t"></div><div class="eb b"></div><div class="eband"><svg class="eye" viewBox="0 0 400 160" aria-hidden="true"><defs>
+<radialGradient id="eIr" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#ff8a6a"/><stop offset=".45" stop-color="#d4161a"/><stop offset=".85" stop-color="#5a0507"/><stop offset="1" stop-color="#1a0203"/></radialGradient>
+<radialGradient id="eIg" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff6c8"/><stop offset=".35" stop-color="#ffc233"/><stop offset=".75" stop-color="#e07a0c"/><stop offset="1" stop-color="#4a1a02"/></radialGradient>
+<radialGradient id="eSc" cx="50%" cy="45%" r="60%"><stop offset="0" stop-color="#f4ede0"/><stop offset="1" stop-color="#b8a99a"/></radialGradient>
+<clipPath id="eCl"><path d="M8 80 Q200 -30 392 80 Q200 190 8 80Z"/></clipPath></defs>
+<g clip-path="url(#eCl)"><rect width="400" height="160" fill="url(#eSc)"/>
+<g class="iris"><circle cx="200" cy="80" r="60" fill="url(#eIr)"/><circle class="gold" cx="200" cy="80" r="60" fill="url(#eIg)"/>
+<g stroke="rgba(40,5,0,.45)" stroke-width="1.6"><line x1="218.0" y1="80.0" x2="256.0" y2="80.0"/><line x1="217.7" y1="83.1" x2="255.1" y2="89.7"/><line x1="216.9" y1="86.2" x2="252.6" y2="99.2"/><line x1="215.6" y1="89.0" x2="248.5" y2="108.0"/><line x1="213.8" y1="91.6" x2="242.9" y2="116.0"/><line x1="211.6" y1="93.8" x2="236.0" y2="122.9"/><line x1="209.0" y1="95.6" x2="228.0" y2="128.5"/><line x1="206.2" y1="96.9" x2="219.2" y2="132.6"/><line x1="203.1" y1="97.7" x2="209.7" y2="135.1"/><line x1="200.0" y1="98.0" x2="200.0" y2="136.0"/><line x1="196.9" y1="97.7" x2="190.3" y2="135.1"/><line x1="193.8" y1="96.9" x2="180.8" y2="132.6"/><line x1="191.0" y1="95.6" x2="172.0" y2="128.5"/><line x1="188.4" y1="93.8" x2="164.0" y2="122.9"/><line x1="186.2" y1="91.6" x2="157.1" y2="116.0"/><line x1="184.4" y1="89.0" x2="151.5" y2="108.0"/><line x1="183.1" y1="86.2" x2="147.4" y2="99.2"/><line x1="182.3" y1="83.1" x2="144.9" y2="89.7"/><line x1="182.0" y1="80.0" x2="144.0" y2="80.0"/><line x1="182.3" y1="76.9" x2="144.9" y2="70.3"/><line x1="183.1" y1="73.8" x2="147.4" y2="60.8"/><line x1="184.4" y1="71.0" x2="151.5" y2="52.0"/><line x1="186.2" y1="68.4" x2="157.1" y2="44.0"/><line x1="188.4" y1="66.2" x2="164.0" y2="37.1"/><line x1="191.0" y1="64.4" x2="172.0" y2="31.5"/><line x1="193.8" y1="63.1" x2="180.8" y2="27.4"/><line x1="196.9" y1="62.3" x2="190.3" y2="24.9"/><line x1="200.0" y1="62.0" x2="200.0" y2="24.0"/><line x1="203.1" y1="62.3" x2="209.7" y2="24.9"/><line x1="206.2" y1="63.1" x2="219.2" y2="27.4"/><line x1="209.0" y1="64.4" x2="228.0" y2="31.5"/><line x1="211.6" y1="66.2" x2="236.0" y2="37.1"/><line x1="213.8" y1="68.4" x2="242.9" y2="44.0"/><line x1="215.6" y1="71.0" x2="248.5" y2="52.0"/><line x1="216.9" y1="73.8" x2="252.6" y2="60.8"/><line x1="217.7" y1="76.9" x2="255.1" y2="70.3"/></g>
+<circle cx="200" cy="80" r="60" fill="none" stroke="#2a0303" stroke-width="5"/><circle cx="200" cy="80" r="17" fill="#080203"/>
+<circle cx="222" cy="58" r="9" fill="#fff" opacity=".92"/><circle cx="184" cy="98" r="4" fill="#fff" opacity=".6"/></g>
+<rect class="lid t" x="0" y="-2" width="400" height="84" fill="#120304"/><rect class="lid b" x="0" y="80" width="400" height="84" fill="#120304"/></g>
+<circle class="ering" cx="200" cy="80" r="62" fill="none" stroke="#ffc233" stroke-width="4"/><circle class="ering r2" cx="200" cy="80" r="62" fill="none" stroke="#ff3b1f" stroke-width="3"/>
+<path d="M8 80 Q200 -30 392 80 Q200 190 8 80Z" fill="none" stroke="#050102" stroke-width="7"/>
+<g stroke="#050102" stroke-width="6" stroke-linecap="round"><path d="M70 40 L48 18"/><path d="M120 22 L108 -2"/><path d="M180 14 L176 -10"/><path d="M240 14 L246 -10"/><path d="M300 24 L314 0"/><path d="M345 44 L368 22"/></g></svg></div><div class="ekanji">頭が高いぞ</div><div class="esub">« Ta tête est trop haute. »</div><div class="ename"><small>天帝の眼</small><b>L'ŒIL DE L'EMPEREUR</b></div><div class="eflash"></div></div>
     <div class="tko" id="tko" hidden><div class="tt"></div><div class="tr"></div><div class="tw"></div><div class="tw b"></div><div class="tf"></div>
       <div class="tb"><small id="tkoP">TOI</small><b>TAKEOVER</b><span id="tkoN">SNIPER</span><i id="tkoD"></i></div></div>
     <div class="votes" id="votes" hidden></div>
@@ -1295,7 +1354,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
 <div class="overlay top" id="shopPanel" hidden>
   <div class="card wide">
     <div class="shophead"><div><p class="eyebrow">Dépense tes pièces</p><h2 class="h2">Boutique</h2></div><span class="coinpill">🪙 <b id="shopCoins">0</b></span></div>
-    <div class="seg" role="tablist" id="shopTabs"><button role="tab" data-v="ball" aria-selected="true">🏀 Ballons</button><button role="tab" data-v="trail" aria-selected="false">☄️ Traînées</button><button role="tab" data-v="fx" aria-selected="false">✨ Effets</button></div>
+    <div class="seg" role="tablist" id="shopTabs"><button role="tab" data-v="ball" aria-selected="true">🏀 Ballons</button><button role="tab" data-v="trail" aria-selected="false">☄️ Traînées</button><button role="tab" data-v="fx" aria-selected="false">✨ Effets</button><button role="tab" data-v="ankle" aria-selected="false">👁️ Chevilles</button></div>
     <p class="note">Gagne des pièces en jouant (victoires, dunks, tirs verts…), avec les succès, les boss, la carrière et le coffre du jour. Les traînées et effets s'affichent sur tes tirs et tes paniers.</p>
     <div class="shoplist" id="shopList"></div>
     <button class="play" id="shopClose">Fermer</button>
@@ -3337,6 +3396,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
       poster() { if (!ac) return; last.crowd = performance.now(); tone(48, 'sine', .004, .7, .7, 30); this.rim(); noise(.002, .3, .3, 'lowpass', 700, 1);
         noise(.08, 1.6, .22, 'bandpass', 700, .6, 1200, .1); noise(.3, 1.4, .14, 'bandpass', 2200, .8, 0, .2); },
       vs() { if (!ac) return; noise(.05, .35, .2, 'bandpass', 500, 1.2, 2400); tone(46, 'sine', .004, .6, .7, 30, .3); noise(.002, .25, .3, 'lowpass', 900, 1, 0, .3); },
+      emperor() { if (!ac) return; tone(55, 'sine', .01, .35, .5, 40); tone(52, 'sine', .01, .35, .45, 38, .32); tone(1760, 'triangle', .005, 1.1, .09, 2640, .55); tone(2637, 'sine', .005, 1.3, .05, 3520, .6); noise(.01, .5, .12, 'highpass', 5000, .7, 9000, .55); tone(98, 'sawtooth', .05, 1.1, .08, 49, 1.2); },
       zone() { if (!ac) return; tone(110, 'sawtooth', .02, .5, .06, 220); tone(880, 'sine', .01, .4, .05, 1760, .1); noise(.05, .6, .08, 'bandpass', 2400, 3, 4800); },
       ankle() { if (!ac) return; this.squeak(); last.crowd = 0; crowd('ooh'); noise(.25, 1.4, .17, 'bandpass', 950, .7, 1400, .55); tone(2600, 'sine', .04, .3, .02, 3100, .8); },
       play(name) { if (name && typeof this[name] === 'function' && name !== 'play') this[name](); }
@@ -3452,12 +3512,14 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
   // ---------- killcam: the basket again, slowed down, from a TV angle ----------
   const humans = () => S.mode === 'local' || S.mode === 'host' ? [p1, p2] : S.mode === 'guest' ? [p1, p2] : [p1];
   function voteSkip(p) {
+    if (S.phase === 'scored') { // before the killcam / during the celebration: skip what's left
+      if (S.kcPending > 0 || S.celeb) { S.kcPending = 0; S.phaseT = Math.min(S.phaseT, .3); SFX.click && SFX.click(); }
+      return;
+    }
     if (S.phase !== 'kill') return;
     if (!S.votes) S.votes = [false, false];
     S.votes[p.idx] = true; SFX.click && SFX.click();
-    if (humans().every(q => S.votes[q.idx])) {
-      if (S.phase === 'kill') endKill(true); else S.phaseT = Math.min(S.phaseT, .25);
-    }
+    endKill(true);
   }
   function showVotes() {
     const el = $('votes'), on = S.phase === 'kill' && humans().length > 1;
@@ -4183,17 +4245,18 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
     if (o.fallT > 0) return; // already on the floor: never restart the fall
     if (isMine(p)) incStat('ankles');
     p.lastAnkleT = S.time;
+    const emp = empWanted(p) && emperorEye(p, o);
     tkGain(p, .25);
-    o.fallT = FALL_T; o.fallKind = 'ankle'; o.fallVar = Math.floor(rnd() * 8); o.stun = FALL_T; o.shooting = false; p.ghost = 1.1;
+    o.fallT = FALL_T; o.fallKind = 'ankle'; o.fallVar = emp ? 1 : Math.floor(rnd() * 8); o.stun = FALL_T; o.shooting = false; p.ghost = 1.1;
     o.fallSide = rnd() < .5 ? 1 : -1;
     sparks(o.x, .12, o.z, '#cfc6b5'); // dust
     // he stumbles backward, away from the ball handler
     const ax = o.x - p.x, az = o.z - p.z, al = Math.hypot(ax, az) || 1; o.vx = ax / al * 1.6; o.vz = az / al * 1.6;
     if (o.ai) { o.ai.biteT = 0; }
     if (o.fallVar === 4) { o.vx *= 2.2; o.vz *= 2.2; } // slides away on his backside
-    popup(FALL_TXT[o.fallVar], o.x, 3, o.z, p.color, 36, 'huge', 'ankle'); comm('ankle', p, o, 350); hl('ankle', FALL_TXT[o.fallVar].replace(/ !$/, ''), p, 4);
-    S.shakeT = .22; if (ATH.slowmo && S.mode !== 'guest') S.slowT = .55;
-    cineFx('ankle', o.idx); // floor-level slow motion on the guy on the floor
+    if (!emp) popup(FALL_TXT[o.fallVar], o.x, 3, o.z, p.color, 36, 'huge', 'ankle'); comm('ankle', p, o, 350); hl('ankle', emp ? 'L\'ŒIL DE L\'EMPEREUR' : FALL_TXT[o.fallVar].replace(/ !$/, ''), p, 4);
+    S.shakeT = .22; if (ATH.slowmo && S.mode !== 'guest' && !emp) S.slowT = .55;
+    if (!emp) cineFx('ankle', o.idx); // floor-level slow motion on the guy on the floor
   }
   const FALL_T = 1.7, POSTER_T = 3.2;
   const POSTER_TXT = ['POSTÉRISÉ !', 'À QUATRE PATTES !', 'IL GLISSE JUSQU\'À LA LIGNE !', 'FACE CONTRE TERRE !', 'IL S\'EFFONDRE !', 'JAMBES EN COTON !'];
@@ -4264,7 +4327,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
     if (k === 'escape' || (k === 'p' && !routeKey(e))) { e.preventDefault(); if (!e.repeat) togglePause(); return; }
     if (isPaused()) return;
     const r = routeKey(e, true);
-    if ((S.phase === 'kill' || (S.phase === 'scored' && S.celeb)) && r && r[1] === 'act' && S.mode !== 'guest') { if (!e.repeat) voteSkip(r[0] === inB ? p2 : p1); return; }
+    if ((S.phase === 'kill' || S.phase === 'scored') && r && r[1] === 'act' && S.mode !== 'guest') { if (!e.repeat) voteSkip(r[0] === inB ? p2 : p1); return; }
     lastDevice = 'kb';
     if (r) { e.preventDefault(); applyKey(r[0], r[1], true, e); }
   });
@@ -4416,7 +4479,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
       { const tri = btn(PB.block), sq = btn(PB.shoot), tE = !st.tri && tri; st.tri = tri; if (sq) st.sqT = performance.now();
         if (tE && has && (sq || performance.now() - (st.sqT || 0) < 220) && ATH.oopBtn !== false) { i.oopReq = true; i.noq = (i.noq || 0) + 1; }   // □ + △: alley-oop
         else if (tE && (p.oopT > 0 || (p.dunking && p.oop && !p.dunkDone))) { i.oopTime = true; i.not = (i.not || 0) + 1; } } // △ again: the finish
-      for (const k of [PB.shoot, PB.block, PB.jump, PB.drib]) { const e2 = edge(k); if (e2 === 1) { st.map[k] = roles[k]; if ((S.phase === 'kill' || (S.phase === 'scored' && S.celeb)) && S.mode !== 'guest') { voteSkip(i === inB ? p2 : p1); st.map[k] = ''; } else down(st.map[k]); } else if (e2 === -1) { up(st.map[k]); st.map[k] = ''; } }
+      for (const k of [PB.shoot, PB.block, PB.jump, PB.drib]) { const e2 = edge(k); if (e2 === 1) { st.map[k] = roles[k]; if ((S.phase === 'kill' || S.phase === 'scored') && S.mode !== 'guest') { voteSkip(i === inB ? p2 : p1); st.map[k] = ''; } else down(st.map[k]); } else if (e2 === -1) { up(st.map[k]); st.map[k] = ''; } }
       // right stick: pro stick
       const R = st.rs;
       if (R.clearAim) { i.aimOn = false; R.clearAim = false; }
@@ -4450,7 +4513,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
     btn.addEventListener('pointerdown', e => {
       e.preventDefault(); if (e.pointerType === 'touch') lastDevice = 'touch'; try { btn.setPointerCapture(e.pointerId); } catch (_) {} btn.classList.add('on');
       if (isPaused()) return;
-      if ((S.phase === 'kill' || (S.phase === 'scored' && S.celeb)) && S.mode !== 'guest') { voteSkip(i === inB ? p2 : p1); return; }
+      if ((S.phase === 'kill' || S.phase === 'scored') && S.mode !== 'guest') { voteSkip(i === inB ? p2 : p1); return; }
       secondary ? secDown(i) : actDown(i);
     });
     const end = () => { btn.classList.remove('on'); secondary ? secUp(i) : actUp(i); };
@@ -5142,7 +5205,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
     NET.lastDd = i.dd || 0;
     if ((i.oq || 0) > (NET.lastOq || 0) && S.phase === 'play') inR.oopReq = true; NET.lastOq = i.oq || 0;
     if ((i.ot || 0) > (NET.lastOt || 0) && S.phase === 'play') inR.oopTime = true; NET.lastOt = i.ot || 0;
-    if ((i.sk || 0) > (NET.lastSk || 0) && (S.phase === 'kill' || (S.phase === 'scored' && S.celeb))) voteSkip(p2);
+    if ((i.sk || 0) > (NET.lastSk || 0) && (S.phase === 'kill' || S.phase === 'scored')) voteSkip(p2);
     if ((i.sk || 0) > (NET.lastSk || 0) && S.phase === 'intro' && S.intro) S.introSkip = true;
     if ((i.ps || 0) > (NET.lastPs || 0) && S.phase === 'play') inR.passReq = true; NET.lastPs = i.ps || 0;
     NET.lastAp = i.ap || 0; NET.lastAr = i.ar || 0; NET.lastBp = i.bp || 0; NET.lastSk = i.sk || 0;
@@ -8606,7 +8669,8 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
       if ((i.oq || 0) > L.oq && live) R.oopReq = true;
       if ((i.ot || 0) > L.ot && live) R.oopTime = true;
       if ((i.ps || 0) > L.ps && live) R.passReq = true;
-      if ((i.sk || 0) > L.sk && S.phase === 'party' && S.party) S.party.it = Math.min(S.party.it, .4); // a guest skips the scoreboard too
+      if ((i.sk || 0) > L.sk && S.phase === 'party' && S.party) S.party.it = Math.min(S.party.it, .4);
+      if ((i.sk || 0) > L.sk && (S.phase === 'kill' || S.phase === 'scored')) voteSkip(p1); // a guest skips the scoreboard too
       pl.L = { init: 1, ap: i.ap || 0, ar: i.ar || 0, bp: i.bp || 0, dd: i.dd || 0, oq: i.oq || 0, ot: i.ot || 0, ps: i.ps || 0, sk: i.sk || 0 };
     }
   }
@@ -9194,7 +9258,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
       const ph = S0.R.peers().find(q => !q.sameTab && q.presence && q.presence.role === 'pad'); if (!ph || !ph.presence.in) continue;
       const v = ph.presence.in, i = S0.inp, L0 = S0.last;
       i.jx = clamp(+v.x || 0, -1, 1); i.jz = clamp(+v.z || 0, -1, 1);
-      if (v.a && !L0.a) { if ((S.phase === 'kill' || (S.phase === 'scored' && S.celeb)) && S.mode !== 'guest') voteSkip(i === inB ? p2 : p1); else if (S.phase === 'story') storyOk(); else actDown(i); } else if (!v.a && L0.a) actUp(i);
+      if (v.a && !L0.a) { if ((S.phase === 'kill' || S.phase === 'scored') && S.mode !== 'guest') voteSkip(i === inB ? p2 : p1); else if (S.phase === 'story') storyOk(); else actDown(i); } else if (!v.a && L0.a) actUp(i);
       if (v.b && !L0.b) secDown(i); else if (!v.b && L0.b) secUp(i);
       i.handsK = !!v.h; i.sprintK = !!v.s; i.intense = !!v.i;
       if ((v.p || 0) > (L0.p || 0)) { i.passReq = true; i.npass = (i.npass || 0) + 1; }
@@ -9579,10 +9643,11 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
     ball: { t: 'Ballons', i: '🏀', items: [['classique', 'Classique', 0], ['retro', 'Rétro tricolore', 300], ['camo', 'Camo', 300], ['damier', 'Damier', 350], ['plage', 'Ballon de plage', 250], ['pasteque', 'Pastèque', 250],
       ['glace', 'Glace', 400], ['neon', 'Néon', 450], ['feu', 'Lave', 550], ['galaxie', 'Galaxie', 800], ['or', 'Or 24 carats', 1000], ['diamant', 'Diamant', 1500]] },
     trail: { t: 'Traînées', i: '☄️', items: [['aucune', 'Aucune', 0], ['fumee', 'Fumée', 250], ['coeurs', 'Cœurs', 300], ['feu', 'Feu', 400], ['matrix', 'Matrix', 400], ['etoiles', 'Étoiles', 500], ['eclair', 'Éclair', 550], ['arcenciel', 'Arc-en-ciel', 700]] },
+    ankle: { t: 'Chevilles', i: '👁️', items: [['empereur', 'Œil de l\'Empereur', 0], ['classique', 'Classique', 0]] },
     fx: { t: 'Effets de panier', i: '✨', items: [['aucun', 'Aucun', 0], ['confettis', 'Confettis', 350], ['glace', 'Éclats de glace', 400], ['flammes', 'Flammes', 500], ['eclair', 'Foudre', 600], ['or', 'Pluie d\'or', 900]] }
   };
-  const owned = () => Object.assign({ ball: ['classique'], trail: ['aucune'], fx: ['aucun'] }, store.get('owned', {}));
-  const equip = () => Object.assign({ ball: 'classique', trail: 'aucune', fx: 'aucun' }, store.get('equip', {}));
+  const owned = () => Object.assign({ ball: ['classique'], trail: ['aucune'], fx: ['aucun'] }, store.get('owned', {}), { ankle: ['empereur', 'classique'] });
+  const equip = () => Object.assign({ ball: 'classique', trail: 'aucune', fx: 'aucun', ankle: 'empereur' }, store.get('equip', {}));
   // ball skins, painted like the original ball (equirectangular canvas)
   const ballOrig = ballMesh.material.map;
   const skinCache = {};
@@ -9646,6 +9711,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
   function shopPreview(cat, id) {
     if (cat === 'ball') { const sk = paintBall(id), src = sk.map === ballOrig ? ballC : sk.map.image; return `<canvas class="sball" data-src="${id}"></canvas>`; }
     if (cat === 'trail') { const L = id === 'arcenciel' ? ['#ff3b3b', '#ffd23b', '#3bff6a', '#3bb4ff', '#b43bff'] : TRAIL_C[id] || ['#3a3150']; return `<i class="strail" style="background:linear-gradient(90deg,transparent,${L.join(',')})"></i>`; }
+    if (cat === 'ankle') return `<i class="sfx">${id === 'empereur' ? '👁️' : '🦶'}</i>`;
     return `<i class="sfx">${{ aucun: '∅', confettis: '🎊', glace: '❄️', flammes: '🔥', eclair: '⚡', or: '🪙' }[id]}</i>`;
   }
   function drawBallPreviews() {
@@ -9957,6 +10023,33 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
     if (v === 'carriere') carRender(); if (v === 'boss') renderBoss();
   }
   achCheck();
+
+  // ---------- v38 · L'ŒIL DE L'EMPEREUR : l'animation de cheville cassée façon anime ----------
+  // the moment freezes, letterbox, extreme close-up on the eye that opens and turns gold, "your head is too high",
+  // then the defender drops in slow motion and the attacker stands over him
+  let empLast = -99;
+  function empWanted(p) {
+    if (p.look && /^s_co_sei/.test(p.look.arch || '')) return true;
+    const mine = S.mode === 'local' ? (p === p1 || p === p2) : (typeof isMine === 'function' && isMine(p));
+    return mine && equip().ankle === 'empereur';
+  }
+  function emperorEye(p, o) {
+    if (S.time - empLast < 4 || S.mode === 'guest') return false; empLast = S.time;
+    const el = $('empFx'); if (!el) return false;
+    el.hidden = false; el.classList.remove('go'); void el.offsetWidth; el.classList.add('go');
+    el.style.setProperty('--ec', p.color || '#ffb020');
+    const cv = renderer.domElement; cv.classList.add('emp');
+    S.freezeT = Math.max(S.freezeT || 0, 1.15);           // the world stops while the eye reads him
+    setTimeout(() => { cv.classList.remove('emp'); if (ATH.slowmo !== false) S.slowT = Math.max(S.slowT || 0, 1.1); }, 1150);
+    SFX.emperor && SFX.emperor();
+    if (!ATH.calm) flash();
+    // gold ring at the defender's feet, red aura on the attacker
+    for (let i = 0; i < 80; i++) { const a = i / 80 * 6.283; emit(o.x + Math.cos(a) * .5, .08, o.z + Math.sin(a) * .5, i % 2 ? '#ffb020' : '#ff3b1f', Math.cos(a) * 3.2, .4, Math.sin(a) * 3.2, .9, 0); }
+    for (let i = 0; i < 50; i++) emit(p.x + (Math.random() - .5) * .6, .2 + Math.random() * 1.9, p.z + (Math.random() - .5) * .6, Math.random() < .5 ? '#ff3b1f' : '#ffb020', 0, 1.2 + Math.random(), 0, 1.4, -.5);
+    setTimeout(() => { if (S.phase === 'play' || S.phase === 'check') { popup('À GENOUX !', o.x, 2.6, o.z, '#ffb020', 40, 'huge', 'ankle'); cineFx('ankle', o.idx, true); } }, 1200);
+    setTimeout(() => { el.hidden = true; el.classList.remove('go'); }, 3000);
+    return true;
+  }
 
   let last = performance.now();
   function frame(now) {
