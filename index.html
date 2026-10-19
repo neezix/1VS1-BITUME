@@ -24,7 +24,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Barlow+Semi+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&text=%E3%82%B4%E3%83%89%E3%83%B3%E3%83%83%E3%83%90%E3%82%B7%21ZONE%E6%A1%9C%E9%A0%AD%E3%81%8C%E9%AB%98%E3%81%84%E3%81%9E%E5%A4%A9%E5%B8%9D%E3%81%AE%E7%9C%BC&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&text=%E3%82%B4%E3%83%89%E3%83%B3%E3%83%83%E3%83%90%E3%82%B7%21ZONE%E6%A1%9C%E9%A0%AD%E3%81%8C%E9%AB%98%E3%81%84%E3%81%9E%E5%A4%A9%E5%B8%9D%E3%81%AE%E7%9C%BC%E5%BF%85%E4%B8%AD%E6%B5%81%E6%98%9F%E5%B9%BB%E5%BD%B1%E9%89%84%E5%A3%81&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mqtt@5.10.1/dist/mqtt.min.js"></script>
 <style>
@@ -428,6 +428,17 @@ body{background:var(--night);color:var(--chalk);font-family:var(--body);font-siz
 @media (orientation:portrait){ .touch:not(.duo) .act6{right:122px;bottom:calc(188px + env(safe-area-inset-bottom,0px))} .touch.lefty:not(.duo) .act6{right:auto;left:122px} }
 @keyframes spPulse{to{transform:scale(1.1);box-shadow:0 0 32px var(--sc,#ffd166)}}
 @media (prefers-reduced-motion:reduce){.act6{animation:none}}
+.spcut{position:absolute;inset:0;z-index:30;pointer-events:none;overflow:hidden;--spc:#ffd166}
+.spcut::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,transparent 34%,rgba(5,3,12,.82) 85%);animation:spFade 1.7s ease-out forwards}
+.spcut .spbg{position:absolute;inset:-60%;background:repeating-conic-gradient(from 0deg,color-mix(in srgb,var(--spc) 60%,transparent) 0deg 2.5deg,transparent 2.5deg 10deg);-webkit-mask:radial-gradient(circle,transparent 30%,#000 62%);mask:radial-gradient(circle,transparent 30%,#000 62%);animation:spSpin 1.7s linear forwards,spFade 1.7s ease-out forwards}
+.spband{position:absolute;left:-12%;right:-12%;top:36%;height:28%;display:flex;align-items:center;justify-content:center;gap:4%;background:linear-gradient(90deg,#0b0816 0%,var(--spc) 30%,var(--spc) 70%,#0b0816 100%);box-shadow:0 0 50px var(--spc),inset 0 6px 0 rgba(255,255,255,.55),inset 0 -6px 0 rgba(0,0,0,.35);animation:spBand 1.7s cubic-bezier(.2,.8,.2,1) forwards}
+.spband b{font-family:'Dela Gothic One',var(--display);font-weight:400;font-size:clamp(46px,13vw,150px);line-height:1;color:#fff;-webkit-text-stroke:4px #0b0816;paint-order:stroke fill;text-shadow:0 0 30px var(--spc)}
+.spband span{font-family:var(--display);font-size:clamp(20px,5.5vw,64px);line-height:1;color:#0b0816;letter-spacing:.05em;text-shadow:0 2px 0 rgba(255,255,255,.5)}
+.spband i{position:absolute;left:14%;bottom:-24%;padding:5px 12px;font:700 clamp(12px,2.2vw,20px)/1 var(--body);font-style:normal;letter-spacing:.12em;color:#fff;background:#0b0816;border:2px solid var(--spc)}
+@keyframes spBand{0%{transform:translateX(115%) skewY(-7deg)}13%{transform:translateX(0) skewY(-7deg)}80%{transform:translateX(-4%) skewY(-7deg);opacity:1}100%{transform:translateX(-125%) skewY(-7deg);opacity:0}}
+@keyframes spSpin{to{rotate:50deg}}
+@keyframes spFade{0%{opacity:0}8%{opacity:1}78%{opacity:1}100%{opacity:0}}
+@media (prefers-reduced-motion:reduce){.spcut .spbg{animation:spFade 1.7s ease-out forwards}.spband{animation:spFade 1.7s ease-out forwards;transform:skewY(-7deg)}}
 .act5.show{display:block}.act5.on{transform:translateY(3px);box-shadow:0 2px 0 #a3561a;background:#ffb466}.touch:not(.duo) .act5.b{display:none}
 .touch.duo .act5{width:50px;height:50px;font-size:9px;bottom:auto;top:calc(max(96px, 18%) + 292px)}.touch.duo #bAS{left:26px;right:auto}.touch.duo #bBS{right:26px}
 .touch.lefty:not(.duo) .act5{right:auto;left:206px}
@@ -1038,6 +1049,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
 <div class="app">
   <div class="stage" id="stage">
     <div class="flash" id="flash"></div>
+    <div class="spcut" id="spCut" hidden><div class="spbg"></div><div class="spband"><b id="spCutK"></b><span id="spCutN"></span><i id="spCutP"></i></div></div>
     <div class="bossfog" id="bossFog"></div>
     <div class="empfx" id="empFx" hidden><div class="eb t"></div><div class="eb b"></div><div class="eband"><svg class="eye" viewBox="0 0 400 160" aria-hidden="true"><defs>
 <radialGradient id="eIr" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#ff8a6a"/><stop offset=".45" stop-color="#d4161a"/><stop offset=".85" stop-color="#5a0507"/><stop offset="1" stop-color="#1a0203"/></radialGradient>
@@ -1115,7 +1127,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
 <div class="overlay" id="menu">
   <div class="card hub">
     <header class="hubtop">
-      <span class="vertag" id="verTag" title="Version du jeu">v49</span>
+      <span class="vertag" id="verTag" title="Version du jeu">v50</span>
       <h1 class="logo">Bitume<span>1c1</span></h1>
       <div class="hubstat"><button class="coinpill" id="coinBtn" aria-label="Mes pièces · boutique">🪙 <b id="coinN">0</b></button><button class="chestbtn" id="chestBtn" aria-label="Coffre du jour">🎁<i id="chestDot" hidden></i></button>
       <div class="lvl" id="lvlBox"><b id="lvlN">NIV 1</b><i><s id="lvlBar"></s></i><span id="lvlXp"></span><button class="linkbtn" id="dailyBtn">🎯 Défis</button></div></div>
@@ -3826,7 +3838,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
   }
   function tkFxTick(dt) {
     const F = S.tkFx; if (!F) { tkWave.material.opacity = 0; tkPillar.material.opacity = 0; return; }
-    F.t += dt; const q = P[F.who] || p1, u = F.t / 1.6;
+    F.t += dt; const q = F.body || P[F.who] || p1, u = F.t / 1.6;
     tkWave.position.x = q.x; tkWave.position.z = q.z; tkWave.scale.setScalar(1 + u * 9); tkWave.material.opacity = Math.max(0, .9 * (1 - u));
     tkPillar.position.set(q.x, 7, q.z); tkPillar.scale.set(1 + Math.sin(F.t * 30) * .05, 1, 1 + Math.sin(F.t * 30) * .05); tkPillar.material.opacity = F.t < .2 ? F.t / .2 * .55 : Math.max(0, .55 * (1 - (F.t - .2) / 1.8));
     if (F.t > 2.2) S.tkFx = null;
@@ -3842,7 +3854,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
     const T = TK[tkType(p)];
     p.tkoT = TKO_T; p.tkm = 0; p.specUsed = false;
     setTimeout(() => { popup(tkType(p) + '|' + p.idx, 0, 0, 0, T.c, 0, 'tko'); comm('takeover', p); }, 600);
-    setTimeout(() => { if (p.tkoT > 0 && !S.sub && !S.team3 && !S.party) popup('ATTAQUE SPÉCIALE PRÊTE : ' + SPEC[tkType(p)].n, p.x, 3.3, p.z, T.c, 18, 'action'); }, 2900);
+    setTimeout(() => { if (p.tkoT > 0 && !SPEC_OFF.includes(S.sub)) popup('ATTAQUE SPÉCIALE PRÊTE : ' + SPEC[tkType(p)].n, p.x, 3.3, p.z, T.c, 18, 'action'); }, 2900);
   }
   function staminaTick(p, dt) {
     // v41: camping in intense D gives heavy legs (every level, not only Hall of Fame): slower slide, weaker lock, easier to break
@@ -4271,7 +4283,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
     const wasOop = p.oop; p.oop = false;
     if (wasOop && isMine(p)) S.oopTry = true;
     if (S.phase !== 'play') { looseBall(RIM.x, RIM.y + .2, RIM.z + .4, (rnd() - .5) * 2, 2.5, 1.5); return; } // too late: whistle already blown
-    if (p.meteor) { p.meteor = false; p.dunkGreen = true; p.dunkMeteor = true; const d0 = other(p); // v49: MÉTÉORE
+    if (p.meteor) { p.meteor = false; p.dunkGreen = true; p.dunkMeteor = true; const d0 = foeNear(p); specShape('slasher', p); flash(); // v49: MÉTÉORE
       if (d0 && !(d0.fallT > 0) && Math.hypot(d0.x - p.x, d0.z - p.z) < 3.2) { d0.fallT = FALL_T; d0.fallKind = 'ankle'; d0.fallVar = 7; d0.stun = FALL_T; d0.shooting = false; const ax = d0.x - p.x, az = d0.z - p.z, al = Math.hypot(ax, az) || 1; d0.vx = ax / al * 3; d0.vz = az / al * 3; }
       madeDunk(p, false); return; }
     let d = other(p);
@@ -4601,28 +4613,42 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
     popup('AU BUZZER !', RIM.x, RIM.y + 1.9, RIM.z, '#ff5a4f', 36, 'huge', 'buzzer');
   }
   // ---------- v49 · special attacks + style auras (each takeover style has its own look and its own big move) ----------
+  const SPEC_OFF = ['horse', 'trois', 'dunkc']; // contests, not matches
+  const foesOf = p => S.team3 ? teamBodies().filter(b => sideOf(b) !== sideOf(p)) : [other(p)];
+  const foeNear = p => foesOf(p).reduce((a, b) => !a || Math.hypot(b.x - p.x, b.z - p.z) < Math.hypot(a.x - p.x, a.z - p.z) ? b : a, null);
   function specReady(p) { // which special this player can fire right now (null = none)
-    if (!(p.tkoT > 0) || p.specUsed || S.sub || S.team3 || S.party || S.phase !== 'play' || p.y > .02 || p.dunking || p.shooting || p.pend || p.stun > 0 || p.fallT > 0) return null;
-    const t = tkType(p), o = other(p), has = ball.state === 'held' && ball.holder === p;
-    if (t === 'mur') return ball.state === 'held' && ball.holder === o && o.y <= .05 && !o.dunking && Math.hypot(o.x - p.x, o.z - p.z) < 4 ? t : null;
+    if (!(p.tkoT > 0) || p.specUsed || SPEC_OFF.includes(S.sub) || S.phase !== 'play' || p.y > .02 || p.dunking || p.shooting || p.pend || p.stun > 0 || p.fallT > 0) return null;
+    const t = tkType(p), o = foeNear(p), has = ball.state === 'held' && ball.holder === p, h = ball.holder;
+    if (t === 'mur') return ball.state === 'held' && h && foesOf(p).includes(h) && h.y <= .05 && !h.dunking && Math.hypot(h.x - p.x, h.z - p.z) < 4 ? t : null;
     if (!has || !ball.clr || p.mv) return null;
     if (t === 'slasher') return hdist(p) < 7.5 && p.z > RIM.z + .25 ? t : null;
-    if (t === 'meneur') return Math.hypot(o.x - p.x, o.z - p.z) < 3.2 && !(o.fallT > 0) ? t : null;
+    if (t === 'meneur') return o && Math.hypot(o.x - p.x, o.z - p.z) < 3.2 && !(o.fallT > 0) ? t : null;
     return t; // sniper: from anywhere on the court
   }
-  function specFx(t, who) { // the big moment, visuals only (the online guest replays it from the host's popup)
-    const p = P[who] || p1, c = TK[t].c;
-    cineFx('sp_' + t, who, true, 'manga');
-    S.tkFx = { who, t: 0, c }; tkWave.material.color.set(c); tkPillar.material.color.set(c);
+  function fxMesh(geo, c) { const mat = new THREE.MeshBasicMaterial({ color: c, transparent: true, opacity: .9, side: THREE.DoubleSide, depthWrite: false, blending: THREE.AdditiveBlending }), m = new THREE.Mesh(geo, mat); scene.add(m); return [m, mat]; }
+  function specShape(t, q, tgt) { // each style leaves its own mark in 3D
+    const c = TK[t].c;
+    if (t === 'tireur') for (let i = 0; i < 4; i++) { const [m, mat] = fxMesh(new THREE.TorusGeometry(.55, .05, 8, 40), i % 2 ? '#ffffff' : c); m.rotation.x = Math.PI / 2; m.position.set(q.x, .1, q.z); effects.push({ m, mat, t: -i * .14, dur: 1.7, kind: 'rise', vy: 3.4, s0: .8, s1: 1.6 }); } // golden halos rising to the sky
+    else if (t === 'slasher') for (let i = 0; i < 3; i++) { const [m, mat] = fxMesh(new THREE.RingGeometry(.45, .75, 48), i === 1 ? '#ffd166' : c); m.rotation.x = -Math.PI / 2; m.position.set(q.x, .05, q.z); effects.push({ m, mat, t: -i * .12, dur: 1, kind: 'gring', s1: 10 }); } // shockwaves of fire on the floor
+    else if (t === 'mur' && tgt) for (let i = 0; i < 14; i++) { const a = i / 14 * Math.PI * 2, [m, mat] = fxMesh(new THREE.BoxGeometry(.07, 2.6, .07), i % 2 ? c : '#ffffff'); m.position.set(tgt.x + Math.cos(a) * .95, 9 + i * .35, tgt.z + Math.sin(a) * .95); effects.push({ m, mat, t: 0, dur: 1.9, kind: 'bar', y1: 1.3 }); } // bars of light falling from the sky
+  }
+  function specFx(t, q, tgt) { // the big moment, visuals only (the online guest replays it from the host's popup)
+    const p = q || p1, c = TK[t].c, who = P.indexOf(p), el = $('spCut');
+    el.style.setProperty('--spc', c); $('spCutK').textContent = SPEC[t].k; $('spCutN').textContent = SPEC[t].n; $('spCutP').textContent = p.name || '';
+    el.hidden = true; void el.offsetWidth; el.hidden = false; clearTimeout(specFx.tm); specFx.tm = setTimeout(() => { el.hidden = true; }, 1750);
+    S.cine = { kind: 'sp_' + t, who, body: p, t: 0, dur: 1.9, t0: performance.now(), cam: true }; // its own camera: close orbit, looking up at him
+    if (S.mode !== 'guest' && !ATH.calm) { S.freezeT = Math.max(S.freezeT || 0, .9); if (ATH.slowmo) S.slowT = Math.max(S.slowT, 1.1); } // the world stops while the banner slashes across
+    specShape(t, p, tgt);
+    S.tkFx = { who, body: p, t: 0, c }; tkWave.material.color.set(c); tkPillar.material.color.set(c);
     for (let i = 0; i < 70; i++) { const a = rnd() * Math.PI * 2, v = 2 + rnd() * 5; emit(p.x, .3 + rnd() * 2.2, p.z, i % 3 ? c : '#ffffff', Math.cos(a) * v, 1 + rnd() * 4, Math.sin(a) * v, .7 + rnd() * .5, 4); }
     if (t === 'tireur') { ball.trailT = 2.4; ball.trailCol = c; setTimeout(() => { ball.trailCol = null; }, 2600); }
-    showPop(SPEC[t].k, p.x, 3.7, p.z, c, 58, 'huge'); flash(); S.shakeT = Math.max(S.shakeT || 0, .6);
+    flash(); S.shakeT = Math.max(S.shakeT || 0, .6);
     SFX.vs(); SFX.zone(); setTimeout(() => SFX.roar(), 250);
     if (ATH.vibrate && navigator.vibrate) { try { navigator.vibrate([40, 30, 90]); } catch (_) {} }
   }
   function useSpecial(p) {
     const t = specReady(p); if (!t) return false;
-    const o = other(p), c = TK[t].c; p.specUsed = true;
+    const o = foeNear(p), c = TK[t].c, h0 = ball.holder; p.specUsed = true;
     if (t === 'tireur') { // TIR CÉLESTE: a sky-high rainbow that can't miss and can't be blocked, 2 points from anywhere
       faceTo(p, RIM.x, RIM.z); const fx = Math.sin(p.face), fz = Math.cos(p.face), d = hdist(p);
       p.vy = 3.4; p.y = .001; p.ftT = .55;
@@ -4637,15 +4663,16 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
       const ax = RIM.x - o.x, az = RIM.z - o.z, al = Math.hypot(ax, az) || 1;
       const nx = clamp(o.x + ax / al * 1.3, MINX + .3, MAXX - .3), nz = clamp(o.z + az / al * 1.3, MINZ + .3, MAXZ - .3);
       for (let i = 0; i <= 14; i++) { const u = i / 14; emit(lerp(p.x, nx, u), .4 + rnd() * 1.7, lerp(p.z, nz, u), i % 2 ? c : '#ffffff', (rnd() - .5) * .6, .3 + rnd() * .6, (rnd() - .5) * .6, 1.2, 0); }
+      for (let i = 1; i <= 4; i++) { const u = i / 5, g = p.m.g.clone(true), mat = new THREE.MeshBasicMaterial({ color: c, transparent: true, opacity: .55, depthWrite: false, blending: THREE.AdditiveBlending }); // afterimages along the dash
+        g.traverse(o2 => { if (o2.isMesh) o2.material = mat; }); g.position.set(lerp(p.x, nx, u), p.y, lerp(p.z, nz, u)); scene.add(g); effects.push({ m: g, mat, t: -i * .06, dur: 1.1, kind: 'ghost' }); }
       p.x = nx; p.z = nz; faceTo(p, RIM.x, RIM.z); p.ghost = 1.6;
       breakAnkles(p, o);
     } else { // LA CAGE: bars of light close around the handler, the ball is ripped away and he is frozen
-      o.shooting = false; o.pend = null; o.mv = 0; o.burstT = 0; o.stun = 1.4; o.robT = .6;
+      const o = h0; o.shooting = false; o.pend = null; o.mv = 0; o.burstT = 0; o.stun = 1.4; o.robT = .6;
       for (let i = 0; i < 48; i++) { const a = i / 48 * Math.PI * 2; emit(o.x + Math.cos(a) * .9, .15 + (i % 8) * .3, o.z + Math.sin(a) * .9, i % 4 ? c : '#ffffff', 0, 1.2, 0, 1.1, 0); }
       swipe(ball.x, ball.y, ball.z, p, true); gain(p);
-      showPop('ゴゴゴゴ', o.x, 3.2, o.z, '#c79bff', 40, 'huge');
     }
-    specFx(t, p.idx); // after the move: its cinematic wins over the ankle / steal ones
+    specFx(t, p, t === 'mur' ? h0 : null); // after the move: its cinematic wins over the ankle / steal ones
     popup(SPEC[t].n + ' !', p.x, 3.1, p.z, c, 34, 'huge');
     return true;
   }
@@ -4663,7 +4690,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
   function spinCheck(p) { return S.phase === 'check' && (S.chkT || 0) < .5 && ball.state === 'held' && ball.holder === p && !p.mv && !p.shooting && !p.dunking && p.y < .05 && Math.hypot(p.vx, p.vz) < .3; }
   function updateEffects(dt) {
     S.chkT = S.phase === 'check' ? (S.chkT || 0) + dt : 0;
-    if (S.phase !== 'menu' && !S.team3 && !S.party) for (const q of P) if (q.tkoT > 0) auraTick(q, dt); // first half of the check: finger spin, then the friend's triple threat
+    if (S.phase !== 'menu') for (const q of (S.team3 ? teamBodies() : P)) if (q.tkoT > 0) auraTick(q, dt); // first half of the check: finger spin, then the friend's triple threat
     // the new board drops in from above as soon as the next possession (or a menu) starts
     if (S.boardBroken && !['play', 'scored', 'kill', 'replay'].includes(S.phase)) { S.boardBroken = false; boardDrop = 1; boardMesh.visible = true; boardFrame.visible = false; }
     if (boardDrop > 0) { boardDrop = Math.max(0, boardDrop - dt * 1.5); boardMesh.position.y = 3.45 + 5 * boardDrop * boardDrop; if (!boardDrop) { SFX.board(); S.rimShake = Math.max(S.rimShake, .4); } }
@@ -4671,13 +4698,17 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
       const e = effects[i]; e.t += dt; const u = e.t / e.dur;
       if (e.kind === 'ring') { e.m.scale.setScalar(1 + u * 7); e.m.material.opacity = .95 * (1 - u); e.m.lookAt(camera.position); }
       else if (e.kind === 'swipe') { e.m.scale.setScalar(1 + u * .6); e.m.rotation.z += dt * 9; e.m.material.opacity = .95 * (1 - u); }
+      else if (e.kind === 'rise') { e.m.position.y += e.vy * dt; e.m.scale.setScalar(e.s0 + Math.max(0, u) * e.s1); e.mat.opacity = .9 * Math.min(1, 1 - u); }
+      else if (e.kind === 'gring') { e.m.scale.setScalar(1 + Math.max(0, u) * e.s1); e.mat.opacity = .9 * Math.min(1, 1 - u); }
+      else if (e.kind === 'bar') { e.m.position.y = Math.max(e.y1, e.m.position.y - dt * 24); e.mat.opacity = u < .75 ? .9 : .9 * (1 - (u - .75) / .25); }
+      else if (e.kind === 'ghost') { e.mat.opacity = .55 * Math.min(1, 1 - u); }
       else if (e.kind === 'glass') { // shards fall, skid on the court, then shrink away (shared material: no per-shard fade)
         e.v.y -= 9.8 * dt; e.m.position.addScaledVector(e.v, dt);
         if (e.m.position.y < .02) { e.m.position.y = .02; e.v.y = e.v.y < -1 ? -e.v.y * .25 : 0; e.v.x *= .5; e.v.z *= .5; e.w.multiplyScalar(.4); }
         e.m.rotation.x += e.w.x * dt; e.m.rotation.y += e.w.y * dt; e.m.rotation.z += e.w.z * dt; if (u > .75) e.m.scale.setScalar(Math.max(.01, (1 - u) * 4));
       }
       else { e.v.y -= 9 * dt; e.m.position.addScaledVector(e.v, dt); e.m.rotation.x += dt * 9; }
-      if (u >= 1) { scene.remove(e.m); e.m.geometry.dispose(); effects.splice(i, 1); }
+      if (u >= 1) { scene.remove(e.m); if (e.m.geometry) e.m.geometry.dispose(); if (e.mat) e.mat.dispose(); effects.splice(i, 1); } // a ghost is a group sharing the player's geometry: only its own material goes
     }
   }
 
@@ -6108,7 +6139,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
       if (String(e.t).startsWith('BÂCH')) { S.shakeT = .4; ringFlash(e.x, e.y - .4, e.z, e.c); ball.trailT = .6; trailPos.length = 0; }
       if (e.t === 'VOLÉ !' || e.t === 'RATÉ' || String(e.t).startsWith('ARRACHÉ')) { const d = Math.hypot(p1.x - e.x, p1.z - e.z) < Math.hypot(p2.x - e.x, p2.z - e.z) ? p1 : p2; swipe(ball.x, Math.max(.5, ball.y), ball.z, d, e.t !== 'RATÉ'); }
       const near = () => Math.hypot(p1.x - e.x, p1.z - e.z) < Math.hypot(p2.x - e.x, p2.z - e.z) ? p1 : p2;
-      { const sk = Object.keys(SPEC).find(k => SPEC[k].n + ' !' === e.t); if (sk) specFx(sk, near().idx); } // v49: the host fired a special
+      { const sk = Object.keys(SPEC).find(k => SPEC[k].n + ' !' === e.t); if (sk) { const q = near(); specFx(sk, q, sk === 'mur' ? other(q) : null); } } // v49: the host fired a special
       if (FALL_TXT.includes(e.t)) cineFx('ankle', near().idx);
       else if (e.t === 'POSTERISÉ !' || String(e.t).startsWith('MARTEAU')) cineFx('poster', (p1.dunking || p1.hangT > 0 ? p1 : p2).idx);
       else if (String(e.t).startsWith('BÂCH')) cineFx('block', near().idx);
@@ -6644,12 +6675,13 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
       k = 1 - Math.pow(.2, dt);
     } else if (S.cine && S.cine.cam && ATH.cine) {
       // NBA replay style: camera almost on the floor, looking up, slowly sliding round
-      const f = P[S.cine.who] || p1, u = S.cine.t / S.cine.dur, rimShot = S.cine.kind === 'dunk' || S.cine.kind === 'poster';
+      const f = S.cine.body || P[S.cine.who] || p1, u = S.cine.t / S.cine.dur, rimShot = S.cine.kind === 'dunk' || S.cine.kind === 'poster';
       const fx = rimShot ? RIM.x : f.x, fz = rimShot ? RIM.z + .6 : f.z, sd = f.x >= 0 ? 1 : -1;
       const a = sd * (.55 + u * .5), r = rimShot ? 4.4 : 3.3;
       tp.set(fx + Math.sin(a) * r, rimShot ? .55 : .45, fz + Math.cos(a) * r); tl.set(fx, rimShot ? 2.6 : (S.cine.kind === 'block' ? 2.2 : .9), fz);
       k = 1 - Math.pow(.0005, dt);
-      if (S.cine.kind === 'tko') { const a2 = f.face + .6 + u * 1.2; tp.set(f.x + Math.sin(a2) * 2.6, .7 + u * .5, f.z + Math.cos(a2) * 2.6); tl.set(f.x, 1.5 + f.y, f.z); k = 1 - Math.pow(.0001, dt); }
+      if (S.cine.kind.startsWith('sp_')) { const a2 = f.face + .9 - u * 1.6; tp.set(f.x + Math.sin(a2) * 2.1, .35 + u * .9, f.z + Math.cos(a2) * 2.1); tl.set(f.x, 1.7 + f.y, f.z); k = 1 - Math.pow(.00002, dt); } // v49: low, close, sweeping round him
+      else if (S.cine.kind === 'tko') { const a2 = f.face + .6 + u * 1.2; tp.set(f.x + Math.sin(a2) * 2.6, .7 + u * .5, f.z + Math.cos(a2) * 2.6); tl.set(f.x, 1.5 + f.y, f.z); k = 1 - Math.pow(.0001, dt); }
       else if (S.cine.kind === 'poster') { // up by the rim, beside the backboard, looking down on the poor guy
         if (!S.cine.fix) S.cine.fix = [RIM.x + sd * 3.4, RIM.y + 2.1, RIM.z + 1.6, RIM.x, 1.8, RIM.z + 1.6]; const F = S.cine.fix;
         tp.set(F[0], F[1], F[2]); tl.set(F[3], F[4], F[5]); k = 1 - Math.pow(.00005, dt); }

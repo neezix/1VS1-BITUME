@@ -1,6 +1,6 @@
 // Bitume 1c1 — service worker : lance le jeu hors ligne (sauf le mode en ligne).
 // Change VERSION à chaque nouvelle mise à jour du jeu pour forcer le rafraîchissement. (et le numéro affiché dans index.html, id="verTag")
-const VERSION = 'bitume-v49';
+const VERSION = 'bitume-v50';
 const CORE = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
 const CDN = [
   'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js',
