@@ -317,6 +317,11 @@ body{background:var(--night);color:var(--chalk);font-family:var(--body);font-siz
 .dash{color:var(--muted);font-family:var(--display)}
 .clock{font-family:var(--display);font-size:17px;background:var(--panel);border-radius:7px;padding:3px 12px;font-variant-numeric:tabular-nums}
 .clock.hot{color:#ff5a4f}
+.hubtop{position:relative}
+.vertag{position:absolute;top:2px;right:6px;padding:3px 5px;font:700 10px/1 var(--body);letter-spacing:.08em;color:var(--muted);opacity:.8;user-select:none;-webkit-user-select:none;cursor:default}
+@media (max-height:520px) and (orientation:landscape){.vertag{top:0;right:2px;padding:1px 4px;font-size:8px}} /* phones sideways: no room above the level pill */
+.admgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px}
+.admgrid button[aria-pressed="true"]{background:var(--sodium);color:#1d1205}
 .clock.buzz{animation:buzz .35s ease-in-out 4;color:#fff;background:#ff3b30!important;box-shadow:0 0 18px #ff3b30}
 @keyframes buzz{50%{transform:scale(1.35)}}
 @media (prefers-reduced-motion:reduce){.clock.buzz{animation:none}}
@@ -1101,6 +1106,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
 <div class="overlay" id="menu">
   <div class="card hub">
     <header class="hubtop">
+      <span class="vertag" id="verTag" title="Version du jeu">v48</span>
       <h1 class="logo">Bitume<span>1c1</span></h1>
       <div class="hubstat"><button class="coinpill" id="coinBtn" aria-label="Mes pièces · boutique">🪙 <b id="coinN">0</b></button><button class="chestbtn" id="chestBtn" aria-label="Coffre du jour">🎁<i id="chestDot" hidden></i></button>
       <div class="lvl" id="lvlBox"><b id="lvlN">NIV 1</b><i><s id="lvlBar"></s></i><span id="lvlXp"></span><button class="linkbtn" id="dailyBtn">🎯 Défis</button></div></div>
@@ -1111,6 +1117,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
         <button class="hb" id="athBtn"><i>⚙️</i><span>Réglages</span></button>
         <button class="hb" id="phoneBtn"><i>☁️</i><span>Compte</span></button>
         <button class="hb" id="fsBtn"><i>⛶</i><span>Plein écran</span></button>
+        <button class="hb" id="admBtn" hidden><i>🛠️</i><span>Admin</span></button>
       </nav>
     </header>
     <div class="hubscroll" id="hubScroll">
@@ -1292,6 +1299,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
     <button class="play alt" id="athBtn2">ATH &amp; réglages</button>
     <button class="play alt" id="restartBtn">Recommencer la partie</button>
     <button class="play alt" id="fsBtn2">⛶ Plein écran</button>
+    <button class="play alt" id="admBtn2" hidden>🛠️ Admin</button>
     <button class="play alt" id="quitBtn">Quitter vers le menu</button>
   </div>
 </div>
@@ -1303,6 +1311,24 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
     <div id="dailyList"></div>
     <p class="label">Récompenses</p><div id="unlockList"></div>
     <button class="play" id="dailyClose">Fermer</button>
+  </div>
+</div>
+<div class="overlay top" id="admPanel" hidden>
+  <div class="card wide">
+    <p class="eyebrow">Réservé au patron</p>
+    <h2 class="h2">🛠️ Menu admin</h2>
+    <div class="admgrid">
+      <button class="play alt" data-adm="coins">💰 +10 000 pièces</button>
+      <button class="play alt" data-adm="xp">⭐ +5 000 XP</button>
+      <button class="play alt" data-adm="shop">🛒 Tout débloquer</button>
+      <button class="play alt" data-adm="win">🏆 Gagner le match</button>
+      <button class="play alt" data-adm="green" aria-pressed="false">🎯 Toujours vert</button>
+      <button class="play alt" data-adm="freeze" aria-pressed="false">🧊 IA figée</button>
+      <button class="play alt" data-adm="glass" aria-pressed="false">💥 Planche à chaque dunk</button>
+    </div>
+    <p class="note" id="admNote" role="status"></p>
+    <button class="play alt" id="admLock">🔒 Verrouiller sur cet appareil</button>
+    <button class="play" id="admClose">Fermer</button>
   </div>
 </div>
 <div class="overlay top" id="phonePanel" hidden>
@@ -1625,6 +1651,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
   // text that came over the network (party names, host overlays) must never become HTML
   const escH = t => String(t == null ? '' : t).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
   console.assert(escH(`<"'&>`) === '&lt;&quot;&#39;&amp;&gt;', 'escH must neutralize HTML');
+  const ADM = { green: false, freeze: false, glass: false }; // admin cheats, this session only (see the admin menu)
   const safeCol = c => /^#[0-9a-f]{3,8}$/i.test(String(c)) ? c : '#efe7d6';
   const lerp = (a, b, t) => a + (b - a) * t;
   const rnd = Math.random;
@@ -3923,6 +3950,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
     return base * cw * (fade ? Math.min(1, FADE_ZONE * st.fade) : 1) * (p.stepAwayT > 0 ? 1 : moveFactor(p)) * assist * LV().win * postK;
   }
   function shotProb(p, g, fade, lvl) {
+    if (ADM.green && isMine(p)) return { prob: 1, perfect: true, good: false, w: shotWindow(p, fade, lvl) };
     const w = shotWindow(p, fade, lvl), off = Math.abs(g - METER_TARGET), three = isTwo(p);
     const perfect = w > 0 && off <= w;      // green: always goes in (unless blocked), like the 2K26 pure green window
     const good = !perfect && off <= w + WHITE;
@@ -4236,7 +4264,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
     const bchance = Math.min(.9, (d.ctrl === 'ai' ? S.diff.block + .15 : .65) * (p.contact ? .5 : 1) * clamp(Math.pow(stOf(d).blk, 1.5) * (1 + Math.max(-.2, (stOf(d).h - stOf(p).h) * 1.6)), .25, 1.9)); // v38 // a power dunk is hard to stop
     // the dunk meter result (no input = way too late)
     const w = dunkWindow(p), g = p.dunkG == null ? 1.15 : p.dunkG, off = Math.abs(g - DUNK_TARGET), lvl = Math.max(contestOf(p, false), p.dunkLvl || 0);
-    const green = off <= w, white = !green && off <= w + .09; p.dunkGreen = green; // read back by madeDunk (backboard explosion)
+    const green = off <= w || (ADM.green && isMine(p)), white = !green && off <= w + .09; p.dunkGreen = green; // read back by madeDunk (backboard explosion)
     if (S.sub === 'dunkc' && p.qteRes) { const q = p.qteRes; p.qteRes = null; S.meterRes = { who: p.idx, g: q.fast ? DUNK_TARGET : q.ok ? DUNK_TARGET + w + .05 : 1.15, w, cls: q.fast ? 'green' : q.ok ? 'ok' : 'miss', t: .8, dunk: true }; dunkContest(p, q.ok && q.fast, q.ok && !q.fast, wasOop, q.ok); return; }
     if (S.sub === 'dunkc') { S.meterRes = { who: p.idx, g, w, cls: green ? 'green' : white ? 'ok' : 'miss', t: .8, dunk: true }; dunkContest(p, green, white, wasOop); return; }
     S.meterRes = { who: p.idx, g, w, cls: green ? 'green' : white ? 'ok' : 'miss', t: .8, dunk: true };
@@ -4348,7 +4376,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
       if (wasOop && isMine(p)) incStat('oops');
       S.playKind = wasOop ? 'oop' : 'dunk'; if (wasOop) { hl('oop', 'ALLEY-OOP', p, 4); popup('ALLEY-OOP !', RIM.x, RIM.y + 1.6, RIM.z, '#ffd166', 30, 'huge'); } else if (big) hl('dunk', DUNKS[p.dunkType][1], p, 2);
       popup(p.contact ? 'PAR-DESSUS LUI !' : DUNKS[p.dunkType][1], RIM.x, RIM.y + 1.1, RIM.z, p.color, 32, 'huge', 'dunk'); score(p, 1);
-      if (big && p.dunkGreen && S.mode !== 'guest' && rnd() < .35) shatter(); // a perfect big slam sometimes takes the glass with it
+      if (S.mode !== 'guest' && (ADM.glass || (big && p.dunkGreen && rnd() < .35))) shatter(); // a perfect big slam sometimes takes the glass with it
     }
   }
   function attemptSteal(d, a) {
@@ -4621,7 +4649,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
     if (r) applyKey(r[0], r[1], false, e);
   });
   // ---------- controller / phone navigation in the menus ----------
-  const NAV_LAYERS = ['lvUp', 'fsHelp', 'chestPanel', 'phonePanel', 'dailyPanel', 'histPanel', 'shopPanel', 'trophyPanel', 'keysPanel', 'athPanel', 'customPanel', 'vsScr', 'pause', 'selectScr', 'menu'];
+  const NAV_LAYERS = ['admPanel', 'lvUp', 'fsHelp', 'chestPanel', 'phonePanel', 'dailyPanel', 'histPanel', 'shopPanel', 'trophyPanel', 'keysPanel', 'athPanel', 'customPanel', 'vsScr', 'pause', 'selectScr', 'menu'];
   function navLayer() { for (const id of NAV_LAYERS) { const el = $(id); if (el && !el.hidden) return el; } return null; }
   const navActive = () => S.phase !== 'story' && !!navLayer() && (inMenu() || isPaused() || !$('dailyPanel').hidden || !$('histPanel').hidden || !$('shopPanel').hidden || !$('trophyPanel').hidden || !$('chestPanel').hidden || !$('lvUp').hidden || !$('phonePanel').hidden || !$('fsHelp').hidden);
   const navEls = L => [...L.querySelectorAll('button, input, select, [tabindex]:not([tabindex="-1"])')].filter(x => !x.disabled && x.offsetParent !== null && x.getClientRects().length && getComputedStyle(x).visibility !== 'hidden');
@@ -4658,6 +4686,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
     const n = bs[(i + d + bs.length) % bs.length]; n.click(); navFocus(n);
   }
   function navBack() {
+    if (!$('admPanel').hidden) { $('admPanel').hidden = true; return; }
     if (!$('lvUp').hidden) { lvClose(); return; }
     if (!$('phonePanel').hidden) { phoneClose(); return; }
     if (!$('fsHelp').hidden) { $('fsHelp').hidden = true; return; }
@@ -5090,6 +5119,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
     return l;
   }
   function controlAI(a, dt) {
+    if (ADM.freeze) { a.vx = a.vz = 0; return; }
     if (a.diveT > 0) return; // v44: mid-dive
     const D = S.diff, st = a.ai, h = other(a);
     a.handsUp = false; a.sprinting = false; a.intense = false;
@@ -7581,6 +7611,36 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
   }
   $('dailyBtn').addEventListener('click', () => { renderDaily(); $('dailyPanel').hidden = false; });
   $('dailyClose').addEventListener('click', () => { $('dailyPanel').hidden = true; });
+  // ---------- admin menu: hidden; 5 taps on the version, then the owner's code (only its SHA-256 is stored here) ----------
+  const ADM_HASH = '939890b1391fc2407c08dae052d56e94bc4aae7e97f112dca0fc2d464b082111';
+  const admOn = () => !!store.get('adm', 0);
+  function admShow() { $('admBtn').hidden = $('admBtn2').hidden = !admOn(); }
+  function openAdm() { document.querySelectorAll('#admPanel [aria-pressed]').forEach(b => b.setAttribute('aria-pressed', String(ADM[b.dataset.adm]))); $('admNote').textContent = ''; $('admPanel').hidden = false; }
+  let verTaps = [];
+  $('verTag').addEventListener('click', async () => {
+    const t = performance.now(); verTaps = verTaps.filter(x => t - x < 2500).concat(t); if (verTaps.length < 5) return; verTaps = [];
+    if (admOn()) { openAdm(); return; }
+    const code = (prompt('Code admin :') || '').trim().toUpperCase(); if (!code) return;
+    let h = ''; try { const b = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(code)); h = [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, '0')).join(''); } catch (_) {}
+    if (h === ADM_HASH) { store.set('adm', 1); admShow(); openAdm(); } else alert('Code incorrect.');
+  });
+  $('admPanel').addEventListener('click', e => {
+    const b = e.target.closest('[data-adm]'); if (!b) return; const k = b.dataset.adm, note = $('admNote'); SFX.click && SFX.click();
+    if (k in ADM) { ADM[k] = !ADM[k]; b.setAttribute('aria-pressed', String(ADM[k])); note.textContent = b.textContent + (ADM[k] ? ' : activé' : ' : désactivé'); }
+    else if (k === 'coins') { addCoins(10000, 'Admin'); note.textContent = '+10 000 pièces ajoutées.'; }
+    else if (k === 'xp') { awardXP(5000); note.textContent = '+5 000 XP ajoutés.'; }
+    else if (k === 'shop') { const O = {}; for (const c in SHOP) O[c] = SHOP[c].items.map(x => x[0]); store.set('owned', O); note.textContent = 'Toute la boutique est débloquée.'; }
+    else if (k === 'win') {
+      const mine = S.mode === 'local' ? p1 : me();
+      if (!mine || S.mode === 'guest' || S.party || (S.sub && S.sub !== 'roi') || !['play', 'check', 'scored'].includes(S.phase)) { note.textContent = "Lance d'abord un match (en ligne : seulement si tu es l'hôte)."; return; }
+      S.score[mine.id] = Math.max(S.score[mine.id], S.score[other(mine).id] + 1, S.sub === 'roi' ? 5 : (GM().win || 0));
+      $('admPanel').hidden = true; endGame();
+    }
+  });
+  $('admBtn').addEventListener('click', openAdm); $('admBtn2').addEventListener('click', openAdm);
+  $('admClose').addEventListener('click', () => { $('admPanel').hidden = true; });
+  $('admLock').addEventListener('click', () => { store.set('adm', 0); for (const k in ADM) ADM[k] = false; admShow(); $('admPanel').hidden = true; });
+  admShow();
   // online rating (Elo), kept on your device; your friend's is sent with his look
   function eloUpdate(won) {
     const ra = store.get('elo', 1000), rb = (other(me()).look && other(me()).look.elo) || 1000, ea = 1 / (1 + Math.pow(10, (rb - ra) / 400));
