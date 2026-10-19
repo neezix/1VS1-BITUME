@@ -421,6 +421,13 @@ body{background:var(--night);color:var(--chalk);font-family:var(--body);font-siz
 .touch.lefty:not(.duo) .act3{right:auto;left:122px}.touch.lefty:not(.duo) .act4{right:auto;left:30px}
 .touch:not(.duo) .b{display:none}
 .act5{display:none;position:absolute;right:206px;bottom:calc(104px + env(safe-area-inset-bottom,0px));width:58px;height:58px;border-radius:50%;font-family:var(--display);font-size:10px;background:#ff9a3c;color:#140f1f;border:3px solid #ffd9b0;box-shadow:0 5px 0 #a3561a;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.act6{display:none;position:absolute;right:30px;bottom:calc(206px + env(safe-area-inset-bottom,0px));width:66px;height:66px;padding:0 4px;border-radius:50%;font-family:var(--display);font-size:9px;line-height:1.05;background:var(--sc,#ffd166);color:#140f1f;border:3px solid #fff;box-shadow:0 0 18px var(--sc,#ffd166);animation:spPulse .7s ease-in-out infinite alternate;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.act6.show{display:block}.touch:not(.duo) .act6.b{display:none}.act6.on{filter:brightness(1.25)}
+.touch.duo .act6{width:50px;height:50px;font-size:7px;bottom:auto;top:calc(max(96px, 18%) + 112px)}.touch.duo #bAX{left:84px;right:auto}.touch.duo #bBX{right:84px}
+.touch.lefty:not(.duo) .act6{right:auto;left:30px}
+@media (orientation:portrait){ .touch:not(.duo) .act6{right:122px;bottom:calc(188px + env(safe-area-inset-bottom,0px))} .touch.lefty:not(.duo) .act6{right:auto;left:122px} }
+@keyframes spPulse{to{transform:scale(1.1);box-shadow:0 0 32px var(--sc,#ffd166)}}
+@media (prefers-reduced-motion:reduce){.act6{animation:none}}
 .act5.show{display:block}.act5.on{transform:translateY(3px);box-shadow:0 2px 0 #a3561a;background:#ffb466}.touch:not(.duo) .act5.b{display:none}
 .touch.duo .act5{width:50px;height:50px;font-size:9px;bottom:auto;top:calc(max(96px, 18%) + 292px)}.touch.duo #bAS{left:26px;right:auto}.touch.duo #bBS{right:26px}
 .touch.lefty:not(.duo) .act5{right:auto;left:206px}
@@ -1099,6 +1106,8 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
       <button class="act4 b" id="bBL">LOB</button>
       <button class="act5" id="bAS">POSTE</button>
       <button class="act5 b" id="bBS">POSTE</button>
+      <button class="act6" id="bAX">SPÉCIAL</button>
+      <button class="act6 b" id="bBX">SPÉCIAL</button>
     </div>
   </div>
 </div>
@@ -1106,7 +1115,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
 <div class="overlay" id="menu">
   <div class="card hub">
     <header class="hubtop">
-      <span class="vertag" id="verTag" title="Version du jeu">v48</span>
+      <span class="vertag" id="verTag" title="Version du jeu">v49</span>
       <h1 class="logo">Bitume<span>1c1</span></h1>
       <div class="hubstat"><button class="coinpill" id="coinBtn" aria-label="Mes pièces · boutique">🪙 <b id="coinN">0</b></button><button class="chestbtn" id="chestBtn" aria-label="Coffre du jour">🎁<i id="chestDot" hidden></i></button>
       <div class="lvl" id="lvlBox"><b id="lvlN">NIV 1</b><i><s id="lvlBar"></s></i><span id="lvlXp"></span><button class="linkbtn" id="dailyBtn">🎯 Défis</button></div></div>
@@ -1543,6 +1552,8 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
     meneur: { n: 'BRISE-CHEVILLES', c: '#c79bff', d: 'les dribbles cassent les chevilles' },
     mur: { n: 'VERROU', c: '#4cc9b8', d: 'contres et vols en série' }
   };
+  // v49: one special attack per takeover style (Basketball Zero style): once per takeover, with its own big cinematic
+  const SPEC = { tireur: { n: 'TIR CÉLESTE', k: '必中' }, slasher: { n: 'MÉTÉORE', k: '流星' }, meneur: { n: 'PAS FANTÔME', k: '幻影' }, mur: { n: 'LA CAGE', k: '鉄壁' } };
   function tkTypeOf(P0) {
     const sc = { tireur: ((P0.sh3 - .4) / 1.1 + (P0.shm - .7) / .65) / 2, meneur: (P0.drib - .5) / 1.35, mur: (P0.blk - .5) / 1.3 * .95, slasher: ((P0.dnk + .6) / 1.85 + Math.min(1, P0.post / 3)) / 2 };
     return Object.keys(sc).reduce((a, b) => sc[b] > sc[a] ? b : a);
@@ -3565,6 +3576,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
   const FX_TXT = { ankle: ['ゴゴゴゴ', '#c79bff'], poster: ['ドンッ!!', '#ff9a2e'], block: ['バシッ!', '#4cc9b8'], dunk: ['ドン!', '#ffd166'], zone: ['ZONE', '#59a8ff'], takeover: ['TAKEOVER', '#ff6b3d'] };
   const BURST = { poster: ['SUR SA TÊTE', 'POSTÉRISÉ', 'ENCADRÉ AU MUR'], ankle: ['CHEVILLES CASSÉES', 'IL EST AU SOL', 'ON RELÈVE ÇA'], block: ['REFUSÉ', 'PAS CHEZ MOI', 'RETOUR À L’ENVOYEUR'], dunk: ['SMASH', 'IL A TOUT CASSÉ', 'AU-DESSUS DU CERCLE'] };
   const CARD_T = { poster: 'POSTERISÉ', ankle: 'CHEVILLES CASSÉES', block: 'CONTRE', dunk: 'DUNK' };
+  for (const [t, sp] of Object.entries(SPEC)) { FX_TXT['sp_' + t] = [sp.k, TK[t].c]; BURST['sp_' + t] = [sp.n]; CARD_T['sp_' + t] = 'ATTAQUE SPÉCIALE'; } // v49
   function cineFx(kind, who, force, forceStyle) {
     // not every time: the special effects show up now and then, so they stay special
     if (kind !== 'zone' && kind !== 'takeover' && !force) { const ch = { poster: .9, ankle: .55, dunk: .45, block: .45 }[kind] || .45; crowdFlash(); if (rnd() > ch) return; }
@@ -3828,8 +3840,9 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
     p.tkm = Math.min(1, (p.tkm || 0) + v);
     if (p.tkm < 1) return;
     const T = TK[tkType(p)];
-    p.tkoT = TKO_T; p.tkm = 0;
+    p.tkoT = TKO_T; p.tkm = 0; p.specUsed = false;
     setTimeout(() => { popup(tkType(p) + '|' + p.idx, 0, 0, 0, T.c, 0, 'tko'); comm('takeover', p); }, 600);
+    setTimeout(() => { if (p.tkoT > 0 && !S.sub && !S.team3 && !S.party) popup('ATTAQUE SPÉCIALE PRÊTE : ' + SPEC[tkType(p)].n, p.x, 3.3, p.z, T.c, 18, 'action'); }, 2900);
   }
   function staminaTick(p, dt) {
     // v41: camping in intense D gives heavy legs (every level, not only Hall of Fame): slower slide, weaker lock, easier to break
@@ -4258,6 +4271,9 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
     const wasOop = p.oop; p.oop = false;
     if (wasOop && isMine(p)) S.oopTry = true;
     if (S.phase !== 'play') { looseBall(RIM.x, RIM.y + .2, RIM.z + .4, (rnd() - .5) * 2, 2.5, 1.5); return; } // too late: whistle already blown
+    if (p.meteor) { p.meteor = false; p.dunkGreen = true; p.dunkMeteor = true; const d0 = other(p); // v49: MÉTÉORE
+      if (d0 && !(d0.fallT > 0) && Math.hypot(d0.x - p.x, d0.z - p.z) < 3.2) { d0.fallT = FALL_T; d0.fallKind = 'ankle'; d0.fallVar = 7; d0.stun = FALL_T; d0.shooting = false; const ax = d0.x - p.x, az = d0.z - p.z, al = Math.hypot(ax, az) || 1; d0.vx = ax / al * 3; d0.vz = az / al * 3; }
+      madeDunk(p, false); return; }
     let d = other(p);
     if (S.team3 && !p.contact && !(d.y > .3 && Math.hypot(d.x - p.x, d.z - p.z) < 1.4)) { const h = defsOf(p).find(b => b.y > .3 && Math.hypot(b.x - p.x, b.z - p.z) < 1.4); if (h) d = helpSwap(h); } // v44: weak-side help comes to block
     const close = Math.hypot(d.x - p.x, d.z - p.z) < 1.4 && d.y > .3;
@@ -4375,8 +4391,8 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
       if (big || p.zoneT > 0) cineFx('dunk', p.idx);
       if (wasOop && isMine(p)) incStat('oops');
       S.playKind = wasOop ? 'oop' : 'dunk'; if (wasOop) { hl('oop', 'ALLEY-OOP', p, 4); popup('ALLEY-OOP !', RIM.x, RIM.y + 1.6, RIM.z, '#ffd166', 30, 'huge'); } else if (big) hl('dunk', DUNKS[p.dunkType][1], p, 2);
-      popup(p.contact ? 'PAR-DESSUS LUI !' : DUNKS[p.dunkType][1], RIM.x, RIM.y + 1.1, RIM.z, p.color, 32, 'huge', 'dunk'); score(p, 1);
-      if (S.mode !== 'guest' && (ADM.glass || (big && p.dunkGreen && rnd() < .35))) shatter(); // a perfect big slam sometimes takes the glass with it
+      popup(p.contact ? 'PAR-DESSUS LUI !' : DUNKS[p.dunkType][1], RIM.x, RIM.y + 1.1, RIM.z, p.color, 32, 'huge', 'dunk'); score(p, p.dunkMeteor ? 2 : 1);
+      if (S.mode !== 'guest' && (ADM.glass || p.dunkMeteor || (big && p.dunkGreen && rnd() < .35))) shatter(); p.dunkMeteor = false; // a perfect big slam sometimes takes the glass with it
     }
   }
   function attemptSteal(d, a) {
@@ -4584,10 +4600,70 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
     buzzFx(); S.shakeT = Math.max(S.shakeT || 0, .35); if (ATH.slowmo && S.mode !== 'guest') S.slowT = Math.max(S.slowT, .9);
     popup('AU BUZZER !', RIM.x, RIM.y + 1.9, RIM.z, '#ff5a4f', 36, 'huge', 'buzzer');
   }
+  // ---------- v49 · special attacks + style auras (each takeover style has its own look and its own big move) ----------
+  function specReady(p) { // which special this player can fire right now (null = none)
+    if (!(p.tkoT > 0) || p.specUsed || S.sub || S.team3 || S.party || S.phase !== 'play' || p.y > .02 || p.dunking || p.shooting || p.pend || p.stun > 0 || p.fallT > 0) return null;
+    const t = tkType(p), o = other(p), has = ball.state === 'held' && ball.holder === p;
+    if (t === 'mur') return ball.state === 'held' && ball.holder === o && o.y <= .05 && !o.dunking && Math.hypot(o.x - p.x, o.z - p.z) < 4 ? t : null;
+    if (!has || !ball.clr || p.mv) return null;
+    if (t === 'slasher') return hdist(p) < 7.5 && p.z > RIM.z + .25 ? t : null;
+    if (t === 'meneur') return Math.hypot(o.x - p.x, o.z - p.z) < 3.2 && !(o.fallT > 0) ? t : null;
+    return t; // sniper: from anywhere on the court
+  }
+  function specFx(t, who) { // the big moment, visuals only (the online guest replays it from the host's popup)
+    const p = P[who] || p1, c = TK[t].c;
+    cineFx('sp_' + t, who, true, 'manga');
+    S.tkFx = { who, t: 0, c }; tkWave.material.color.set(c); tkPillar.material.color.set(c);
+    for (let i = 0; i < 70; i++) { const a = rnd() * Math.PI * 2, v = 2 + rnd() * 5; emit(p.x, .3 + rnd() * 2.2, p.z, i % 3 ? c : '#ffffff', Math.cos(a) * v, 1 + rnd() * 4, Math.sin(a) * v, .7 + rnd() * .5, 4); }
+    if (t === 'tireur') { ball.trailT = 2.4; ball.trailCol = c; setTimeout(() => { ball.trailCol = null; }, 2600); }
+    showPop(SPEC[t].k, p.x, 3.7, p.z, c, 58, 'huge'); flash(); S.shakeT = Math.max(S.shakeT || 0, .6);
+    SFX.vs(); SFX.zone(); setTimeout(() => SFX.roar(), 250);
+    if (ATH.vibrate && navigator.vibrate) { try { navigator.vibrate([40, 30, 90]); } catch (_) {} }
+  }
+  function useSpecial(p) {
+    const t = specReady(p); if (!t) return false;
+    const o = other(p), c = TK[t].c; p.specUsed = true;
+    if (t === 'tireur') { // TIR CÉLESTE: a sky-high rainbow that can't miss and can't be blocked, 2 points from anywhere
+      faceTo(p, RIM.x, RIM.z); const fx = Math.sin(p.face), fz = Math.cos(p.face), d = hdist(p);
+      p.vy = 3.4; p.y = .001; p.ftT = .55;
+      ball.state = 'flight'; ball.holder = null; ball.lastTouch = p;
+      ball.fl = { x0: p.x + fx * .25, y0: p.y + 2.45 * (p.sc || 1), z0: p.z + fz * .25, x1: RIM.x, y1: RIM.y + .02, z1: RIM.z, T: 1.5 + d * .03, arc: 7 + d * .2, t: 0, success: true, pts: 2, shooter: p, checked: true, fade: false, green: true };
+    } else if (t === 'slasher') { // MÉTÉORE: a flying slam from far out, unblockable; the defender is blown away and the glass goes
+      startDunk(p);
+      const bi = DUNKS.findIndex(x => BIG_DUNKS.includes(x[0])); if (bi >= 0) p.dunkType = bi;
+      const k = 1.3; p.vy *= k; p.vx /= k; p.vz /= k; // higher and longer: same landing spot at the top of the jump
+      Object.assign(p, { contact: false, dunkG: DUNK_TARGET, dunkWaitRel: false, meteor: true });
+    } else if (t === 'meneur') { // PAS FANTÔME: vanishes and reappears behind his man, who is left on the floor
+      const ax = RIM.x - o.x, az = RIM.z - o.z, al = Math.hypot(ax, az) || 1;
+      const nx = clamp(o.x + ax / al * 1.3, MINX + .3, MAXX - .3), nz = clamp(o.z + az / al * 1.3, MINZ + .3, MAXZ - .3);
+      for (let i = 0; i <= 14; i++) { const u = i / 14; emit(lerp(p.x, nx, u), .4 + rnd() * 1.7, lerp(p.z, nz, u), i % 2 ? c : '#ffffff', (rnd() - .5) * .6, .3 + rnd() * .6, (rnd() - .5) * .6, 1.2, 0); }
+      p.x = nx; p.z = nz; faceTo(p, RIM.x, RIM.z); p.ghost = 1.6;
+      breakAnkles(p, o);
+    } else { // LA CAGE: bars of light close around the handler, the ball is ripped away and he is frozen
+      o.shooting = false; o.pend = null; o.mv = 0; o.burstT = 0; o.stun = 1.4; o.robT = .6;
+      for (let i = 0; i < 48; i++) { const a = i / 48 * Math.PI * 2; emit(o.x + Math.cos(a) * .9, .15 + (i % 8) * .3, o.z + Math.sin(a) * .9, i % 4 ? c : '#ffffff', 0, 1.2, 0, 1.1, 0); }
+      swipe(ball.x, ball.y, ball.z, p, true); gain(p);
+      showPop('ゴゴゴゴ', o.x, 3.2, o.z, '#c79bff', 40, 'huge');
+    }
+    specFx(t, p.idx); // after the move: its cinematic wins over the ankle / steal ones
+    popup(SPEC[t].n + ' !', p.x, 3.1, p.z, c, 34, 'huge');
+    return true;
+  }
+  function auraTick(q, dt) { // each takeover style wears its own aura (both screens: the takeover state is synced)
+    q.auraT = (q.auraT || 0) - dt; if (q.auraT > 0) return; q.auraT = .03;
+    const t = tkType(q), c = TK[t].c, a = rnd() * Math.PI * 2, r = .35 + rnd() * .25, x = q.x + Math.cos(a) * r, z = q.z + Math.sin(a) * r, y = q.y;
+    if (t === 'tireur') emit(x, y + .2 + rnd() * 1.8, z, rnd() < .3 ? '#ffffff' : c, 0, .9 + rnd(), 0, .9, 0);                                                  // golden sparkles drifting up
+    else if (t === 'slasher') emit(x, y + .1 + rnd() * .6, z, rnd() < .5 ? c : '#ffb21f', (rnd() - .5) * .4, 2.2 + rnd() * 1.6, (rnd() - .5) * .4, .55, -1);    // flames licking up
+    else if (t === 'meneur') emit(q.x - q.vx * .06, y + .3 + rnd() * 1.5, q.z - q.vz * .06, rnd() < .4 ? '#ffffff' : c, -q.vx * .15, .2, -q.vz * .15, .8, 0); // ghost wisps left behind
+    else { emit(x, y + rnd() * 2.1, z, rnd() < .25 ? '#ffffff' : c, (rnd() - .5) * 3, (rnd() - .5) * 3, (rnd() - .5) * 3, .22, 0);                              // crackling lightning
+      q.menT = (q.menT || 0) - .03; if (q.menT <= 0) { q.menT = 2.6; showPop('ゴ ゴ ゴ', q.x + .6, q.y + 2.6, q.z, c, 22, 'info'); } }
+    if (q.meteor && q.dunking) for (let i = 0; i < 4; i++) emit(q.x + (rnd() - .5) * .4, q.y + 1 + rnd(), q.z + (rnd() - .5) * .4, i % 2 ? '#ff5a3c' : '#ffd166', -q.vx * .3, -1, -q.vz * .3, .5, 0); // comet tail
+  }
   // check-ball flex: before the possession starts, the ball spins on the holder's raised finger
   function spinCheck(p) { return S.phase === 'check' && (S.chkT || 0) < .5 && ball.state === 'held' && ball.holder === p && !p.mv && !p.shooting && !p.dunking && p.y < .05 && Math.hypot(p.vx, p.vz) < .3; }
   function updateEffects(dt) {
-    S.chkT = S.phase === 'check' ? (S.chkT || 0) + dt : 0; // first half of the check: finger spin, then the friend's triple threat
+    S.chkT = S.phase === 'check' ? (S.chkT || 0) + dt : 0;
+    if (S.phase !== 'menu' && !S.team3 && !S.party) for (const q of P) if (q.tkoT > 0) auraTick(q, dt); // first half of the check: finger spin, then the friend's triple threat
     // the new board drops in from above as soon as the next possession (or a menu) starts
     if (S.boardBroken && !['play', 'scored', 'kill', 'replay'].includes(S.phase)) { S.boardBroken = false; boardDrop = 1; boardMesh.visible = true; boardFrame.visible = false; }
     if (boardDrop > 0) { boardDrop = Math.max(0, boardDrop - dt * 1.5); boardMesh.position.y = 3.45 + 5 * boardDrop * boardDrop; if (!boardDrop) { SFX.board(); S.rimShake = Math.max(S.rimShake, .4); } }
@@ -4710,9 +4786,9 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
     document.querySelectorAll('.joy').forEach(j => { j.hidden = true; }); document.querySelectorAll('#touch .on').forEach(b => b.classList.remove('on')); }
   // ---------- key bindings, saved, for every device ----------
   const BIND_DEFAULT = {
-    kb1: { up: ['z', 'w'], down: ['s'], left: ['q', 'a'], right: ['d'], act: [' ', 'j'], sec: ['f', 'k'], hands: ['e'], sprint: ['ShiftLeft'], pass: ['c'], oop: ['r'], intense: ['x'] },
-    kb2: { up: ['arrowup'], down: ['arrowdown'], left: ['arrowleft'], right: ['arrowright'], act: ['enter', '0'], sec: ['ShiftRight', '1', 'l'], hands: ['ControlRight'], sprint: [], pass: ['m', '2'], oop: ['3'], intense: ['4'] },
-    pad: { shoot: 2, block: 3, jump: 0, drib: 1, sprint: 7, intense: 6, pause: 9, pass: 4 },
+    kb1: { up: ['z', 'w'], down: ['s'], left: ['q', 'a'], right: ['d'], act: [' ', 'j'], sec: ['f', 'k'], hands: ['e'], sprint: ['ShiftLeft'], pass: ['c'], oop: ['r'], intense: ['x'], spec: ['v'] },
+    kb2: { up: ['arrowup'], down: ['arrowdown'], left: ['arrowleft'], right: ['arrowright'], act: ['enter', '0'], sec: ['ShiftRight', '1', 'l'], hands: ['ControlRight'], sprint: [], pass: ['m', '2'], oop: ['3'], intense: ['4'], spec: ['5'] },
+    pad: { shoot: 2, block: 3, jump: 0, drib: 1, sprint: 7, intense: 6, pause: 9, pass: 4, spec: 5 },
     touch: { size: 'normale', lefty: false }
   };
   const BIND = (() => { const b = JSON.parse(JSON.stringify(BIND_DEFAULT)), sv = store.get('binds', null); if (sv && typeof sv === 'object') for (const g of Object.keys(b)) if (sv[g] && typeof sv[g] === 'object') Object.assign(b[g], sv[g]); return b; })();
@@ -4727,6 +4803,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
   function applyKey(i, a, down, e) {
     const dirs = { up: 'u', down: 'd', left: 'l', right: 'r' };
     if (a === 'pass') { if (down && !(e && e.repeat)) { i.passReq = true; i.npass = (i.npass || 0) + 1; } return; }
+    if (a === 'spec') { if (down && !(e && e.repeat)) { i.specReq = true; i.nsp = (i.nsp || 0) + 1; } return; } // v49
     if (a === 'oop') { if (down && !(e && e.repeat)) { const p = S.mode === 'guest' ? gme() : inBody(i); if (p.oopT > 0 || (p.dunking && p.oop && !p.dunkDone)) { i.oopTime = true; i.not = (i.not || 0) + 1; ordNow(i, p); } else { i.oopReq = true; i.noq = (i.noq || 0) + 1; } } return; }
     if (dirs[a]) { i[dirs[a]] = down ? 1 : 0; return; }
     if (a === 'act') { if (!down) actUp(i); else if (!e.repeat) actDown(i); return; }
@@ -4785,6 +4862,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
         if (edge(0) === 1) navOk(); if (edge(1) === 1) navBack(); if (st.l1E === 1) navTab(-1); if (edge(5) === 1) navTab(1);
         [2, 3].forEach(edge); i.hands = false; continue;
       }
+      if (edge(PB.spec != null ? PB.spec : 5) === 1 && S.phase === 'play') { i.specReq = true; i.nsp = (i.nsp || 0) + 1; } // v49: RB = special
       const p = S.mode === 'guest' ? gme() : inBody(i);
       const has = ball.state === 'held' && ball.holder === p, def = ball.state === 'held' && ball.holder === other(p);
       const down = w => w === 'A' ? actDown(i) : w === 'B' ? secDown(i) : 0, up = w => w === 'A' ? actUp(i) : w === 'B' ? secUp(i) : 0;
@@ -4861,6 +4939,9 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
     for (const ev of ['pointerup', 'pointercancel', 'pointerleave']) b.addEventListener(ev, () => { b.classList.remove('on'); inp.handsK = false; }); }
   for (const [id, inp] of [['bAP', inA], ['bBP', inB]]) { const b = $(id); b.addEventListener('pointerdown', e => { e.preventDefault(); b.classList.add('on'); if (b.textContent === 'VERROU') { inp.intenseK = true; inp.vLock = true; return; } inp.passReq = true; inp.npass = (inp.npass || 0) + 1; });
     for (const ev of ['pointerup', 'pointercancel', 'pointerleave']) b.addEventListener(ev, () => { inp.intenseK = false; }); /* v40: VERROU is held */ for (const ev of ['pointerup', 'pointercancel', 'pointerleave']) b.addEventListener(ev, () => b.classList.remove('on')); }
+  for (const [id, inp] of [['bAX', inA], ['bBX', inB]]) { const b = $(id); // v49: SPÉCIAL
+    b.addEventListener('pointerdown', e => { e.preventDefault(); b.classList.add('on'); inp.specReq = true; inp.nsp = (inp.nsp || 0) + 1; });
+    for (const ev of ['pointerup', 'pointercancel', 'pointerleave']) b.addEventListener(ev, () => b.classList.remove('on')); }
   for (const [id, inp] of [['bAS', inA], ['bBS', inB]]) { const b = $(id); // v45: POSTE, held
     b.addEventListener('pointerdown', e => { e.preventDefault(); b.classList.add('on'); inp.intenseK = true; });
     for (const ev of ['pointerup', 'pointercancel', 'pointerleave']) b.addEventListener(ev, () => { b.classList.remove('on'); inp.intenseK = false; }); }
@@ -5099,6 +5180,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
     if (i.oopReq && (p.oopT > 0 || (p.dunking && p.oop && !p.dunkDone))) { i.oopReq = false; i.oopTime = true; } // v43: a press that arrives as a new lob (ping) during an alley-oop = the finish
     if (i.oopReq && S.team3 && ball.holder === p) { i.oopReq = false; if (!teamOop(p, i)) teamPass(p, i); }
     if (i.oopReq) { i.oopReq = false; if (canOop(p)) { p.shooting = false; p.gt = 0; p.pend = null; startOop(p); } }
+    if (i.specReq) { i.specReq = false; useSpecial(p); } // v49
     if (i.oopTime) { i.oopTime = false; if (p.dunking && p.oop && !p.dunkDone && p.dunkG == null) p.dunkG = clamp((typeof i.ord === 'number' ? i.ord : p.dkT) / DUNK_T, 0, 1.3); else if (p.oopT > 0) p.oopEarly = true; i.ord = null; }
     if (p.oopEarly && p.dunking && p.oop && p.dunkG == null) { p.oopEarly = false; p.dunkG = .35; } // pressed way too early
     if (i.dbl) { // double tap reported by the online guest
@@ -5120,6 +5202,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
   }
   function controlAI(a, dt) {
     if (ADM.freeze) { a.vx = a.vz = 0; return; }
+    if (a.tkoT > 0 && !a.specUsed && rnd() < dt * .35 && useSpecial(a)) return; // v49
     if (a.diveT > 0) return; // v44: mid-dive
     const D = S.diff, st = a.ai, h = other(a);
     a.handsUp = false; a.sprinting = false; a.intense = false;
@@ -5837,7 +5920,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
     const g = peerWith('guest');
     if (g && S.mode !== 'host') {
       const i = g.presence.in || {};
-      NET.lastAp = i.ap || 0; NET.lastAr = i.ar || 0; NET.lastBp = i.bp || 0; NET.lastSk = i.sk || 0; NET.lastDd = i.dd || 0;
+      NET.lastAp = i.ap || 0; NET.lastAr = i.ar || 0; NET.lastBp = i.bp || 0; NET.lastSk = i.sk || 0; NET.lastDd = i.dd || 0; NET.lastSp = i.sp || 0;
       S.mode = 'host'; p1.ctrl = 'local'; p2.ctrl = 'remote';
       setLook(p1, looks.p1); setLook(p2, cleanLook(g.presence.look, LOOK_P2));
       setNames(); setTouch(); $('menu').hidden = true; $('result').hidden = true; hostStart();
@@ -5867,6 +5950,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
     if ((i.sk || 0) > (NET.lastSk || 0) && (S.phase === 'kill' || S.phase === 'scored')) voteSkip(p2);
     if ((i.sk || 0) > (NET.lastSk || 0) && S.phase === 'intro' && S.intro) S.introSkip = true;
     if ((i.ps || 0) > (NET.lastPs || 0) && S.phase === 'play') inR.passReq = true; NET.lastPs = i.ps || 0;
+    if ((i.sp || 0) > (NET.lastSp || 0) && S.phase === 'play') inR.specReq = true; NET.lastSp = i.sp || 0; // v49
     NET.lastAp = i.ap || 0; NET.lastAr = i.ar || 0; NET.lastBp = i.bp || 0; NET.lastSk = i.sk || 0;
   }
   // v42: the small animation timers the host runs (bump, finger wag, rebound chin, triple threat, hesi, fakes, drive,
@@ -5878,7 +5962,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
     return {
       ph: S.phase === 'replay' ? 'over' : S.phase, eq: S.balanced ? 1 : 0, mr: S.meterRes && S.meterRes.t > 0 ? [S.meterRes.who, Math.round(S.meterRes.g * 1000) / 1000, Math.round(S.meterRes.w * 1000) / 1000, S.meterRes.cls, S.meterRes.dunk ? 1 : 0, r2(S.meterRes.t)] : 0, kv: S.votes ? S.votes.map(v => v ? 1 : 0) : 0, gm: S.gm, lv: S.lv, gc: r2(S.gclock || 0),
       it: S.phase === 'intro' && S.intro ? [INTROS.indexOf(S.intro.v), r2(S.intro.t), S.intro.emote] : 0,
-      x2: P.map(q => [r2(q.stam == null ? 1 : q.stam), r2(q.tkm || 0), r2(q.tkoT || 0)]), zn: P.map(q => q.zoneT > 0 ? 1 : 0), sc: [S.score.p, S.score.ai], cl: r2(S.clock), at: S.att.idx, nt: r2(S.netT), mp: S.map, rs: r2(S.rimShake),
+      x2: P.map(q => [r2(q.stam == null ? 1 : q.stam), r2(q.tkm || 0), r2(q.tkoT || 0), q.specUsed ? 1 : 0]), zn: P.map(q => q.zoneT > 0 ? 1 : 0), sc: [S.score.p, S.score.ai], cl: r2(S.clock), at: S.att.idx, nt: r2(S.netT), mp: S.map, rs: r2(S.rimShake),
       ce: S.celeb ? [S.celeb.who, S.celeb.type, r2(S.celeb.t)] : 0, tm: S.team3 && S.team3.H ? teamPack() : 0,
       p: P.map(p => [r2(p.x), r2(p.y), r2(p.z), r2(p.face), r2(p.vx), r2(p.vz),
         (p.shooting ? 1 : 0) | (p.dunking ? 2 : 0) | (p.stun > 0 ? 4 : 0) | (p.fadeIntent ? 8 : 0) | (p.reachT > 0 ? 16 : 0) | (p.dunkDone ? 32 : 0) | (p.sad ? 64 : 0) | (p.landLag > 0 ? 128 : 0) | (p.fallT > 0 ? 256 : 0) | (p.handsUp ? 512 : 0) | (p.intense ? 1024 : 0) | (p.robT > 0 ? 2048 : 0) | (p.fallKind === 'poster' ? 4096 : 0) | (p.contact ? 8192 : 0) | (p.reachT > 0 ? 16384 : 0) | (p.grabT > 0 ? 32768 : 0) | ((p.fallVar || 0) & 1 ? 65536 : 0) | ((p.fallVar || 0) & 2 ? 131072 : 0) | ((p.fallVar || 0) & 4 ? 2097152 : 0) | (p.fallSide < 0 ? 262144 : 0) | (p.sprinting ? 524288 : 0) | (p.pend ? 1048576 : 0) | (p.gatherT > 0 ? 8388608 : 0) | (p.humil ? 4194304 : 0),
@@ -5959,7 +6043,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
     if ((inA.not || 0) !== (NET.lastNot || 0)) { NET.lastNot = inA.not || 0; const q = gme(); if (inA.ord == null) inA.ord = q.dunking && !q.dunkDone ? Math.round(q.dkT * 1000) / 1000 : null; } // v39: alley-oop finish timed on his screen
     const inp = { x: r2(ix), z: r2(iz), a: inA.A, he: NET.echo || 0, od: inA.ord == null ? -1 : inA.ord, ap: inA.np, ar: inA.nr, rg: inA.rg, sg: inA.sg ? 1 : 0, oq: inA.noq || 0, ot: inA.not || 0, bp: inA.nb, sk: guestSkips, dd: inA.nd,
       bh: inA.B, rd: inA.rd, hu: !!(inA.hands || inA.handsK), spr: !!(inA.sprint || inA.sprintK), it: !!(inA.intense || inA.intenseK), tf: inA.touchFull ? 1 : 0,
-      am: inA.aimOn ? [r2(inA.aimX), r2(inA.aimZ)] : 0, mo: inA.mvOn ? [r2(inA.mvX), r2(inA.mvZ)] : 0, ps: inA.npass || 0 };
+      am: inA.aimOn ? [r2(inA.aimX), r2(inA.aimZ)] : 0, mo: inA.mvOn ? [r2(inA.mvX), r2(inA.mvZ)] : 0, ps: inA.npass || 0, sp: inA.nsp || 0 };
     const key = JSON.stringify(inp);
     if (key !== NET.lastSent && NET.R) { NET.lastSent = key; NET.R.presence({ role: 'guest', look: looks.p1, in: inp }).catch(() => {}); }
     if ((inA.pressed && (S.phase === 'scored' || S.phase === 'intro' || S.phase === 'kill')) || S.introSkip) { guestSkips++; S.introSkip = false; }
@@ -5975,7 +6059,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
     if (!!s.eq !== !!S.balanced) { S.balanced = !!s.eq; applyBalance(); } // the host decides
     if (s.zn) P.forEach((q, n) => { q.zoneT = s.zn[n] ? Math.max(q.zoneT || 0, 1) : 0; });
     if (s.gm && GMS[s.gm]) { if (S.gm !== s.gm) { S.gm = s.gm; refreshGoal(); } } if (s.lv && LVLS[s.lv]) S.lv = s.lv; S.gclock = +s.gc || 0;
-    if (s.x2) P.forEach((q, n) => { const a = s.x2[n]; if (a) { q.stam = a[0]; q.tkm = a[1]; q.tkoT = a[2]; fxTick(q); } });
+    if (s.x2) P.forEach((q, n) => { const a = s.x2[n]; if (a) { q.stam = a[0]; q.tkm = a[1]; q.tkoT = a[2]; q.specUsed = !!a[3]; fxTick(q); } });
     if (s.ph === 'intro' && s.it) { // the host's cinematic, played here too
       if (!S.intro) { $('selectScr').hidden = true; startIntro(INTROS[s.it[0]] || 'drone', s.it[1] < 0, true); }
       const I = S.intro; if (Math.abs(I.t - s.it[1]) > .25) I.t = s.it[1]; I.emote = s.it[2];
@@ -6024,6 +6108,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
       if (String(e.t).startsWith('BÂCH')) { S.shakeT = .4; ringFlash(e.x, e.y - .4, e.z, e.c); ball.trailT = .6; trailPos.length = 0; }
       if (e.t === 'VOLÉ !' || e.t === 'RATÉ' || String(e.t).startsWith('ARRACHÉ')) { const d = Math.hypot(p1.x - e.x, p1.z - e.z) < Math.hypot(p2.x - e.x, p2.z - e.z) ? p1 : p2; swipe(ball.x, Math.max(.5, ball.y), ball.z, d, e.t !== 'RATÉ'); }
       const near = () => Math.hypot(p1.x - e.x, p1.z - e.z) < Math.hypot(p2.x - e.x, p2.z - e.z) ? p1 : p2;
+      { const sk = Object.keys(SPEC).find(k => SPEC[k].n + ' !' === e.t); if (sk) specFx(sk, near().idx); } // v49: the host fired a special
       if (FALL_TXT.includes(e.t)) cineFx('ankle', near().idx);
       else if (e.t === 'POSTERISÉ !' || String(e.t).startsWith('MARTEAU')) cineFx('poster', (p1.dunking || p1.hangT > 0 ? p1 : p2).idx);
       else if (String(e.t).startsWith('BÂCH')) cineFx('block', near().idx);
@@ -6748,6 +6833,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
       btn.classList.toggle('off', t4 === 'LOB' && !has);
       { const hide = !!S.team3 && t4 === 'LOB' && !has; if (btn.style.visibility !== (hide ? 'hidden' : '')) btn.style.visibility = hide ? 'hidden' : ''; } // v43: in 2c2/3c3 the lob button only shows with the ball
       { const ps = $(btn === $('bAL') ? 'bAS' : 'bBS'); if (ps) { const o5 = other(bp), on = S.phase === 'play' && (bp.inPost || (has && !S.sub && hdist(bp) < 6.2 && o5 && Math.hypot(o5.x - bp.x, o5.z - bp.z) < 2.2)); ps.classList.toggle('show', on); } } // v45: POSTE only when it can be used
+      { const sx = $(btn === $('bAL') ? 'bAX' : 'bBX'), st = specReady(bp); if (sx) { sx.classList.toggle('show', !!st); if (st) { sx.style.setProperty('--sc', TK[st].c); if (sx.textContent !== SPEC[st].n) sx.textContent = SPEC[st].n; } } } // v49: SPÉCIAL only when it can be fired
       if (S.team3 && S.team3.H) { const h = S.team3.H.find(q => q.inp === (S.mode === 'guest' ? inR : inp)), me2 = h && teamBodies().find(q => q.look === h.look);
         const t3 = !att ? 'CHANGER' : me2 && ball.holder === me2 ? 'PASSE' : 'BALLE !'; if (pb.textContent !== t3) pb.textContent = t3; }
       else if (S.team3 && pb.textContent !== 'PASSE') pb.textContent = 'PASSE';
@@ -6818,7 +6904,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
     });
     // ball trail
     if (ball.trailT > 0) { trailPos.unshift([ball.x, ball.y, ball.z]); if (trailPos.length > 7) trailPos.length = 7; }
-    const tcol = ball.trailFire ? (Math.random() < .5 ? '#ff5a1f' : '#ffb21f') : ball.trailGreen ? (METER_COLORS[ATH.meterColor] || OKC) : '#ffb067'; // on fire in the Zone
+    const tcol = ball.trailCol || (ball.trailFire ? (Math.random() < .5 ? '#ff5a1f' : '#ffb21f') : ball.trailGreen ? (METER_COLORS[ATH.meterColor] || OKC) : '#ffb067'); // on fire in the Zone
     trail.forEach((m, i) => { const pp = trailPos[i]; m.material.color.set(tcol); if (ball.trailT > 0 && pp) { m.position.set(pp[0], pp[1], pp[2]); m.material.opacity = .35 * (1 - i / 7) * Math.min(1, ball.trailT * 3); } else m.material.opacity = 0; });
     if (S.meterRes) S.meterRes.t -= dt;
     if (envGroup && envGroup.userData.foam) envGroup.userData.foam.position.z = -13.2 + Math.sin(S.time * .6) * .5;
@@ -7070,7 +7156,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
   document.querySelectorAll('#ctrlTabs button').forEach(b => b.addEventListener('click', () => { ctrlTab = b.dataset.v; document.querySelectorAll('#ctrlTabs button').forEach(x => x.setAttribute('aria-selected', String(x === b))); renderCtrls(); }));
   document.querySelectorAll('#ctrlTabs button').forEach(b => b.setAttribute('aria-selected', String(b.dataset.v === ctrlTab)));
   const KP_NAMES = { up: 'Haut', down: 'Bas', left: 'Gauche', right: 'Droite', act: 'Tirer / contrer / attraper', sec: 'Dribble / voler', hands: 'Mains levées', sprint: 'Sprint',
-    shoot: 'Tirer (défense : voler)', block: 'Contrer', jump: 'Sauter / attraper', drib: 'Dribble', intense: 'Défense intense / jeu au poste (maintenu)', pause: 'Pause', pass: 'Passe / demander la balle / changer (2c2, 3c3)', oop: 'Alley-oop (puis au bon moment : finir)' };
+    shoot: 'Tirer (défense : voler)', block: 'Contrer', jump: 'Sauter / attraper', drib: 'Dribble', intense: 'Défense intense / jeu au poste (maintenu)', spec: 'Attaque spéciale (pendant le takeover)', pause: 'Pause', pass: 'Passe / demander la balle / changer (2c2, 3c3)', oop: 'Alley-oop (puis au bon moment : finir)' };
   function renderKeys() {
     const list = $('kpList'); list.innerHTML = '';
     $('kpNote').textContent = kpTab === 'pad' ? 'Clique sur une action puis appuie sur le bouton de la manette. Sticks : gauche = bouger, droit = dribbles / tir visé / mains levées.' : kpTab === 'touch' ? 'Taille des boutons et côté de l\'écran.' : 'Clique sur une action puis appuie sur la nouvelle touche. Échap pour annuler.';
