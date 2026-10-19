@@ -317,6 +317,9 @@ body{background:var(--night);color:var(--chalk);font-family:var(--body);font-siz
 .dash{color:var(--muted);font-family:var(--display)}
 .clock{font-family:var(--display);font-size:17px;background:var(--panel);border-radius:7px;padding:3px 12px;font-variant-numeric:tabular-nums}
 .clock.hot{color:#ff5a4f}
+.clock.buzz{animation:buzz .35s ease-in-out 4;color:#fff;background:#ff3b30!important;box-shadow:0 0 18px #ff3b30}
+@keyframes buzz{50%{transform:scale(1.35)}}
+@media (prefers-reduced-motion:reduce){.clock.buzz{animation:none}}
 .goal{position:absolute;top:24px;left:66px;font-weight:600;font-size:12px;letter-spacing:.12em;color:rgba(239,231,214,.55);pointer-events:none}
 .menubtn{position:absolute;top:10px;left:10px;z-index:4;width:46px;height:46px;border-radius:12px;border:1px solid rgba(239,231,214,.22);background:var(--panel);display:grid;place-items:center;cursor:pointer;padding:0}
 .menubtn span{display:block;width:20px;height:2.5px;border-radius:2px;background:var(--chalk);box-shadow:0 -7px 0 var(--chalk),0 7px 0 var(--chalk)}
@@ -1570,6 +1573,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
   // text that came over the network (party names, host overlays) must never become HTML
   const escH = t => String(t == null ? '' : t).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+  console.assert(escH(`<"'&>`) === '&lt;&quot;&#39;&amp;&gt;', 'escH must neutralize HTML');
   const safeCol = c => /^#[0-9a-f]{3,8}$/i.test(String(c)) ? c : '#efe7d6';
   const lerp = (a, b, t) => a + (b - a) * t;
   const rnd = Math.random;
@@ -3096,6 +3100,9 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
   bgx.strokeStyle = '#d84b2a'; bgx.lineWidth = 8; bgx.strokeRect(6, 6, 244, 138); bgx.strokeRect(86, 70, 84, 64);
   const boardMesh = new THREE.Mesh(new THREE.BoxGeometry(1.8, 1.05, .05), [dark, dark, dark, dark, new THREE.MeshStandardMaterial({ map: tex(boardC), roughness: .4 }), dark]);
   boardMesh.position.set(0, 3.45, BOARD_Z - .025); boardMesh.castShadow = true; scene.add(boardMesh);
+  // shattered backboard: only the frame stays up until a new board drops in (see shatterFx)
+  const boardFrame = new THREE.Group(); boardFrame.visible = false; scene.add(boardFrame);
+  for (const [w, h, x, y] of [[1.8, .06, 0, 3.95], [1.8, .06, 0, 2.95], [.06, 1.05, -.87, 3.45], [.06, 1.05, .87, 3.45]]) { const b = new THREE.Mesh(new THREE.BoxGeometry(w, h, .06), dark); b.position.set(x, y, BOARD_Z - .025); boardFrame.add(b); }
   const rimMat = new THREE.MeshStandardMaterial({ color: '#ff4d1f', emissive: '#5a1400', roughness: .4, metalness: .6 });
   const rim = new THREE.Mesh(new THREE.TorusGeometry(RIM_R, .018, 8, 28), rimMat); rim.rotation.x = Math.PI / 2; rim.position.copy(RIM); scene.add(rim);
   const brk = new THREE.Mesh(new THREE.BoxGeometry(.1, .03, .16), rimMat); brk.position.set(0, RIM.y, BOARD_Z + .08); scene.add(brk);
@@ -3378,6 +3385,10 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
       // the swat: a dry crack, a big low thump, and the crowd going "ohhh"
       block() { if (!ac) return; noise(.001, .06, .5, 'highpass', 1800, .7); noise(.001, .12, .35, 'bandpass', 900, 1.2); tone(52, 'sine', .003, .45, .7, 32); tone(160, 'triangle', .002, .15, .25, 70);
         last.crowd = 0; crowd('ooh'); noise(.3, 1.2, .14, 'bandpass', 1000, .7, 1500, .45); },
+      // backboard shattering: a sharp crack, a low boom, then a rain of glass tinkles
+      glass() { if (!ac) return; noise(.001, .08, .55, 'highpass', 2500, .7); tone(60, 'sine', .003, .5, .6, 35);
+        for (let i = 0; i < 14; i++) tone(2600 + rnd() * 3600, 'sine', .002, .08 + rnd() * .12, .05, 0, .05 + rnd() * .9);
+        noise(.05, 1.1, .12, 'highpass', 4500, .7, 0, .1); last.crowd = 0; crowd('ooh'); },
       dunk() { if (!ac) return; tone(70, 'sine', .003, .25, .45, 45); this.rim(); noise(.002, .2, .18, 'lowpass', 900, 1); crowd('cheer'); },
       cheer() { crowd('cheer'); },
       roar() { if (!ac) return; last.crowd = 0; crowd('cheer'); noise(.2, 2.4, .24, 'bandpass', 900 * vary(.1), .6); noise(.3, 2, .12, 'bandpass', 2200, .8); },
@@ -3994,7 +4005,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
     let x1 = RIM.x, z1 = RIM.z, y1 = RIM.y + .02;
     if (!success) { const a = rnd() * Math.PI * 2, m = .26 + rnd() * .16; x1 += Math.cos(a) * m; z1 += Math.sin(a) * m; y1 = RIM.y + .1; }
     ball.state = 'flight'; ball.holder = null; ball.lastTouch = p;
-    ball.fl = { x0: p.x + fx * .25, y0: p.y + 2.45 * (p.sc || 1), z0: p.z + fz * .25, x1, y1, z1, T: .55 + d * .055, arc: .8 + d * .12, t: 0, success, pts: isTwo(p) ? 2 : 1, shooter: p, checked: rolled, fade: !!fade, green: !!r.perfect };
+    ball.fl = { x0: p.x + fx * .25, y0: p.y + 2.45 * (p.sc || 1), z0: p.z + fz * .25, x1, y1, z1, T: .55 + d * .055, arc: .8 + d * .12, t: 0, success, pts: isTwo(p) ? 2 : 1, shooter: p, checked: rolled, fade: !!fade, green: !!r.perfect, buzz: S.phase === 'play' && S.clock <= 1 };
   }
 
   // ---------- alley-oop: throw it up, run, catch it above the rim and finish with the dunk meter ----------
@@ -4137,6 +4148,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
       if (wasOop && isMine(p)) incStat('oops');
       S.playKind = wasOop ? 'oop' : 'dunk'; if (wasOop) { hl('oop', 'ALLEY-OOP', p, 4); popup('ALLEY-OOP !', RIM.x, RIM.y + 1.6, RIM.z, '#ffd166', 30, 'huge'); } else if (big) hl('dunk', DUNKS[p.dunkType][1], p, 2);
       popup(p.contact ? 'PAR-DESSUS LUI !' : DUNKS[p.dunkType][1], RIM.x, RIM.y + 1.1, RIM.z, p.color, 32, 'huge', 'dunk'); score(p, 1);
+      if (big && green && S.mode !== 'guest' && rnd() < .35) shatter(); // a perfect big slam sometimes takes the glass with it
     }
   }
   function attemptSteal(d, a) {
@@ -4295,11 +4307,48 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
       effects.push({ m, t: 0, dur: .7, kind: 'spark', v: new V3(Math.cos(a) * s, 2 + rnd() * 3, Math.sin(a) * s) });
     }
   }
+  // ---------- v39 · backboard explosion, buzzer-beater ----------
+  const glassMat = new THREE.MeshBasicMaterial({ color: '#cfefff', transparent: true, opacity: .75, side: THREE.DoubleSide, depthWrite: false });
+  let boardDrop = 0;
+  function shatterFx() { // visuals only: the host and the online guest both run it
+    if (S.boardBroken) return; S.boardBroken = true; boardDrop = 0;
+    boardMesh.visible = false; boardFrame.visible = true; boardMesh.position.y = 3.45;
+    for (let i = 0; i < 46; i++) {
+      const s = .06 + rnd() * .16, m = new THREE.Mesh(new THREE.PlaneGeometry(s, s * (.5 + rnd())), glassMat);
+      m.position.set((rnd() - .5) * 1.7, 2.95 + rnd(), BOARD_Z); m.rotation.set(rnd() * 6, rnd() * 6, 0); scene.add(m);
+      effects.push({ m, t: 0, dur: 2.2 + rnd() * .8, kind: 'glass', v: new V3((rnd() - .5) * 5, 1 + rnd() * 3, 1.5 + rnd() * 4), w: new V3(rnd() * 12, rnd() * 12, rnd() * 12) });
+    }
+    for (let i = 0; i < 60; i++) emit((rnd() - .5) * 1.8, 2.95 + rnd(), BOARD_Z + .05, rnd() < .5 ? '#ffffff' : '#9be7ff', (rnd() - .5) * 6, rnd() * 4, rnd() * 5, .6 + rnd() * .6, 9);
+    flash(); S.shakeT = Math.max(S.shakeT || 0, .8);
+  }
+  function shatter() {
+    shatterFx(); if (ATH.slowmo && S.mode !== 'guest') S.slowT = Math.max(S.slowT, .7);
+    popup('PLANCHE EXPLOSÉE !', RIM.x, RIM.y + 2.2, RIM.z, '#9be7ff', 38, 'huge', 'glass'); SFX.roar();
+  }
+  function buzzFx() { // shot clock flashes red, a burst of red and gold over the rim
+    const c = $('clock'); if (c) { c.classList.remove('buzz'); void c.offsetWidth; c.classList.add('buzz'); setTimeout(() => c.classList.remove('buzz'), 1400); }
+    for (let i = 0; i < 40; i++) emit(RIM.x, RIM.y, RIM.z, i % 2 ? '#ff5a4f' : '#ffe08a', (rnd() - .5) * 6, 2 + rnd() * 4, (rnd() - .5) * 6, .9, 8);
+    flash();
+  }
+  function buzzerBeater() {
+    buzzFx(); S.shakeT = Math.max(S.shakeT || 0, .35); if (ATH.slowmo && S.mode !== 'guest') S.slowT = Math.max(S.slowT, .9);
+    popup('AU BUZZER !', RIM.x, RIM.y + 1.9, RIM.z, '#ff5a4f', 36, 'huge', 'buzzer');
+  }
+  // check-ball flex: before the possession starts, the ball spins on the holder's raised finger
+  function spinCheck(p) { return S.phase === 'check' && ball.state === 'held' && ball.holder === p && !p.mv && !p.shooting && !p.dunking && p.y < .05 && Math.hypot(p.vx, p.vz) < .3; }
   function updateEffects(dt) {
+    // the new board drops in from above as soon as the next possession (or a menu) starts
+    if (S.boardBroken && !['play', 'scored', 'kill', 'replay'].includes(S.phase)) { S.boardBroken = false; boardDrop = 1; boardMesh.visible = true; boardFrame.visible = false; }
+    if (boardDrop > 0) { boardDrop = Math.max(0, boardDrop - dt * 1.5); boardMesh.position.y = 3.45 + 5 * boardDrop * boardDrop; if (!boardDrop) { SFX.board(); S.rimShake = Math.max(S.rimShake, .4); } }
     for (let i = effects.length - 1; i >= 0; i--) {
       const e = effects[i]; e.t += dt; const u = e.t / e.dur;
       if (e.kind === 'ring') { e.m.scale.setScalar(1 + u * 7); e.m.material.opacity = .95 * (1 - u); e.m.lookAt(camera.position); }
       else if (e.kind === 'swipe') { e.m.scale.setScalar(1 + u * .6); e.m.rotation.z += dt * 9; e.m.material.opacity = .95 * (1 - u); }
+      else if (e.kind === 'glass') { // shards fall, skid on the court, then shrink away (shared material: no per-shard fade)
+        e.v.y -= 9.8 * dt; e.m.position.addScaledVector(e.v, dt);
+        if (e.m.position.y < .02) { e.m.position.y = .02; e.v.y = e.v.y < -1 ? -e.v.y * .25 : 0; e.v.x *= .5; e.v.z *= .5; e.w.multiplyScalar(.4); }
+        e.m.rotation.x += e.w.x * dt; e.m.rotation.y += e.w.y * dt; e.m.rotation.z += e.w.z * dt; if (u > .75) e.m.scale.setScalar(Math.max(.01, (1 - u) * 4));
+      }
       else { e.v.y -= 9 * dt; e.m.position.addScaledVector(e.v, dt); e.m.rotation.x += dt * 9; }
       if (u >= 1) { scene.remove(e.m); e.m.geometry.dispose(); effects.splice(i, 1); }
     }
@@ -4947,6 +4996,10 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
       ball.x = p.x + fx * fw; ball.z = p.z + fz * fw; ball.y = p.y + up;
       ballMesh.rotation.x += dt * 2; return;
     }
+    if (spinCheck(p)) { // on the tip of the raised finger, spinning flat
+      ball.x = p.x + (fx * .1 - fz * .3 * p.hand) * sc; ball.z = p.z + (fz * .1 + fx * .3 * p.hand) * sc; ball.y = p.y + (2.4 + BALL_R) * sc;
+      ballMesh.rotation.x = 0; ballMesh.rotation.z = 0; ballMesh.rotation.y += dt * 24; ball.prevY = ball.y; return;
+    }
     ball.dphase += dt * (Math.hypot(p.vx, p.vz) > .3 ? 11 : 7);
     let side = p.hand, fw = .28, hy = BALL_R + Math.abs(Math.cos(ball.dphase)) * .82 * sc;
     if (p.mv === 8) { // between the legs: low bounce right under him
@@ -5003,6 +5056,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
           S.netT = .5;
           if (f.pts === 2) popup('DE LOIN !', RIM.x, RIM.y + 1.2, RIM.z, f.shooter.color, 22, 'action', 'three');
           S.playKind = f.green ? 'green' : f.pts === 2 ? 'three' : null; if (f.green && f.pts === 2) hl('green', 'TIR PARFAIT', f.shooter, 2.5);
+          if (f.buzz) buzzerBeater();
           score(f.shooter, f.pts);
         } else {
           const dx = f.x1 - RIM.x, dz = f.z1 - RIM.z, l = Math.hypot(dx, dz) || 1;
@@ -5372,6 +5426,8 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
         const sh = Math.hypot(p1.x - e.x, p1.z - e.z) < Math.hypot(p2.x - e.x, p2.z - e.z) ? p1 : p2, t = String(e.t);
         if (!s.mr) S.meterRes = { who: sh.idx, g: gauge(sh.gt), w: shotWindow(sh, t.includes('FADE'), 0), cls: t.startsWith('VERT') ? 'green' : t.startsWith('UN PEU') ? 'ok' : 'miss', t: .7 };
       }
+      if (e.t === 'PLANCHE EXPLOSÉE !') { shatterFx(); SFX.roar(); }
+      if (e.t === 'AU BUZZER !') buzzFx();
       if (String(e.t).startsWith('BÂCH')) { S.shakeT = .4; ringFlash(e.x, e.y - .4, e.z, e.c); ball.trailT = .6; trailPos.length = 0; }
       if (e.t === 'VOLÉ !' || e.t === 'RATÉ' || String(e.t).startsWith('ARRACHÉ')) { const d = Math.hypot(p1.x - e.x, p1.z - e.z) < Math.hypot(p2.x - e.x, p2.z - e.z) ? p1 : p2; swipe(ball.x, Math.max(.5, ball.y), ball.z, d, e.t !== 'RATÉ'); }
       const near = () => Math.hypot(p1.x - e.x, p1.z - e.z) < Math.hypot(p2.x - e.x, p2.z - e.z) ? p1 : p2;
@@ -5603,6 +5659,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
     else if (holding && p.shooting) { const u = Math.min(1, gauge(p.gt) / METER_TARGET); setA(dribArm, lerp(-.75, -1.95, u), lerp(-.18, .02, u)); setA(freeArm, lerp(-.7, -1.7, u), lerp(-.05, .42, u)); } // ball from the hip to the set point = the green moment
     else if (p.pend && ball.holder === p) { setA(dribArm, -2.2, .02); setA(freeArm, -1.85, .45); }  // rising, ball still at the set point
     else if (p.ftT > 0) { setA(dribArm, -2.75, -.04); setA(freeArm, -2.2, .5); }                        // follow-through: shooting arm extended, guide hand off
+    else if (holding && spinCheck(p)) { setA(dribArm, -3.0, .04); setA(freeArm, -1.0 + Math.sin(S.time * 12) * .25, .5); } // finger up, the other hand slaps it to keep it spinning
     else if (holding && (p.mv === 1 || p.mv === 3 || p.mv === 5)) {
       // ball crossing from one hand to the other: both hands low, the receiving hand opens toward the ball
       const t = clamp(p.mvT / MOVES[p.mv].dur, 0, 1), lo = p.mv === 3 ? .45 : -.55;
@@ -8600,7 +8657,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
     if (team && !guest) { let a = 0, b = 0; for (const p of PT.pl) { if (p.team !== 'A' && p.team !== 'B') p.team = a <= b ? 'A' : 'B'; if (p.team === 'A') a++; else b++; } }
     $('fList').innerHTML = list.map((p, i) => `<div class="fp" style="--pc:${FCOL[i % FCOL.length]}"><span class="fi">${kindIco[p.k] || '📱'}</span><b>${escH(p.n)}</b>${p.id === PT.myId ? '<em>toi</em>' : ''}`
       + (team ? `<button class="ft${p.t === 'B' ? ' b' : ''}" data-id="${escH(p.id)}"${guest ? ' disabled' : ''}>Équipe ${p.t === 'B' ? 'B' : 'A'}</button>` : '')
-      + (!guest && p.k !== 'me' ? `<button class="fx" data-id="${p.id}" aria-label="Retirer">✕</button>` : '') + '</div>').join('')
+      + (!guest && p.k !== 'me' ? `<button class="fx" data-id="${escH(p.id)}" aria-label="Retirer">✕</button>` : '') + '</div>').join('')
       + (list.length < 2 ? '<p class="note">Ajoute des joueurs : bots, J2 sur cet écran, ou invite tes amis en ligne.</p>' : '');
     document.querySelectorAll('#fGameSeg button').forEach(b => b.setAttribute('aria-checked', String(b.dataset.v === PT.game)));
     document.querySelectorAll('#fMods button').forEach(b => b.setAttribute('aria-pressed', String(!!PT.mods[b.dataset.v])));
