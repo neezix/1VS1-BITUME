@@ -1190,6 +1190,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
           <button id="m-trois" role="radio" data-v="trois" aria-checked="false"><i>🎯</i><b>Concours 3 pts</b><small>Chrono</small></button>
           <button id="m-dunkc" role="radio" data-v="dunkc" aria-checked="false"><i>💥</i><b>Concours dunks</b><small>Les juges notent</small></button>
           <button id="m-libre" role="radio" data-v="libre" aria-checked="false"><i>🧘</i><b>Terrain libre</b><small>Entraînement</small></button>
+          <button id="m-fun" role="radio" data-v="fun" aria-checked="false"><i>🛝</i><b>Playground</b><small>Le chaos total</small></button>
         </div>
       </div>
       <p class="lede" id="lede">Premier à 11. Derrière la ligne : 2 pts, dedans : 1 pt. Après un raté, un contre ou un vol : ressors derrière la ligne.</p>
@@ -4311,6 +4312,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
   function score(p, pts) {
     if (S.phase !== 'play') return; // whistle already blown (shot clock / out of bounds): the basket doesn't count
     if (S.sub && subScore(p, pts)) return;
+    if (funOn('x3')) pts *= 3; // v52: Playground
     S.score[p.id] += pts; maxiScore(p, pts, S.playKind); labInc(p, 'pts', pts); if (S.playKind === 'dunk' || S.playKind === 'poster' || S.playKind === 'oop') labInc(p, 'dunksOk'); // v49 lab
     // "the Zone" (Kuroko no Basket): three baskets in a row and you're in the Zone until the other one scores
     // v47: every legend reaches HIS Zone his own way (TKO[...].zEv): 3 charges, and it ends when the other one scores
@@ -4442,7 +4444,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
     return base * cw * (fade ? Math.min(1, FADE_ZONE * st.fade) : 1) * (p.stepAwayT > 0 ? 1 : moveFactor(p)) * assist * LV().win * postK;
   }
   function shotProb(p, g, fade, lvl) {
-    if (ADM.green && isMine(p)) return { prob: 1, perfect: true, good: false, w: shotWindow(p, fade, lvl) };
+    if ((ADM.green && isMine(p)) || funOn('panier')) return { prob: 1, perfect: true, good: false, w: shotWindow(p, fade, lvl) }; // v52: Playground giant hoop: everything goes in
     const w = shotWindow(p, fade, lvl), off = Math.abs(g - METER_TARGET), three = isTwo(p);
     const perfect = w > 0 && off <= w;      // green: always goes in (unless blocked), like the 2K26 pure green window
     const good = !perfect && off <= w + WHITE;
@@ -4776,7 +4778,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
     const bchance = Math.min(.9, (d.ctrl === 'ai' ? S.diff.block + .15 : .65) * (p.contact ? .5 : 1) * clamp(Math.pow(stOf(d).blk, 1.5) * (1 + Math.max(-.2, (stOf(d).h - stOf(p).h) * 1.6)), .25, 1.9)); // v38 // a power dunk is hard to stop
     // the dunk meter result (no input = way too late)
     const w = dunkWindow(p), g = p.dunkG == null ? 1.15 : p.dunkG, off = Math.abs(g - DUNK_TARGET), lvl = Math.max(contestOf(p, false), p.dunkLvl || 0);
-    const green = off <= w || (ADM.green && isMine(p)), white = !green && off <= w + .09; p.dunkGreen = green; // read back by madeDunk (backboard explosion)
+    const green = off <= w || (ADM.green && isMine(p)) || funOn('panier'), white = !green && off <= w + .09; p.dunkGreen = green; // read back by madeDunk (backboard explosion)
     if (S.sub === 'dunkc' && p.qteRes) { const q = p.qteRes; p.qteRes = null; S.meterRes = { who: p.idx, g: q.fast ? DUNK_TARGET : q.ok ? DUNK_TARGET + w + .05 : 1.15, w, cls: q.fast ? 'green' : q.ok ? 'ok' : 'miss', t: .8, dunk: true }; dunkContest(p, q.ok && q.fast, q.ok && !q.fast, wasOop, q.ok); return; }
     if (S.sub === 'dunkc') { S.meterRes = { who: p.idx, g, w, cls: green ? 'green' : white ? 'ok' : 'miss', t: .8, dunk: true }; dunkContest(p, green, white, wasOop); return; }
     S.meterRes = { who: p.idx, g, w, cls: green ? 'green' : white ? 'ok' : 'miss', t: .8, dunk: true };
@@ -5181,10 +5183,59 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
       q.menT = (q.menT || 0) - .03; if (q.menT <= 0) { q.menT = 2.6; showPop('ゴ ゴ ゴ', q.x + .6, q.y + 2.6, q.z, c, 22, 'info'); } }
     if (q.meteor && q.dunking) for (let i = 0; i < 4; i++) emit(q.x + (rnd() - .5) * .4, q.y + 1 + rnd(), q.z + (rnd() - .5) * .4, i % 2 ? '#ff5a3c' : '#ffd166', -q.vx * .3, -1, -q.vz * .3, .5, 0); // comet tail
   }
+  // ---------- v52 · PLAYGROUND: a real match, and every ~10 s something goofy happens for 10 s ----------
+  const FUN_EV = [
+    ['lune', '🌙 GRAVITÉ LUNAIRE', '#a5b4fc'], ['tete', '🤯 GROSSES TÊTES', '#f472b6'], ['turbo', '⚡ TURBO', '#facc15'], ['ballon', '🏖️ BALLON GÉANT', '#fb923c'],
+    ['panier', '🗑️ PANIER GÉANT : TOUT RENTRE', '#22c55e'], ['x3', '💰 PANIERS × 3', '#fde047'], ['pluie', '🎈 PLUIE DE BALLONS', '#38bdf8'], ['disco', '🪩 DISCO', '#c084fc'],
+    ['poulet', '🐔 POULET FOU', '#fef3c7'], ['mini', '🦶 MINI JOUEURS', '#5eead4'], ['geant', '🦍 GÉANTS', '#f87171']
+  ];
+  const FUN = { on: null, t: 0, next: 5, last: null, x: null };
+  const funOn = k => !!(S.fun && FUN.on === k);
+  function funStop() {
+    const k = FUN.on; FUN.on = null; if (!k) return;
+    if (k === 'tete' || k === 'mini' || k === 'geant') partyVisual(null);
+    if (k === 'lune') partyPhysics(false);
+    ballMesh.scale.setScalar(1); rim.scale.setScalar(1); renderer.domElement.style.filter = '';
+    if (FUN.x) { scene.remove(FUN.x); FUN.x = null; }
+  }
+  function funChicken() { // a little low-poly chicken that sprints around the court, flapping
+    const g = new THREE.Group(), W = M('#fafafa', { roughness: .8 }), R = M('#ef4444'), O = M('#f59e0b');
+    const b = new THREE.Mesh(new THREE.SphereGeometry(.28, 12, 10), W); b.scale.set(1, .9, 1.25); b.position.y = .5; g.add(b);
+    const h = new THREE.Mesh(new THREE.SphereGeometry(.15, 10, 8), W); h.position.set(0, .82, .26); g.add(h);
+    const c = new THREE.Mesh(new THREE.BoxGeometry(.04, .1, .14), R); c.position.set(0, .98, .26); g.add(c);
+    const k = new THREE.Mesh(new THREE.ConeGeometry(.05, .14, 6), O); k.rotation.x = Math.PI / 2; k.position.set(0, .8, .44); g.add(k);
+    const wl = new THREE.Mesh(new THREE.BoxGeometry(.06, .2, .32), W); wl.position.set(-.28, .55, 0); g.add(wl); const wr = wl.clone(); wr.position.x = .28; g.add(wr);
+    for (const lx of [-.08, .08]) { const l = new THREE.Mesh(new THREE.CylinderGeometry(.02, .02, .3, 5), O); l.position.set(lx, .16, 0); g.add(l); }
+    g.userData = { wl, wr }; scene.add(g); return g;
+  }
+  function funStart(k) {
+    funStop(); FUN.on = k; FUN.t = 10; const E = FUN_EV.find(e => e[0] === k);
+    popup(E[1], 0, 4.6, 7.5, E[2], 40, 'huge'); flash(); SFX.vs && SFX.vs(); S.shakeT = Math.max(S.shakeT || 0, .3);
+    if (k === 'lune') { G = 14 * .42; BG = 12 * .45; }
+    else if (k === 'tete' || k === 'mini' || k === 'geant') partyVisual({ [k]: true });
+    else if (k === 'ballon') ballMesh.scale.setScalar(3);
+    else if (k === 'panier') rim.scale.setScalar(2.1);
+    else if (k === 'pluie') for (let i = 0; i < 46; i++) { const r = BALL_R * (1 + rnd() * 1.6), m = new THREE.Mesh(new THREE.SphereGeometry(r, 12, 10), ballMesh.material); m.position.set((rnd() - .5) * 15, 8 + rnd() * 10, 1 + rnd() * 13); scene.add(m); effects.push({ m, t: -rnd() * 1.5, dur: 7, kind: 'fball', r, v: new V3((rnd() - .5) * 2, 0, (rnd() - .5) * 2) }); }
+    else if (k === 'poulet') { FUN.x = funChicken(); FUN.x.userData.a = rnd() * 6.28; }
+  }
+  function funTick(dt) {
+    if (!S.fun) { if (FUN.on) funStop(); return; }
+    if (modeKey !== 'fun' || S.mode !== 'solo' || S.phase === 'menu' || S.phase === 'over') { S.fun = false; funStop(); return; }
+    if (S.phase !== 'play' && S.phase !== 'scored' && S.phase !== 'check') return;
+    if (FUN.on) {
+      FUN.t -= dt;
+      if (FUN.on === 'disco' && !ATH.calm) renderer.domElement.style.filter = 'hue-rotate(' + Math.round((S.time * 300) % 360) + 'deg) saturate(1.7)';
+      if (FUN.on === 'poulet' && FUN.x) { const U = FUN.x.userData; U.a += dt * 1.6; const x = Math.sin(U.a) * 5.5, z = 7 + Math.sin(U.a * 2.3) * 4.5, px = FUN.x.position.x, pz = FUN.x.position.z;
+        FUN.x.position.set(x, Math.abs(Math.sin(S.time * 16)) * .12, z); FUN.x.rotation.y = Math.atan2(x - px, z - pz); U.wl.rotation.z = Math.sin(S.time * 30) * .8; U.wr.rotation.z = -U.wl.rotation.z;
+        if (rnd() < dt * .8) showPop('COT COT !', x, 1.6, z, '#fef3c7', 16, 'info'); }
+      if (FUN.t <= 0) { funStop(); FUN.next = 4 + rnd() * 4; }
+    } else { FUN.next -= dt; if (FUN.next <= 0) { let k; do k = FUN_EV[Math.floor(rnd() * FUN_EV.length)][0]; while (k === FUN.last); FUN.last = k; funStart(k); } }
+  }
   // check-ball flex: before the possession starts, the ball spins on the holder's raised finger
   function spinCheck(p) { return S.phase === 'check' && (S.chkT || 0) < .5 && ball.state === 'held' && ball.holder === p && !p.mv && !p.shooting && !p.dunking && p.y < .05 && Math.hypot(p.vx, p.vz) < .3; }
   function updateEffects(dt) {
     S.chkT = S.phase === 'check' ? (S.chkT || 0) + dt : 0;
+    funTick(dt);
     if (S.phase !== 'menu') for (const q of (S.team3 ? teamBodies() : P)) if (q.tkoT > 0) auraTick(q, dt); // first half of the check: finger spin, then the friend's triple threat
     // the new board drops in from above as soon as the next possession (or a menu) starts
     if (S.boardBroken && !['play', 'scored', 'kill', 'replay'].includes(S.phase)) { S.boardBroken = false; boardDrop = 1; boardMesh.visible = true; boardFrame.visible = false; }
@@ -5196,6 +5247,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
       else if (e.kind === 'rise') { e.m.position.y += e.vy * dt; e.m.scale.setScalar(e.s0 + Math.max(0, u) * e.s1); e.mat.opacity = .9 * Math.min(1, 1 - u); }
       else if (e.kind === 'gring') { e.m.scale.setScalar(1 + Math.max(0, u) * e.s1); e.mat.opacity = .9 * Math.min(1, 1 - u); }
       else if (e.kind === 'bar') { e.m.position.y = Math.max(e.y1, e.m.position.y - dt * 24); e.mat.opacity = u < .75 ? .9 : .9 * (1 - (u - .75) / .25); }
+      else if (e.kind === 'fball') { e.v.y -= 9.8 * dt; e.m.position.addScaledVector(e.v, dt); if (e.m.position.y < e.r) { e.m.position.y = e.r; e.v.y = Math.abs(e.v.y) * .72; e.v.x *= .9; e.v.z *= .9; } e.m.rotation.x += e.v.z * dt * 3; e.m.rotation.z -= e.v.x * dt * 3; if (u > .85) e.m.scale.setScalar(Math.max(.01, (1 - u) / .15)); }
       else if (e.kind === 'ghost') { e.mat.opacity = .55 * Math.min(1, 1 - u); }
       else if (e.kind === 'glass') { // shards fall, skid on the court, then shrink away (shared material: no per-shard fade)
         e.v.y -= 9.8 * dt; e.m.position.addScaledVector(e.v, dt);
@@ -6322,6 +6374,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
     if (S.mode === 'pad') { padSend(); return; }
     if (S.paused) return;
     if (S.party && S.party.mods.turbo) dt *= 1.3;
+    if (funOn('turbo')) dt *= 1.45; // v52: Playground
     if (S.phase === 'replay') { S.time += dt; if (S.mode === 'guest') { const h = peerWith('host'); if (h && h.presence.s && h.presence.s.ph !== 'over') { endReplay(); return; } } replayUpdate(dt); return; }
     S.time += dt; S.netT = Math.max(0, S.netT - dt); S.rimShake = Math.max(0, S.rimShake - dt); S.clearMsgT = Math.max(0, S.clearMsgT - dt);
     if (S.mode === 'guest') return guestUpdate(dt);
@@ -7703,7 +7756,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
   const pickMode = bindSeg('modeSeg', v => {
     modeKey = v;
     $('storyPanel').hidden = v !== 'histoire'; if (v === 'histoire') setTimeout(renderStoryPanel, 0); setTimeout(() => typeof fmtVis === 'function' && fmtVis(), 0);
-    $('diffField').hidden = !(v === 'solo' || v === 'horse' || v === 'fete'); $('localNote').hidden = v !== 'local'; $('onlinePanel').hidden = v !== 'online'; $('fetePanel').hidden = v !== 'fete'; if (v === 'fete') setTimeout(renderFete, 0); $('tourPanel').hidden = v !== 'tournoi'; renderSub(v);
+    $('diffField').hidden = !(v === 'solo' || v === 'horse' || v === 'fete' || v === 'fun'); $('localNote').hidden = v !== 'local'; $('onlinePanel').hidden = v !== 'online'; $('fetePanel').hidden = v !== 'fete'; if (v === 'fete') setTimeout(renderFete, 0); $('tourPanel').hidden = v !== 'tournoi'; renderSub(v);
     if (v === 'tournoi') renderTour(); else if (playBtn.textContent.startsWith('Affronter') || playBtn.textContent.startsWith('Rejouer contre')) playBtn.textContent = 'Jouer';
     playBtn.hidden = v === 'online';
     if (NET.R && NET.party && v !== 'fete') feteLeave();
@@ -7740,8 +7793,8 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
     if (S.boss) bossPowerOff(); S.boss = null; S.car = null;
     if (MAXI_MODES.includes(modeKey)) { maxiStart(); return; }
     if (modeKey === 'tournoi' && !window.__noIntro) { S.sub = null; S.tour = null; storyStart(tourScene(tourIdx(), null)); return; }
-    S.sub = SUBS.includes(modeKey) ? modeKey : null;
-    S.mode = modeKey === 'tournoi' || S.sub ? 'solo' : modeKey; S.diff = modeKey === 'tournoi' ? tourDiff(tourIdx()) : S.sub === 'roi' ? tourDiff(Math.min(7, (S.roiStreak || 0) * .9)) : DIFFS[diffKey];
+    S.sub = SUBS.includes(modeKey) ? modeKey : null; S.fun = modeKey === 'fun'; funStop(); FUN.next = 5; FUN.last = null; // v52: Playground
+    S.mode = modeKey === 'tournoi' || S.sub || S.fun ? 'solo' : modeKey; S.diff = modeKey === 'tournoi' ? tourDiff(tourIdx()) : S.sub === 'roi' ? tourDiff(Math.min(7, (S.roiStreak || 0) * .9)) : DIFFS[diffKey];
     S.tour = modeKey === 'tournoi' ? tourIdx() : null; if (S.tour != null && S.map !== TOUR[S.tour].map) buildMap(TOUR[S.tour].map);
     { const md = moodPick(); if (md !== (S.mood || '') || S.moodWant !== md) { S.moodWant = md; buildMap(S.map); } } // v51: the chosen ambiance
     p1.ctrl = 'local'; p2.ctrl = S.mode === 'solo' ? 'ai' : 'local';
@@ -8216,9 +8269,10 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
     dunkc: ['Concours de dunks', '4 essais. Fonce et décolle : pendant le saut, enchaîne vite la combo de flèches affichée (ZQSD / flèches, croix ou △✕□○), sinon le dunk est raté. Rapide = note énorme.'],
     roi: ['Roi du terrain', 'Matchs en 5 points contre des adversaires toujours nouveaux et de plus en plus forts. Combien de victoires d\'affilée ?']
   };
+  SUB_INFO.fun = ['Playground', 'Un vrai match contre l\'IA, mais toutes les 10 secondes il se passe un truc complètement absurde : gravité lunaire, grosses têtes, turbo, ballon géant, panier géant où tout rentre, paniers × 3, pluie de ballons, disco, poulet fou, mini joueurs, géants…'];
   const BEST_K = { trois: 'best3', dunkc: 'bestDunk', roi: 'bestRoi' };
   function renderSub(v) {
-    const on = SUBS.includes(v); $('subPanel').hidden = !on; if (!on) return;
+    const on = SUBS.includes(v) || v === 'fun'; $('subPanel').hidden = !on; if (!on) return;
     $('subT').textContent = SUB_INFO[v][0]; $('subD').textContent = SUB_INFO[v][1];
     const b = BEST_K[v] ? store.get(BEST_K[v], 0) : null; $('subBest').textContent = b ? 'Record : ' + b + (v === 'roi' ? ' victoires d\'affilée' : ' pts') : '';
     $('libreDefRow').hidden = v !== 'libre'; $('libreDef').checked = !!store.get('libreDef', false);
@@ -8776,7 +8830,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
   }
   function startTeams() {
     const fmt = S.mode === 'guest' ? 1 : +store.get('fmt', 1);
-    if (fmt < 2 || S.sub || S.story || S.tour != null) { if (!S.story) teamOff(); return; }
+    if (fmt < 2 || S.sub || S.fun || S.story || S.tour != null) { if (!S.story) teamOff(); return; }
     const coop = S.mode === 'local' && store.get('coop', 'vs') === 'coop'; if (!S.diff) S.diff = DIFFS.normal;
     const [A, B] = teamRosters(fmt, coop);
     const H = S.mode === 'host' ? [{ inp: inA, side: 'A' }, { inp: inR, side: 'B' }] : S.mode === 'local' ? [{ inp: inA, side: 'A' }, { inp: inB, side: coop ? 'A' : 'B' }] : [{ inp: inA, side: 'A' }];
