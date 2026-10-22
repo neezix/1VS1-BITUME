@@ -3408,7 +3408,8 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
     nuit: { sky: ['#04050d', '#0f1730', '#1d2846'], fog: ['#070b16', 14, 46], hemi: [0x5a6aa0, 0x0e0e18, .24], sun: [0xbfcaff, .34], night: true, stars: 1, noSun: false, clouds: .3, grade: { bloom: 1.8, th: .7, exp: .74, sat: 1.0, shT: [-.01, 0, .025] } },
     pluie: { sky: ['#262b35', '#454d5b', '#6a7380'], fog: ['#4a5260', 12, 42], hemi: [0xaab4c8, 0x2a2c33, .62], sun: [0xd0d8e8, .42], night: false, stars: 0, noSun: true, clouds: .97, cloudTint: '#59606c', rays: 0, grade: { sat: .88, con: 1.04, exp: .95, shT: [-.004, .002, .012] } }
   };
-  const MOOD_OUT = ['bitume', 'plage', 'toit', 'cage', 'paris', 'lycee', 'neon', 'port', 'neige', 'desert', 'jungle', 'favela', 'ouest', 'sanctuaire', 'ferme'];
+  const MOOD_OUT = ['bitume', 'plage', 'toit', 'cage', 'paris', 'lycee', 'neon', 'port', 'neige', 'desert', 'jungle', 'favela', 'ouest', 'sanctuaire', 'ferme', 'rucker', 'tokyo', 'volcan'];
+  const MOOD_IN = ['gymnase', 'arene', 'metro', 'orbite']; // v52: covered courts (and space): the light changes, but it never rains inside
   const MOOD_N = { '': 'COMME LA CARTE', jour: 'EN PLEIN JOUR', coucher: 'AU COUCHER DU SOLEIL', nuit: 'DE NUIT', pluie: 'SOUS LA PLUIE' };
   function moodPick() { // what the menu option asks for, at the start of a game
     if (S.story || S.tour != null) return '';
@@ -3418,7 +3419,8 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
   }
   const AMB = { drops: null, wearC: null, wearT: null, wearN: 0, wearDirty: false };
   function applyMood(md, id) {
-    S.mood = MOOD_OUT.includes(id) && MOODS[md] ? md : '';
+    if (MOOD_IN.includes(id) && md === 'pluie') md = 'nuit';
+    S.mood = (MOOD_OUT.includes(id) || MOOD_IN.includes(id)) && MOODS[md] ? md : '';
     if (!S.mood) return;
     const m = MOODS[S.mood]; storyMood(m);
     if (scene.fog && m.fog) { scene.fog.near = m.fog[1]; scene.fog.far = m.fog[2]; }
@@ -3490,15 +3492,16 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
     dropsTick(dt); puffTick(dt);
   }
   // living decor (city courts): a dog trotting behind the fence, a bus going by, pigeons that fly off on a dunk, a kid filming
-  const DECOR_CITY = ['bitume', 'cage', 'paris', 'port', 'favela', 'ouest', 'neon', 'toit', 'plage', 'lycee', 'desert', 'ferme', 'sanctuaire', 'jungle', 'neige'];
-  const DECOR_ROAD = ['bitume', 'cage', 'paris', 'port', 'ouest', 'neon'];
+  const DECOR_CITY = ['bitume', 'cage', 'paris', 'port', 'favela', 'ouest', 'neon', 'toit', 'plage', 'lycee', 'desert', 'ferme', 'sanctuaire', 'jungle', 'neige', 'rucker', 'tokyo'];
+  const DECOR_ROAD = ['bitume', 'cage', 'paris', 'port', 'ouest', 'neon', 'rucker', 'tokyo'];
+  const DECOR_LITE = ['gymnase', 'arene', 'metro', 'volcan', 'orbite']; // v52: no pigeons / dog there, just the kid filming from the side
   function ambDecor(id, grp) {
-    if (!DECOR_CITY.includes(id) || ATH.decor === false) return;
+    const lite = DECOR_LITE.includes(id); if ((!DECOR_CITY.includes(id) && !lite) || ATH.decor === false) return;
     const r = seeded(id.length * 13 + 3);
     // pigeons on the ground, next to the court (seagulls at the beach, white doves at the sanctuary)
     const bc = id === 'plage' ? '#f4f4f4' : id === 'sanctuaire' ? '#fffaf0' : '#8a8d99', bodyM = M(bc, { roughness: .9 }), headM = M(id === 'plage' ? '#f4f4f4' : '#5d6a7a'), beakM = M('#e0a040');
     const birdsG = [];
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < (lite ? 0 : 6); i++) {
       const g = new THREE.Group(), side = i < 3 ? -1 : 1, bx = side * (7.9 + r() * .8), bz = 3 + r() * 8; g.position.set(bx, 0, bz); g.rotation.y = r() * 6.28; g.scale.setScalar(1.4);
       const b = new THREE.Mesh(new THREE.SphereGeometry(.09, 8, 6), bodyM); b.scale.set(1, .85, 1.5); b.position.y = .1; g.add(b);
       const h = new THREE.Mesh(new THREE.SphereGeometry(.05, 8, 6), headM); h.position.set(0, .18, .12); g.add(h);
@@ -3525,7 +3528,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
     for (const ex of [-1, 1]) { const e = new THREE.Mesh(new THREE.BoxGeometry(.05, .1, .06), dm); e.position.set(ex * .08, .63, .3); dog.add(e); }
     const tail = new THREE.Mesh(new THREE.BoxGeometry(.04, .04, .22), dm); tail.position.set(0, .45, -.32); tail.rotation.x = -.6; dog.add(tail);
     const legs = []; for (const [lx, lz] of [[-.08, .2], [.08, .2], [-.08, -.2], [.08, -.2]]) { const l = new THREE.Group(); l.position.set(lx, .28, lz); const m = new THREE.Mesh(new THREE.BoxGeometry(.06, .28, .06), dm); m.position.y = -.14; l.add(m); dog.add(l); legs.push(l); }
-    const D = { t: 8 + r() * 10, x: 0, dir: 1, on: false };
+    const D = { t: lite ? 1e9 : 8 + r() * 10, x: 0, dir: 1, on: false };
     // a bus far behind (on the city courts with a street)
     let bus = null; const B = { t: 15 + r() * 20, x: 0, on: false };
     if (DECOR_ROAD.includes(id)) {
