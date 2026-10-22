@@ -1085,7 +1085,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
 .overlay{background:rgba(0,0,0,.4);backdrop-filter:var(--ios-blur);-webkit-backdrop-filter:var(--ios-blur)}
 .overlay.top{background:rgba(0,0,0,.52)}
 .overlay:not(#menu):not(#selectScr):not(#vsScr):not(.studio)>.card{background:var(--ios-mat);backdrop-filter:var(--ios-blur);-webkit-backdrop-filter:var(--ios-blur);border:.5px solid rgba(255,255,255,.1);border-radius:24px;box-shadow:0 24px 70px rgba(0,0,0,.55)}
-#menu{background:linear-gradient(90deg,rgba(0,0,0,.35),rgba(0,0,0,0) 60%)}
+#menu{background:linear-gradient(90deg,rgba(0,0,0,.18),rgba(0,0,0,0) 55%);backdrop-filter:none;-webkit-backdrop-filter:none} /* v54: the map stays sharp and bright behind the menu */
 #menu .hub{background:var(--ios-mat);backdrop-filter:var(--ios-blur);-webkit-backdrop-filter:var(--ios-blur);border-right:.5px solid rgba(255,255,255,.1)}
 .h2{font-family:var(--ios-font);font-weight:700;font-size:30px;letter-spacing:-.02em;text-shadow:none}
 .eyebrow,.label{font-family:var(--ios-font);font-weight:600;font-size:13px;letter-spacing:.01em;text-transform:uppercase;color:var(--ios-label2)}
@@ -1257,7 +1257,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
 <div class="overlay" id="menu">
   <div class="card hub">
     <header class="hubtop">
-      <span class="vertag" id="verTag" title="Version du jeu">v53</span>
+      <span class="vertag" id="verTag" title="Version du jeu">v54</span>
       <h1 class="logo">Bitume<span>1c1</span></h1>
       <div class="hubstat"><button class="coinpill" id="coinBtn" aria-label="Mes pièces · boutique">🪙 <b id="coinN">0</b></button><button class="chestbtn" id="chestBtn" aria-label="Coffre du jour">🎁<i id="chestDot" hidden></i></button>
       <div class="lvl" id="lvlBox"><b id="lvlN">NIV 1</b><i><s id="lvlBar"></s></i><span id="lvlXp"></span><button class="linkbtn" id="dailyBtn">🎯 Défis</button></div></div>

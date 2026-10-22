@@ -1,5 +1,5 @@
 // Bitume 1c1 — service worker : lance le jeu hors ligne (sauf le mode en ligne).
-const VERSION = 'bitume-v53';
+const VERSION = 'bitume-v54';
 const CORE = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
 const CDN = [
   'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js',
