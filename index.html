@@ -1142,6 +1142,33 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
 @media (max-width:520px){.board{padding:4px 10px;gap:6px}.board .tname{font-size:12px;max-width:74px;overflow:hidden;text-overflow:ellipsis}} /* phones: the island stays clear of the menu button */
 .athtabs{background:rgba(30,30,32,.96)} /* the settings tab strip: no more purple band */
 @media (max-width:430px){#menu .logo{font-size:24px}} /* narrow phones: the logo ran under the coins */
+/* v53 · less at once: the editor list, its detail page, the mode groups, the folded match settings */
+.curow{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:48px;padding:10px 14px;margin:0 0 6px;border:0;border-radius:12px;background:var(--ios-bg2);color:#fff;font:500 16px/1.2 var(--ios-font);text-align:left;cursor:pointer}
+.curow:active{background:var(--ios-bg3)}
+.curow .cut{min-width:0}
+.curow .cuv{display:flex;align-items:center;gap:8px;color:var(--ios-label2);font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:55%}
+.curow .cuv::after{content:'›';font-size:22px;line-height:1;color:rgba(235,235,245,.3)}
+.curow .cuv i{flex:0 0 18px;width:18px;height:18px;border-radius:50%;border:1px solid rgba(255,255,255,.3)}
+.cuback{display:block;background:none;border:0;color:var(--ios-tint);font:600 17px var(--ios-font);padding:4px 0 2px;cursor:pointer}
+.cuhead{font:700 22px/1.2 var(--ios-font);letter-spacing:-.01em;margin:2px 0 12px}
+#customList.cudetail .opt{grid-template-columns:1fr;background:none;padding:0}
+#customList.cudetail .opt>.t{display:none}
+#customList.cudetail .opt>:last-child{justify-self:stretch}
+#customList.cudetail .swatches,#customList.cudetail .mini{justify-content:flex-start}
+#modeSeg .modegrp{grid-column:1/-1;margin:8px 2px 0;font:600 13px var(--ios-font);letter-spacing:.01em;text-transform:uppercase;color:var(--ios-label2)}
+#modeSeg .modegrp:first-child{margin-top:0}
+@media (orientation:portrait) and (max-width:699px),(max-height:520px) and (orientation:landscape){
+  #modeSeg .modegrp{grid-column:auto;margin:0;align-self:stretch;display:grid;place-items:center;writing-mode:vertical-rl;transform:rotate(180deg);font-size:10px;padding:0 2px;border-left:1px solid var(--ios-sep)}
+}
+.matchfold{margin-top:6px;border-radius:12px;background:var(--ios-bg2)}
+.matchfold>summary{display:flex;align-items:center;justify-content:space-between;gap:10px;list-style:none;cursor:pointer;padding:12px 14px;font:600 16px var(--ios-font)}
+.matchfold>summary::-webkit-details-marker{display:none}
+.matchfold>summary small{font:500 13px var(--ios-font);color:var(--ios-label2);text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.matchfold>summary small::after{content:' ›';font-size:18px;color:rgba(235,235,245,.3)}
+.matchfold[open]>summary small::after{content:' ⌄'}
+.matchfold>.msets{padding:0 12px 12px;background:none;border:0}
+.matchfold>summary>span{flex:0 0 auto;white-space:nowrap}.matchfold>summary small{flex:1 1 auto}
+@media (max-width:370px){#menu .hubtop{grid-template-columns:1fr}#menu .hubstat{justify-self:start}} /* very narrow: the coins go under the logo */
 @media (prefers-reduced-transparency:reduce){:root{--ios-blur:none;--ios-mat:#1c1c1e}}
 </style>
 </head>
@@ -1230,7 +1257,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
 <div class="overlay" id="menu">
   <div class="card hub">
     <header class="hubtop">
-      <span class="vertag" id="verTag" title="Version du jeu">v52</span>
+      <span class="vertag" id="verTag" title="Version du jeu">v53</span>
       <h1 class="logo">Bitume<span>1c1</span></h1>
       <div class="hubstat"><button class="coinpill" id="coinBtn" aria-label="Mes pièces · boutique">🪙 <b id="coinN">0</b></button><button class="chestbtn" id="chestBtn" aria-label="Coffre du jour">🎁<i id="chestDot" hidden></i></button>
       <div class="lvl" id="lvlBox"><b id="lvlN">NIV 1</b><i><s id="lvlBar"></s></i><span id="lvlXp"></span><button class="linkbtn" id="dailyBtn">🎯 Défis</button></div></div>
@@ -1306,6 +1333,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
         <div class="fmods" id="fMods"><button data-v="tete" aria-pressed="false">🎈 Grosses têtes</button><button data-v="mini" aria-pressed="false">🐜 Mini</button><button data-v="geant" aria-pressed="false">🗿 Géants</button><button data-v="lune" aria-pressed="false">🌙 Lune</button><button data-v="turbo" aria-pressed="false">⚡ Turbo</button></div>
         <button class="play alt" id="fLeave" hidden>Quitter la salle</button>
       </div>
+      <details class="fold matchfold" id="matchFold"><summary tabindex="0"><span>⚙️ Réglages du match</span><small id="matchSum"></small></summary>
       <section class="msets" aria-label="Réglages du match">
         <div class="field" id="fmtField">
           <span class="label" id="fmtLbl">Format</span>
@@ -1373,6 +1401,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
           </div>
         </div>
       </section>
+      </details>
       <details class="fold" id="ctrlFold"><summary tabindex="0">🎮 Commandes</summary>
         <div class="ctrls">
           <div class="ctabs" role="tablist" id="ctrlTabs">
@@ -5384,7 +5413,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
     if (!$('phonePanel').hidden) { if (k === 'escape') phoneClose(); return; }
     if (!$('fsHelp').hidden) { if (k === 'escape' || k === 'enter') $('fsHelp').hidden = true; return; }
     if (!$('keysPanel').hidden) { if (k === 'escape') closeKeys(); return; }
-    if (!$('athPanel').hidden || !$('customPanel').hidden) { if (k === 'escape') { $('athPanel').hidden = true; closeCustom(); } return; }
+    if (!$('athPanel').hidden || !$('customPanel').hidden) { if (k === 'escape') { if (backCustom()) return; $('athPanel').hidden = true; closeCustom(); } return; }
     if (!$('vsScr').hidden) return;
     if (!$('selectScr').hidden) { if (k === 'escape') closeSelect(); else if (e.key === 'Enter' && !(document.activeElement && document.activeElement.closest('#selectScr button'))) goVs(); return; }
     if (inMenu()) { if (e.key === 'Enter' && (S.mode === 'solo' || S.mode === 'local') && document.activeElement !== $('codeIn') && modeKey !== 'online' && (!document.activeElement || document.activeElement === document.body || document.activeElement.closest('.seg'))) openSelect(); return; }
@@ -5456,7 +5485,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
     const cur = els.indexOf(document.activeElement);
     if (dir) { const n = cur < 0 ? 0 : clamp(cur + dir, 0, els.length - 1); els[n].focus(); try { els[n].scrollIntoView({ block: 'nearest' }); } catch (_) {} }
     if (ok && cur >= 0) els[cur].click();
-    if (back) { if (!$('selectScr').hidden) closeSelect(); else if (!$('keysPanel').hidden) closeKeys(); else if (!$('athPanel').hidden) $('athPanel').hidden = true; else if (!$('customPanel').hidden) closeCustom(); else if (isPaused()) closePause(); }
+    if (back) { if (!$('selectScr').hidden) closeSelect(); else if (!$('keysPanel').hidden) closeKeys(); else if (!$('athPanel').hidden) $('athPanel').hidden = true; else if (!$('customPanel').hidden) { if (!backCustom()) closeCustom(); } else if (isPaused()) closePause(); }
   }
   function releaseAll() { for (const i of [inA, inB]) { i.u = i.d = i.l = i.r = 0; i.jx = i.jz = 0; i.handsK = i.sprintK = i.intenseK = false; actUp(i); secUp(i); i.pressed = i.released = i.pressed2 = false; }
     document.querySelectorAll('.joy').forEach(j => { j.hidden = true; }); document.querySelectorAll('#touch .on').forEach(b => b.classList.remove('on')); }
@@ -7864,6 +7893,17 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
     maxiMode(v);
   });
   let buildKey = store.get('builds', 'legendes');
+  // v53: modes in three groups, and the match settings folded into one line that sums them up
+  (() => {
+    const seg = $('modeSeg'), G = [['Jouer', ['solo', 'histoire', 'carriere', 'boss', 'tournoi', 'roi']], ['Avec des amis', ['online', 'local', 'fete']], ['Mini-jeux', ['horse', 'trois', 'dunkc', 'libre', 'fun']]];
+    for (const [t, ids] of G) { const h = document.createElement('p'); h.className = 'modegrp'; h.textContent = t; h.setAttribute('aria-hidden', 'true'); seg.appendChild(h); for (const id of ids) { const b = $('m-' + id); if (b) seg.appendChild(b); } }
+    [...seg.querySelectorAll('button')].forEach(b => { if (!G.some(g => g[1].includes(b.dataset.v))) seg.appendChild(b); }); // anything new goes last
+  })();
+  function matchSum() {
+    const g = id => { const b = document.querySelector('#' + id + ' [aria-checked="true"]'); return b && !b.closest('[hidden]') ? b.textContent.trim().split(' · ')[0] : null; };
+    const el = $('matchSum'); if (el) el.textContent = [g('fmtSeg'), g('mapSeg'), g('gmSeg'), g('lvSeg'), g('diffSeg')].filter(Boolean).join(' · ');
+  }
+  $('menu').addEventListener('click', () => setTimeout(matchSum, 0)); setTimeout(matchSum, 50);
   const pickBuild = bindSeg('buildSeg', v => { buildKey = v; store.set('builds', v); if (S.mode !== 'guest') { S.balanced = v === 'equilibre'; applyBalance(); } });
   pickBuild(buildKey);
   const pickFmt = bindSeg('fmtSeg', v => { store.set('fmt', +v); fmtVis(); });
@@ -8167,15 +8207,38 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
   const endDrag = () => { dragX = null; };
   $('preview').addEventListener('pointerup', endDrag); $('preview').addEventListener('pointercancel', endDrag);
   const CU_GROUP = {"build": "tete", "mouth": "tete", "arch": "profil", "name": "profil", "num": "profil", "outfit": "tenue", "brand": "tenue", "jersey": "tenue", "style": "tenue", "hoodie": "tenue", "tights": "tenue", "soles": "tenue", "shorts": "tenue", "shoes": "tenue", "socks": "tenue", "skin": "tete", "hair": "tete", "hairColor": "tete", "beard": "tete", "durag": "tete", "headband": "tete", "glasses": "tete", "shades": "tete", "aura": "tenue", "chain": "acc", "knee": "acc", "sleeve": "acc", "wrist": "acc", "celeb": "fete"};
-  let cuTab = 'profil';
-  document.querySelectorAll('#cuTabs button').forEach(b => b.addEventListener('click', () => { cuTab = b.dataset.v; document.querySelectorAll('#cuTabs button').forEach(x => x.setAttribute('aria-selected', String(x === b))); renderCustom(); }));
+  let cuTab = 'profil', cuOpen = null; // v53: cuOpen = the one setting shown on its own page (null = the list)
+  const CU_DRILL = ['profile', 'outfits', 'color', 'skin', 'choice'];
+  const CU_TAB_N = { profil: 'Profil', tenue: 'Tenue', tete: 'Tête', acc: 'Accessoires', fete: 'Célébration' };
+  function cuVal(it, L) {
+    const v = L[it.k];
+    if (it.type === 'profile') return (PROFILES[L.arch] || PROFILES.perso).n;
+    if (it.type === 'outfits') return 'Choisir';
+    if (it.type === 'skin') return { sw: SKINS[v] };
+    if (it.type === 'color') return v ? { sw: v } : 'Aucun';
+    return v == null || v === '' ? (it.o ? String(it.o[0]) : '—') : String(v); // never set = its default
+  }
+  function cuRowFor(it, L) { // "Maillot  ● ›": tap to open just that setting
+    const b = document.createElement('button'); b.className = 'curow';
+    const t = document.createElement('span'); t.className = 'cut'; t.textContent = it.t.split(' · ')[0]; b.appendChild(t);
+    const v = cuVal(it, L), vv = document.createElement('span'); vv.className = 'cuv';
+    if (v && v.sw) { const d = document.createElement('i'); d.style.background = v.sw; vv.appendChild(d); } else vv.textContent = v;
+    b.appendChild(vv); b.addEventListener('click', () => { cuOpen = it.k; renderCustom(); const c = $('customList').closest('.card'); if (c) c.scrollTop = 0; }); return b;
+  }
+  function backCustom() { if (!cuOpen || $('customPanel').hidden) return false; cuOpen = null; renderCustom(); return true; }
+  document.querySelectorAll('#cuTabs button').forEach(b => b.addEventListener('click', () => { cuTab = b.dataset.v; cuOpen = null; document.querySelectorAll('#cuTabs button').forEach(x => x.setAttribute('aria-selected', String(x === b))); renderCustom(); }));
   function renderCustom() {
     const list = $('customList'); list.innerHTML = '';
     const L = curLook();
     $('pvName').textContent = L.name; $('pvArch').textContent = (PROFILES[L.arch] || PROFILES.perso).n + ' · ' + (PROFILES[L.arch] || PROFILES.perso).h.toFixed(2).replace('.', ',') + ' m';
     if (cuTab !== 'profil' && LEG_LOOK[L.arch]) { const nt = document.createElement('div'); nt.className = 'opt full'; nt.innerHTML = '<div class="t" style="color:#fde047">Profil ' + PROFILES[L.arch].n + ' : en match tu as le look de la légende. Ces réglages sont ceux de ton PERSO (choisis PERSO dans Profil pour les porter).</div>'; list.appendChild(nt); } // v50
+    if (cuOpen && !CUSTOM_SCHEMA.some(x => x.k === cuOpen && (CU_GROUP[x.k] || 'profil') === cuTab)) cuOpen = null;
+    list.classList.toggle('cudetail', !!cuOpen);
+    if (cuOpen) { const it0 = CUSTOM_SCHEMA.find(x => x.k === cuOpen), bk = document.createElement('button'); bk.className = 'cuback'; bk.textContent = '‹ ' + (CU_TAB_N[cuTab] || 'Retour'); bk.addEventListener('click', backCustom); list.appendChild(bk);
+      const h = document.createElement('div'); h.className = 'cuhead'; h.textContent = it0.t; list.appendChild(h); }
     for (const it of CUSTOM_SCHEMA) {
       if ((CU_GROUP[it.k] || 'profil') !== cuTab) continue;
+      if (cuOpen ? it.k !== cuOpen : CU_DRILL.includes(it.type)) { if (!cuOpen) list.appendChild(cuRowFor(it, L)); continue; } // v53
       const row = document.createElement('div'); row.className = 'opt';
       const lab = document.createElement('div'); lab.className = 't'; lab.textContent = it.t; row.appendChild(lab);
       let ctl;
@@ -8245,7 +8308,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
     prevModel.armR.rotation.x = -.45; prevModel.armL.rotation.x = -.2;
   }
   function openCustom() {
-    $('customPanel').hidden = false;
+    cuOpen = null; $('customPanel').hidden = false;
     if (!prevR) {
       try {
         prevR = new THREE.WebGLRenderer({ antialias: true, alpha: true }); prevR.setPixelRatio(Math.min(2, window.devicePixelRatio || 1)); prevR.outputEncoding = THREE.sRGBEncoding;
@@ -8275,7 +8338,7 @@ body:has(#partyOv.vn:not([hidden])) .stage :is(.hud,.keys,.goal,.tag,.stam,.gaug
     $('customPanel').hidden = true; cancelAnimationFrame(prevRaf);
     if (S.phase === 'menu' || S.phase === 'over') { setLook(p1, looks.p1); if (S.mode === 'local') setLook(p2, looks.p2); setNames(); }
   }
-  bindSeg('whoSeg', v => { editWho = v; renderCustom(); refreshPreview(); });
+  bindSeg('whoSeg', v => { editWho = v; cuOpen = null; renderCustom(); refreshPreview(); });
   $('customBtn').addEventListener('click', openCustom);
   $('customClose').addEventListener('click', closeCustom);
 
